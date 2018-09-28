@@ -60,16 +60,28 @@ h3 {
 }
 .icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  vertical-align: middle;
+  font-weight: 700;
+  width: 85%;
+  height: 85%;
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
 }
+.icon-consumer {
+  background: url("icons.svg#icon-consumer-view") no-repeat;
+}
+.icon-emitter {
+  background: url("icons.svg#icon-emitter-view") no-repeat;
+}
+
 .icon-folder-plus, .icon-folder-minus {
   margin-left: 5px;
   margin-bottom: 5px;
 }
+
+.tabbedDiv { padding: 5px; display: none;}
+
 
 /* legend styling */
 div#layercontrol {

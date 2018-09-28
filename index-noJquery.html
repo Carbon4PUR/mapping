@@ -79,9 +79,8 @@
 			totalMax: 0,
 			emitters: [],
 			consumers: [],
-			allLayers: {}
+			//allLayers: {}
 		};
-
 		/* Load all csv data files and create menu*/
 		Promise.all([
 				getEmissionData('CO', 'CO', 'CO.csv', "#004e83"),
@@ -89,7 +88,8 @@
 			]).then(loadedData => doStats(loadedData))
 			.then(() => addEmissionsToMap())
 			.then(() => addEmissionsToMenu())
-			.then(() => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300"));
+			.then(() => getChemparkData('Chemical parks', 'chemicalparks.csv', "#CC7300"))
+			.then(() => console.log(JSON.stringify(dataModel, getCircularReplacer())));
 
 		function getEmissionData(emName, emDisplayName, file, color) {
 			return new Promise((resolve, reject) => {

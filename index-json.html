@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Carbon4PUR CO2/CO sources and consumer map</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
+	<link href="https://unpkg.com/leaflet/dist/leaflet.css" rel="stylesheet" />
+	<!-- A CSS framework for easy styling -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" rel="stylesheet" />
+	<!-- Boring layer selection <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.css" integrity="sha256-2nki7eLxn91r/RI3QQq+ArnIltknk6gz4wSoQHFrJnA=" crossorigin="anonymous" /> -->
+	<link href="index.css" rel="stylesheet">
+	<script src="https://unpkg.com/leaflet/dist/leaflet.js">
+	</script>
+	<!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
+	<script src='https://unpkg.com/csv2geojson/csv2geojson.js'>
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.js" integrity="sha256-jpTunCut/xbLZJF8NpoJiNL3FLfFTKv6xeGGrWo8whY=" crossorigin="anonymous"></script>
+	<!-- Load d3: only for size legend for now -->
+	<script src="https://d3js.org/d3.v3.min.js">
+	</script>
+	<script src="vendor/leaflet-sidebar.min.js"></script>
+	<link rel="stylesheet" href="vendor/leaflet-sidebar.min.css" />
+	<script src="dataModel.js"></script>
+	<script src="circleLegend.js"></script>
+</head>
+
+<body>
+
+	<!-- Map takes whole screen -->
+
+	<div id="map"></div>
+	<!-- Size legend -->
+	<div id="scale">
+		<h3>Emissions in Megatonnes</h3>
+	</div>
+
+	<div id="sidebar" class="sidebar collapsed">
+		<!-- Nav tabs -->
+		<div class="sidebar-tabs">
+			<ul role="tablist">
+				<li><a href="#emitter-content" role="tab">
+					<span  class="icon icon-emitter"></span>
+					</a></li>
+
+				<li><a href="#consumer-content" role="tab">
+					<span  class="icon icon-consumer"></span>
+					</a></li>
+				</ul>
+
+			<ul role="tablist">
+				<li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+			</ul>
+		</div>
+
+		<!-- Tab panes -->
+		<div class="sidebar-content">
+			<div class="sidebar-pane" id="emitter-content">
+				<h1 class="sidebar-header">
+					sidebar-v2
+					<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+				</h1>
+
+				<nav class="navbar is-dark" style="margin: 0px -20px 0;">
+
+				  <div class="navbar-menu is-active" id="navMenu">
+				    <div class="navbar-start" style="flex: 1;">
+				      <a class="navbar-item" style="flex: 1; justify-content: center; align-items: center; font-size: large;" onclick="showTabbed('co2selectDiv')">
+				        CO<sub>2</sub>
+				      </a>
+							<a class="navbar-item" style="flex: 1; justify-content: center; align-items: center; font-size: large;" onclick="showTabbed('coselectDiv')">
+				        CO
+				      </a>
+				    </div>
+					</div>
+				</nav>
+				<div id="co2selectDiv" class="tabbedDiv" style="display:block;">
+					CO2
+				</div>
+				<div id="coselectDiv" class="tabbedDiv">
+					CO
+				</div>
+
+
+			</div>
+
+			<div class="sidebar-pane" id="profile">
+				<h1 class="sidebar-header">Profile<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+			</div>
+
+			<div class="sidebar-pane" id="messages">
+				<h1 class="sidebar-header">Messages<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+			</div>
+
+			<div class="sidebar-pane" id="settings">
+				<h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		/* Set up the map with initial center and zoom level */
+
+		let map = L.map('map', {
+			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
+			zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+			scrollWheelZoom: false
+		});
+		/* Carto light-gray basemap tiles with labels */
+		let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
+			})
+			.addTo(map);
+		let overlays = {};
+		for(group in dataModel.data){
+			for (subGroup in dataModel.data[group]){
+				let sub = dataModel.data[group][subGroup];
+				overlays[group + " - " + sub.emDisplayName] = {};
+				var curOverlayGroup = overlays[group + " - " + sub.emDisplayName];
+				for (layer in sub.layers){
+					curOverlayGroup[layer] = new L.LayerGroup();
+					for (feature in sub.layers[layer].features){
+						var feature = sub.layers[layer].features[feature];
+						L.circleMarker(feature.coordinates, {
+							color: sub.color,
+							weight: 0,
+							radius: feature.relativeQuantity * 50
+						}).bindPopup(group === "emitters" ? addEmitterPopupHandler(feature, sub.emDisplayName) : addConsumerPopupHandler(feature)).addTo(curOverlayGroup[layer]);
+
+					}
+				}
+			}
+		}
+		console.log(overlays);
+		/*
+		var options = {
+			// Show a checkbox next to non-exclusive group labels for toggling all
+			groupCheckboxes: true
+		};
+		// Use the custom grouped layer control, not "L.control.layers"
+		var layerControl = L.control.groupedLayers({}, overlays, options);
+		map.addControl(layerControl);
+*/
+
+		var sidebar = L.control.sidebar('sidebar', {position: 'right'}).addTo(map);
+
+		function createScale() {
+			var svg = d3.select('#scale').append('svg').attr('width', 185).attr('height', 120);
+			svg = svg.append('g').attr('transform', 'translate(0,5)');
+			var scale = d3.scale.sqrt().domain([0, dataModel.totalMax]).range([0, 50]);
+			var formatSI = d3.format('.1f');
+			var formatCurrencySI = function(d) {
+				return formatSI(d) + ' MT'
+			}
+			var circleKey = circleLegend()
+				.scale(scale)
+				.tickValues([dataModel.totalMax / 100, dataModel.totalMax / 10, dataModel.totalMax])
+				.tickFormat(formatCurrencySI)
+				.tickPadding(10)
+				.orient("left"); //default
+			svg.append('g')
+				.attr('transform', 'translate(116, 100)')
+				.call(circleKey);
+		}
+
+		function addConsumerPopupHandler(feature){
+			console.log(feature);
+				var htmlstring = '<h3>' + feature.FacilityName + '</h3><table class="popupTable"><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
+				for (em in feature.potentials["50000"]){
+					let emName = em;
+					if(em == "CO2") emName = "CO<sub>2</sub>";
+					htmlstring += "<td>"+emName+"</td>";
+					for (dist in feature.potentials){
+						if(feature.potentials[dist][em]){
+							//console.log(potentials[feature.properties.FacilityName], dist, potentials[feature.properties.FacilityName][dist], em);
+							htmlstring += "<td>" + feature.potentials[dist][em].toFixed(2) + ' MT</td>';
+						}
+						else { htmlstring += "<td></td>";}
+					}
+					htmlstring += "</tr><tr>";
+				}
+				htmlstring = htmlstring.slice(0, -4);
+				return htmlstring;
+		};
+
+		function addEmitterPopupHandler(feature, emDisplayName){
+			return '<h3>' + feature.FacilityName + '</h3><i>' + feature.NACEMainEconomicActivityName + '</i><br />' + feature.MTonnes + ' Mt ' + emDisplayName;
+		}
+
+		map.on('focus', () => {
+			map.scrollWheelZoom.enable();
+		});
+		map.on('blur', () => {
+			map.scrollWheelZoom.disable();
+		});
+
+		// only works with one tabbed area! Otherwise select by sub Classname
+		let showTabbed = (name, multiTabbedClassName = "") => {
+			let tabbedDivs = document.getElementsByClassName("tabbedDiv "+multiTabbedClassName);
+			[].forEach.call(tabbedDivs, function (el) {el.style.display = "none"});
+			document.getElementById(name).style.display = "block";
+		}
+
+	</script>
+</body>
+
+</html>
