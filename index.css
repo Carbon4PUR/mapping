@@ -58,21 +58,33 @@ h3 {
 .popupTable th, .popupTable td {
   background: #f3f5f9;
 }
-.icon {
-  display: inline-block;
-  vertical-align: middle;
-  font-weight: 700;
-  width: 85%;
-  height: 85%;
+
+body .sidebar-tabs > ul > li {
+  position: relative;
+  color: #5a6067;
+}
+svg {
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
 }
-.icon-consumer {
-  background: url("icons.svg#icon-consumer-view") no-repeat;
+.overIcon {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  font-size: small;
+  text-align: right;
+  vertical-align: top;
+  line-height: 1.1em;
 }
-.icon-emitter {
-  background: url("icons.svg#icon-emitter-view") no-repeat;
+.svgicon {
+  margin: 7px;
+  width: 30px;
+  height: 30px;
+}
+.svgicon > use {
+  width: 30px;
+  height: 30px;
 }
 
 .icon-folder-plus, .icon-folder-minus {
