@@ -87,49 +87,17 @@ svg {
   height: 30px;
 }
 
+
 .icon-folder-plus, .icon-folder-minus {
   margin-left: 5px;
   margin-bottom: 5px;
 }
 
 .tabbedDiv { padding: 5px; display: none;}
-
-
-/* legend styling */
-div#layercontrol {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  bottom: 15px;
-  width: 250px;
-  padding: 3px;
-  background-color: rgba(0, 78, 131, 0.3); /* 226, 238, 246 */
-  border-radius: 5px;
-  border: 1px solid rgba(0, 78, 131, 0.9);
-  z-index: 7000;
+.menuSelect {
+  margin-right: 0.4em;
+  vertical-align: middle;
 }
-#layercontrolCont {
-  overflow-y: auto;
-  height: 100%;
-  width: 100%;
-}
-#layercontrolMinimize {
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: -8px;
-  margin-top: -8px;
-  height: 16px;
-  z-index: 8000;
-  border: 1px solid rgba(0, 78, 131, 0.9);
-  background-color: rgb(226, 238, 246);
-}
-div[id*="layercontrolSub-"] {
-  padding-left: 12px;
-  font-size: small;
-  display: none;
-}
-
 /* Title */
 #mapTitle {
   position: absolute;

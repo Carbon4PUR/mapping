@@ -124,21 +124,9 @@
 	<div id="sidebar" class="sidebar">
 		<!-- Nav tabs -->
 		<div class="sidebar-tabs">
-			<ul role="tablist">
+			<ul role="tablist" id="maintablist">
 				<li class="active"><a href="#info-content" role="tab">
 					<svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-info"></use></svg>
-					</a></li>
-				<li><a href="#emitter-co2-content" role="tab">
-					<svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-emitter"></use></svg>
-					<span class="overIcon">CO<sub>2</sub>
-					</span>
-					</a></li>
-					<li><a href="#emitter-co-content" role="tab">
-						<svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-emitter"></use></svg>
-						<span class="overIcon">CO</span>
-						</a></li>
-				<li><a href="#consumer-content" role="tab">
-					<svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-consumer"></use></svg>
 					</a></li>
 				</ul>
 			<ul role="tablist">
@@ -147,27 +135,7 @@
 		</div>
 
 		<!-- Tab panes -->
-		<div class="sidebar-content">
-			<div class="sidebar-pane" id="emitter-co2-content">
-				<h1 class="sidebar-header">
-					CO<sub>2</sub> emitter
-					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-play3"></use></svg></span>
-				</h1>
-			</div>
-			<div class="sidebar-pane" id="emitter-co-content">
-				<h1 class="sidebar-header">
-					CO emitter
-					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-play3"></use></svg></span>
-				</h1>
-			</div>
-
-			<div class="sidebar-pane" id="consumer-content">
-				<h1 class="sidebar-header">
-					CO and CO<sub>2</sub> consumer
-					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-play3"></use></svg></span>
-				</h1>
-			</div>
-
+		<div class="sidebar-content" id="sidebarcontent">
 			<div class="sidebar-pane active" id="info-content">
 				<h1 class="sidebar-header">
 					Information on this map
@@ -198,35 +166,61 @@
 			})
 			.addTo(map);
 		let overlays = {};
-		for(group in dataModel.data){
-			for (subGroup in dataModel.data[group]){
-				let sub = dataModel.data[group][subGroup];
-				overlays[group + " - " + sub.emDisplayName] = {};
-				var curOverlayGroup = overlays[group + " - " + sub.emDisplayName];
-				for (layer in sub.layers){
-					curOverlayGroup[layer] = new L.LayerGroup();
-					for (feature in sub.layers[layer].features){
-						var feature = sub.layers[layer].features[feature];
-						L.circleMarker(feature.coordinates, {
-							color: sub.color,
-							weight: 0,
-							radius: feature.relativeQuantity * 50
-						}).bindPopup(group === "emitters" ? addEmitterPopupHandler(feature, sub.emDisplayName) : addConsumerPopupHandler(feature)).addTo(curOverlayGroup[layer]);
 
-					}
+		/* template functions */
+		let tabStub = item => {
+			return `<li><a href="#${item.category}-${item.name}-content" role="tab">
+			<svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#${item.icon}"></use></svg>
+			<span class="overIcon">${item.iconText}</span></a></li>`;
+		}
+		let paneStub = item => {
+			return `<div class="sidebar-pane" id="${item.category}-${item.name}-content">
+							<h1 class="sidebar-header">
+								${item.title}
+								<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-play3"></use></svg></span>
+							</h1>
+						</div>`
+		}
+		let categoryMenuEntry = (parent, name, layer) => {
+			let label = d3.select(parent)
+										.append('div')
+										.append('label');
+			label.append('input')
+					.attr('type', 'checkbox')
+					.classed('menuSelect', true)
+					.on('change', () => {toggleActive(layer)});
+			label.append('span').text(name);
+			console.log(label);
+		}
+
+		let maintablist = L.DomUtil.get('maintablist');
+		let sidebarcontent = L.DomUtil.get('sidebarcontent');
+
+		for(group in dataModel.data){
+			let item = dataModel.data[group];
+			maintablist.insertAdjacentHTML('beforeend', tabStub(item));
+			sidebarcontent.insertAdjacentHTML('beforeend', paneStub(item));
+			overlays[item.name] = [];
+			let curOverlayGroup = overlays[item.name];
+			for (layer in item.layers){
+				let curLayerGroup = new L.LayerGroup();
+				for (feat in item.layers[layer].features){
+					let feature = item.layers[layer].features[feat];
+					L.circleMarker(feature.coordinates, {
+						color: item.color,
+						weight: 0,
+						radius: feature.relativeQuantity * 50
+					}).bindPopup(item.category === "emitters" ? addEmitterPopupHandler(feature, item.displayName) : addConsumerPopupHandler(feature))
+						.addTo(curLayerGroup);
 				}
+				curOverlayGroup.push(curLayerGroup);
+				let parent = `#${item.category}-${item.name}-content`;
+				console.log(parent);
+				categoryMenuEntry(parent, layer, curLayerGroup);
 			}
 		}
 		console.log(overlays);
-		/*
-		var options = {
-			// Show a checkbox next to non-exclusive group labels for toggling all
-			groupCheckboxes: true
-		};
-		// Use the custom grouped layer control, not "L.control.layers"
-		var layerControl = L.control.groupedLayers({}, overlays, options);
-		map.addControl(layerControl);
-*/
+
 
 		var sidebar = L.control.sidebar('sidebar', {position: 'right'}).addTo(map);
 
@@ -249,8 +243,18 @@
 				.call(circleKey);
 		}
 
+		/* helper functions */
+		let toggleActive = layer => {
+			if(layer.isActive){
+				map.removeLayer(layer);
+				layer.isActive = false;
+			}
+			else {
+				map.addLayer(layer);
+				layer.isActive = true;
+			}
+		}
 		function addConsumerPopupHandler(feature){
-			console.log(feature);
 				var htmlstring = '<h3>' + feature.FacilityName + '</h3><table class="popupTable"><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
 				for (em in feature.potentials["50000"]){
 					let emName = em;
@@ -258,19 +262,21 @@
 					htmlstring += "<td>"+emName+"</td>";
 					for (dist in feature.potentials){
 						if(feature.potentials[dist][em]){
-							//console.log(potentials[feature.properties.FacilityName], dist, potentials[feature.properties.FacilityName][dist], em);
 							htmlstring += "<td>" + feature.potentials[dist][em].toFixed(2) + ' MT</td>';
 						}
 						else { htmlstring += "<td></td>";}
 					}
 					htmlstring += "</tr><tr>";
 				}
-				htmlstring = htmlstring.slice(0, -4);
+				htmlstring = htmlstring.slice(0, -4) + '</table>';
 				return htmlstring;
 		};
 
-		function addEmitterPopupHandler(feature, emDisplayName){
-			return '<h3>' + feature.FacilityName + '</h3><i>' + feature.NACEMainEconomicActivityName + '</i><br />' + feature.MTonnes + ' Mt ' + emDisplayName;
+		function addEmitterPopupHandler(feature, displayName){
+			return `<h3>${feature.FacilityName}</h3>
+							<i>${feature.NACEMainEconomicActivityName}</i>
+							<br />${feature.MTonnes} Mt ${displayName}
+			`
 		}
 
 		map.on('focus', () => {
