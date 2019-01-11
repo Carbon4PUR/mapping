@@ -28,8 +28,8 @@ window.dataModel = {
               "relativeQuantity": 0.95,
               "__comment-size": "calculated by dividing quantity by totalMax",
               "coordinates": [
-                65.033756,
-                -14.099652
+                65,
+                -14
               ]
             },
           ]
