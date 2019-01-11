@@ -37,6 +37,39 @@ window.dataModel = {
       }
     },
     {
+      "category": "emitters",
+      "icon": "icon-emitter",
+      "iconText": "CO<sub>2</sub>",
+      "name":"CO2",
+      "displayName":"CO<sub>2</sub>",
+      "title": "CO<sub>2</sub> emitters",
+      "color":"#002941",
+      "layers": {
+        "Aluminium production": {
+          "features":[
+            {
+              "FacilityReportID":"1310637",
+              "ReportingYear":"2014",
+              "PollutantName":"Carbon dioxide (CO2)",
+              "MTonnes":"0.0354",
+              "FacilityName":"Alcoa Fjarðaál",
+              "City":"Fjarðabyggð",
+              "CountryName":"Iceland",
+              "NACEMainEconomicActivityName":"Aluminium production",
+              "TotalQuantity":"35400000",
+              "UnitName":"kilogram",
+              "relativeQuantity": 0.95,
+              "__comment-size": "calculated by dividing quantity by totalMax",
+              "coordinates": [
+                65.033756,
+                -14.099652
+              ]
+            },
+          ]
+        }
+      }
+    },
+    {
       "category": "consumers",
       "icon": "icon-consumer",
       "iconText": "",
