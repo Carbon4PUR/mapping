@@ -15,15 +15,10 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<script src="https://unpkg.com/leaflet/dist/leaflet.js">
 	</script>
-	<!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
-	<script src='https://unpkg.com/csv2geojson/csv2geojson.js'>
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.js" integrity="sha256-jpTunCut/xbLZJF8NpoJiNL3FLfFTKv6xeGGrWo8whY=" crossorigin="anonymous"></script>
-	<!-- Load d3: only for size legend for now -->
 	<script src="https://d3js.org/d3.v3.min.js">
 	</script>
-	<script src="vendor/leaflet-sidebar.min.js"></script>
-	<link rel="stylesheet" href="vendor/leaflet-sidebar.min.css" />
+	<script src="vendor/leaflet-sidebar2.min.js"></script>
+	<link rel="stylesheet" href="vendor/leaflet-sidebar2.min.css" />
 	<script src="dataModel.js"></script>
 	<script src="circleLegend.js"></script>
 </head>
@@ -158,15 +153,23 @@
 		/* Set up the map with initial center and zoom level */
 
 		let map = L.map('map', {
-			center: [51.65892, 6.41601], // EDIT latitude, longitude to re-center map
-			zoom: 5, // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
-			scrollWheelZoom: false
+			center: [51.65892, 6.41601], // roughly show Europe
+			zoom: 5, // roughly show Europe (from 1 to 18 -- decrease to zoom out, increase to zoom in)
+			scrollWheelZoom: false,
+			zoomControl: false // to put the zoom butons on the right
 		});
+		L.control.zoom({
+		  position:'topright'
+		}).addTo(map);
 		/* Carto light-gray basemap tiles with labels */
-		let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+		/*let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
 			})
-			.addTo(map);
+			.addTo(map);*/
+		let green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
+					attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
+				})
+				.addTo(map);
 		let overlays = {};
 
 		/* template functions */
@@ -224,7 +227,7 @@
 		console.log(overlays);
 
 
-		var sidebar = L.control.sidebar('sidebar', {position: 'right'}).addTo(map);
+		var sidebar = L.control.sidebar('sidebar', {position: 'left'}).addTo(map);
 
 		function createScale() {
 			var svg = d3.select('#scale').append('svg').attr('width', 185).attr('height', 120);
