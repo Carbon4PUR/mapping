@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>leaflet-map-simple</title>
+</head>
+
+<body>
+<div id="result"></div>
+
+
+<script>
+/* at the end to wait for DOM */
+
+var asyncGetData = function asyncGetDataFromSparql(emissionName){
+    return new Promise(resolve => {
+        sortedFeatures[emissionName] = {
+                type: "FeatureCollection",
+                features: []
+            };
+        /* query e-prtr with variables */
+        var query = makeQueryEPRTR(emissionName);
+        fetch(query)
+            .then(function(response) {
+                //console.log(response);
+                return response.json();
+            }, function(reject){
+                console.log(reject);
+            })
+            .then(myBlob => showEm(myBlob))
+            .then(col => {
+                sortedFeatures[emissionName].features = col;
+                let m = col.reduce((a,b)=>a.properties.MTonnes>b.properties.MTonnes?a:b).properties.MTonnes; 
+                sortedFeatures.stats.max[emissionName] = m;
+                if(sortedFeatures.stats.totalMax<m) sortedFeatures.stats.totalMax=m;
+                resolve(sortedFeatures)
+            });
+    })
+};
+
+var sortedFeatures = {'stats': {'totalMax' : 0, max:{}}};
+var actions = ["CO2, AIR", "CO, AIR"].map(asyncGetData);
+var results = Promise.all(actions);
+results.then(data => // or just .then(console.log)
+    console.log(sortedFeatures)
+);
+
+/* use http://semantic.eea.europa.eu/sparql online query tool to generate query */
+function makeQueryEPRTR(emissionName = "CO2, AIR"){
+	/* CORS headers not set by europa.eu, so we use a sparql proxy */
+	var proxy = "https://cors-anywhere.herokuapp.com/";
+	/* easiest sparql endpoint we could find */
+	var url = "http://semantic.eea.europa.eu/sparql";
+	var query = `PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>
+PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>
+PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?FacilityName ?FacilityDetails ?CountryName ?Lat ?Long ?ReportingYear ?NACEMainEconomicActivityName ?PollutantName ?Quantity {
+  ?facility eprtr:facilityName ?FacilityName .
+  ?facility eprtr:inCountry ?country . ?country eprtr:name ?CountryName .
+  ?facility eprtr:latestReport ?latestReport . 
+  ?facility wgs84:lat ?Lat . 
+  ?facility wgs84:long ?Long .
+  ?facility foaf:isPrimaryTopicOf ?FacilityDetails .
+  ?latestReport eprtr:reportingYear ?ReportingYear .
+  ?latestReport eprtr:nACEActivity ?nACEActivity . ?nACEActivity eprtr:name ?NACEMainEconomicActivityName
+  values ?nACEActivity {
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/20.13>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/23.52>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/35.11>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.02>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/23.51>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/20.15>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/19.20>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/24.10>
+    
+  }
+  ?pollutantRelease eprtr:facilityReport ?latestReport .   
+  ?pollutantRelease rdfs:label ?PollutantName . 
+  values ?PollutantName {"`+emissionName+`"}  
+  ?pollutantRelease eprtr:totalQuantity ?Quantity . 
+} 
+ORDER BY ?nACEActivity ?FacilityName ?ReportingYear
+LIMIT 10000
+	`;
+		
+	//console.log(query);
+	/* Warning: europa.eu is normally limiting results to 512, add nrOfHits to increase */
+	return proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson&nrOfHits=10000';
+}
+
+
+function showEm(data){	
+	document.getElementById("result").innerHTML = data.results.bindings.length ;
+    var r = createFeatureCollection(data.results.bindings);
+    return r;
+}
+	
+function createGeometry(long, lat){
+	return {
+		type: "Point",
+		coordinates: [parseFloat(long), parseFloat(lat)]
+	};	
+}
+function createProperties(obj){
+	return {
+		CountryName: obj.CountryName.value,
+        FacilityName: obj.FacilityName.value,
+        FacilityDetails: obj.FacilityDetails.value,
+        ReportingYear: obj.ReportingYear.value,
+		MTonnes: obj.Quantity.value / 10E9,
+		NACEMainEconomicActivityName: obj.NACEMainEconomicActivityName.value,
+		PollutantName: obj.PollutantName.value
+	};
+}
+function createFeatureFromObj(obj){
+	return {
+		geometry: createGeometry(obj.Long.value, obj.Lat.value),
+		properties: createProperties(obj),
+		type: "Feature"
+	};	
+}
+function checkEquality(el, ft){
+    var checks =  (el.properties.FacilityDetails == ft.properties.FacilityDetails ? 1 : 0) + 
+            (el.properties.FacilityName == ft.properties.FacilityName ? 1 : 0) + 
+            (el.properties.ReportingYear == ft.properties.ReportingYear ? 1 : 0) +
+            (el.properties.MTonnes == ft.properties.MTonnes ? 1 : 0)
+    return checks > 3;
+}
+function createFeatureCollection(array){
+    var col = [];
+    for (var i = 0; i < array.length; i++) {
+        var ft = createFeatureFromObj(array[i]);
+        const found = col.some(el => checkEquality(el, ft));
+        if(!found) col.push(ft);
+    }
+    return col;
+}
+</script>
+</body>
+</html>

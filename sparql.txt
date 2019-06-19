@@ -1,0 +1,32 @@
+PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>
+PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>
+PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?FacilityName ?FacilityDetails ?CountryName ?Lat ?Long ?ReportingYear ?NACEMainEconomicActivityName ?PollutantName ?Quantity {
+  ?facility eprtr:facilityName ?FacilityName .
+  ?facility eprtr:inCountry ?country . ?country eprtr:name ?CountryName .
+  ?facility eprtr:latestReport ?latestReport . 
+  ?facility wgs84:lat ?Lat . 
+  ?facility wgs84:long ?Long .
+  ?facility foaf:isPrimaryTopicOf ?FacilityDetails .
+  ?latestReport eprtr:reportingYear ?ReportingYear .
+  ?latestReport eprtr:nACEActivity ?nACEActivity . ?nACEActivity eprtr:name ?NACEMainEconomicActivityName
+  values ?nACEActivity {
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/20.13>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/23.52>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/35.11>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.02>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/23.51>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/20.15>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/19.20>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/24.10>
+    
+  }
+  ?pollutantRelease eprtr:facilityReport ?latestReport .   
+  ?pollutantRelease rdfs:label ?PollutantName . 
+  values ?PollutantName {"CO2, AIR" "CO, AIR"}  
+  ?pollutantRelease eprtr:totalQuantity ?Quantity . 
+} 
+ORDER BY ?nACEActivity ?FacilityName ?ReportingYear
+LIMIT 10000
