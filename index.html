@@ -331,7 +331,7 @@
 			else {
 				naceList = {'Manufacture of other inorganic basic chemicals': true, 'Manufacture of basic iron and steel and of ferro-alloys': true};
 			}
-			filterEmittersByCompat(naceList = naceList);	
+			filterEmittersByNACE(naceList = naceList);	
 		};
 		for(var i=0;i<compatFilterButtons.length;i++){
 			compatFilterButtons[i].addEventListener('click', toggleCompatFilter);
@@ -358,8 +358,17 @@
 		pollutantFilterCOButton.addEventListener('click', togglePollutantFilter(pollutantFilterCOButton));
 		
 
-		function filterEmittersByCompat(naceList){
+		function filterEmittersByNACE(naceList){
 			console.log(naceList);
+			let naceButtons = document.getElementsByClassName('nace-button');
+			for(var i=0; i<naceButtons.length; i++){
+				if(naceList == null || naceButtons[i].id.replace("-filter-button", "") in naceList){
+					naceButtons[i].classList.add('is-info');
+				}
+				else {
+					naceButtons[i].classList.remove('is-info');
+				}
+			}
 			for(marker in markers){
 				var m = markers[marker];
 				if(naceList != null){
@@ -372,7 +381,6 @@
 				}
 			}
 		}
-
 		
 
 		let distanceChemicalPlant = document.getElementById('distance-chemical-plant');
@@ -416,29 +424,28 @@
 		var sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map);
 
 
-		/* template functions */
-		let paneStub = item => {
-			return `<div class="sidebar-pane" id="${item.category}-${item.name}-content">
-							<h1 class="sidebar-header">
-								${item.title}
-								<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32"><use xlink:href="#icon-play3"></use></svg></span>
-							</h1>
-						</div>`
-		}
-		let categoryMenuEntry = (parent, name, layer) => {
-			let label = d3.select(parent)
-				.append('div')
-				.append('label');
-			label.append('input')
-				.attr('type', 'checkbox')
-				.classed('menuSelect', true)
-				.on('change', () => { toggleActive(layer) });
-			label.append('span').text(name);
-			console.log(label);
+		let categoryMenuEntry = (name) => {
+			let button = d3.select('#naceCategories')
+				.append('a')
+				.attr('id', name + '-filter-button')
+				.text(name)
+				.attr('class', 'button is-small is-info is-fullwidth nace-button')
+				.on('click', (a,b,c) => { toggleFilterNACE(c[0].id) });
+			console.log(button);
 		}
 
-		let maintablist = L.DomUtil.get('maintablist');
-		let sidebarcontent = L.DomUtil.get('sidebarcontent');
+		let toggleFilterNACE = (buttonId) => {
+			document.getElementById(buttonId).classList.toggle('is-info');
+			for(var i=0;i<compatFilterButtons.length;i++){
+				compatFilterButtons[i].classList.remove('is-info');
+			}
+			let naceButtons = document.getElementsByClassName('nace-button');
+			naceList = {}
+			for(var i=0; i<naceButtons.length; i++){
+				naceButtons[i].classList.contains('is-info')?naceList[naceButtons[i].id.replace("-filter-button", "")] = true:false;
+			}
+			filterEmittersByNACE(naceList);
+		}
 
 		let fillColors = {
 			"CO2, AIR": 'rgb(240, 175, 67)',
@@ -454,6 +461,12 @@
 			"Manufacture of basic iron and steel and of ferro-alloys": 'red' //ToDo: find better colors
 		};
 
+		let addNACEFilters = () => {
+			for(var nace in borderColors){
+				categoryMenuEntry(nace);
+			}
+		}
+
 		var markers = {};
 		let loadPRTRlayers = (data) => {
 			console.log(data);
@@ -465,7 +478,7 @@
 								radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
 								fillColor: fillColors[feature.properties.PollutantName],
 								color: borderColors[feature.properties.NACEMainEconomicActivityName],
-								weight: 3,
+								weight: 2,
 								opacity: 0.7,
 								fillOpacity: 0.6
 							}).bindPopup(addEmitterPopupHandler(feature, emission))
@@ -486,6 +499,7 @@
 			})
 			.then(loadPRTRlayers)
 			.then(createScale)
+			.then(addNACEFilters)
 
 		function createScale(data) {
 			var height = 120
@@ -548,7 +562,7 @@
 		}
 
 		/* helper functions */
-		let toggleActive = layer => {
+		/*let toggleActive = layer => {
 			if (layer.isActive) {
 				map.removeLayer(layer);
 				layer.isActive = false;
@@ -557,7 +571,7 @@
 				map.addLayer(layer);
 				layer.isActive = true;
 			}
-		}
+		}*/
 		function addConsumerPopupHandler(feature) {
 			var htmlstring = '<h3>' + feature.FacilityName + '</h3><table class="popupTable"><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
 			for (em in feature.potentials["50000"]) {
