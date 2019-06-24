@@ -32,7 +32,7 @@ var asyncGetData = function asyncGetDataFromSparql(emissionName){
                 sortedFeatures[emissionName].features = col;
                 let m = col.reduce((a,b)=>a.properties.MTonnes>b.properties.MTonnes?a:b).properties.MTonnes; 
                 sortedFeatures.stats.max[emissionName] = m;
-                if(sortedFeatures.stats.totalMax<m) sortedFeatures.stats.totalMax=m;
+                if(sortedFeatures.stats.totalMax<m) sortedFeatures.stats.totalMax=m;                
                 resolve(sortedFeatures)
             });
     })
@@ -41,9 +41,23 @@ var asyncGetData = function asyncGetDataFromSparql(emissionName){
 var sortedFeatures = {'stats': {'totalMax' : 0, max:{}}};
 var actions = ["CO2, AIR", "CO, AIR"].map(asyncGetData);
 var results = Promise.all(actions);
-results.then(data => // or just .then(console.log)
-    console.log(sortedFeatures)
-);
+results.then(data => {// or just .then(console.log)
+    console.log(sortedFeatures);
+    // iterate over all CO2 plants
+    for(let i=0; i<sortedFeatures['CO2, AIR'].features.length; i++){
+        let f = sortedFeatures['CO2, AIR'].features[i];
+        // iterate over all CO plants
+        for(let j=0; j<sortedFeatures['CO, AIR'].features.length; j++){
+            let e = sortedFeatures['CO, AIR'].features[j];
+            // check if plants are equal except amount
+            if(checkEquality(e,f,false)){
+                e.properties.co2Amount = f.properties.MTonnes;
+                f.properties.coAmount = e.properties.MTonnes;
+            }
+        }
+    }
+    console.log(sortedFeatures);
+});
 
 /* use http://semantic.eea.europa.eu/sparql online query tool to generate query */
 function makeQueryEPRTR(emissionName = "CO2, AIR"){
@@ -92,8 +106,10 @@ LIMIT 10000
 
 
 function showEm(data){	
-	document.getElementById("result").innerHTML = data.results.bindings.length ;
+    document.getElementById("result").innerHTML = data.results.bindings.length ;
+    //console.log(data.results.bindings);
     var r = createFeatureCollection(data.results.bindings);
+    //console.log(r);
     return r;
 }
 	
@@ -109,7 +125,7 @@ function createProperties(obj){
         FacilityName: obj.FacilityName.value,
         FacilityDetails: obj.FacilityDetails.value,
         ReportingYear: obj.ReportingYear.value,
-		MTonnes: obj.Quantity.value / 10E9,
+		MTonnes: obj.Quantity.value / 1E9,
 		NACEMainEconomicActivityName: obj.NACEMainEconomicActivityName.value,
 		PollutantName: obj.PollutantName.value
 	};
@@ -121,12 +137,12 @@ function createFeatureFromObj(obj){
 		type: "Feature"
 	};	
 }
-function checkEquality(el, ft){
+function checkEquality(el, ft, checkAmount = true){
     var checks =  (el.properties.FacilityDetails == ft.properties.FacilityDetails ? 1 : 0) + 
             (el.properties.FacilityName == ft.properties.FacilityName ? 1 : 0) + 
             (el.properties.ReportingYear == ft.properties.ReportingYear ? 1 : 0) +
             (el.properties.MTonnes == ft.properties.MTonnes ? 1 : 0)
-    return checks > 3;
+    return checks > (checkAmount ? 3 : 2);
 }
 function createFeatureCollection(array){
     var col = [];

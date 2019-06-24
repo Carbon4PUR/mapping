@@ -172,9 +172,10 @@
 						target="_blank">E-PRTR</a>. The data was queried via the SPARQL-Endpoint <a
 						href="http://semantic.eea.europa.eu/sparql"
 						target="_blank">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
-						href="sparql.txt" target="_blank">here</a>.<br>
+						href="sparql.txt" target="_blank">here</a>. Some errors have been corrected manually, e.g. the coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct location in Denmark.<br>
 					All chemical plants and polyol plants have been gathered manually via desk research, publications
-					and interviews. There is no promise that this data is complete or correct. If you have suggestions,
+					and interviews. There is manual
+	 promise that this data is complete or correct. If you have suggestions,
 					please <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a>.
 				</div>
 			</div>
@@ -187,19 +188,26 @@
 				</h1>
 				<div class="filterGroup">Filter by compatibility with Carbon4PUR cleaning step:
 					<div class="buttons has-addons">
-						<a id="compat-filter-no-button" class="button is-info is-small">No filter</a>
 						<a id="compat-filter-loop-button" class="button is-small">chemical looping</a>
-						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>
+						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>						
+						<a id="compat-filter-manual-button" class="button is-info is-small">Manual</a>
 					</div>
 				</div>
 				<hr>
 				<div class="filterGroup">Or manually filter:
 					<div class="buttons">
-						<a id="pollutant-filter-CO2-button" class="button is-info is-small"><span>CO<sub>2</sub></span></a>
-						<a id="pollutant-filter-CO-button" class="button is-info is-small">CO</a>
+						<a id="pollutant-filter-CO2-button" class="button is-activated is-small"><span>CO<sub>2</sub></span></a>
+						<a id="pollutant-filter-CO-button" class="button is-activated is-small">CO</a>
 					</div>
 				</div>
-				<div class="filterGroup">Only selected plant types:
+				<div class="filterGroup">
+					<div>
+						<span class="is-pulled-left">Only selected plant types: </span>
+						<span class="is-pulled-right" style="margin-top:-5px; margin-bottom:10px;"><a class="button is-small" id="nace-deselect-all">Deselect all</a></span>
+						<span class=" is-clearfix"></span>
+					</div>
+					
+					
 					<div class="buttons" id="naceCategories">
 
 					</div>
@@ -270,6 +278,31 @@
     }
 })
 
+
+		let emissionColors = {
+			"CO2, AIR": 'rgb(240, 175, 67)',
+			"CO, AIR": 'rgb(218,73,106)'
+		};
+		let naceColors = {
+			"Manufacture of refined petroleum products": '#c7428f',
+			"Manufacture of fertilisers and nitrogen compounds": '#9884b0',
+			"Manufacture of cement": '#5a6067',
+			"Manufacture of lime and plaster": '#000000',
+			"Production of electricity": '#b06ca4',
+			"Manufacture of other inorganic basic chemicals": '#7995b8',
+			"Manufacture of basic iron and steel and of ferro-alloys": '#ff0000' //ToDo: find better colors
+		};
+		let fullNaceList = {
+			"Manufacture of refined petroleum products": true,
+			"Manufacture of fertilisers and nitrogen compounds": true,
+			"Manufacture of cement": true,
+			"Manufacture of lime and plaster": true,
+			"Production of electricity": true,
+			"Manufacture of other inorganic basic chemicals": true,
+			"Manufacture of basic iron and steel and of ferro-alloys": true //ToDo: find better colors
+		};
+
+
 		document.addEventListener('DOMContentLoaded', function () {
 			// Find output DOM associated to the DOM element passed as parameter
 			function findOutputForSlider(element) {
@@ -313,7 +346,7 @@
 		mapLayoutGreen.addEventListener('click', toggleMapLayout);
 		mapLayoutLight.addEventListener('click', toggleMapLayout);
 
-		let compatFilterButtons = [document.getElementById('compat-filter-no-button'),
+		let compatFilterButtons = [document.getElementById('compat-filter-manual-button'),
 		document.getElementById('compat-filter-loop-button'),
 		document.getElementById('compat-filter-cat-button')];
 		function toggleCompatFilter(event) {
@@ -322,11 +355,11 @@
 			}
 			event.target.classList.add('is-info');
 			var naceList;
-			if(event.target.id == 'compat-filter-no-button'){
-				naceList = null;
+			if(event.target.id == 'compat-filter-manual-button'){
+				return true;
 			}
 			else if(event.target.id == 'compat-filter-loop-button'){
-				naceList = null;
+				naceList = fullNaceList;
 			}
 			else {
 				naceList = {'Manufacture of other inorganic basic chemicals': true, 'Manufacture of basic iron and steel and of ferro-alloys': true};
@@ -339,9 +372,13 @@
 
 		let pollutantFilterCO2Button = document.getElementById('pollutant-filter-CO2-button'),
 		pollutantFilterCOButton = document.getElementById('pollutant-filter-CO-button');
+		pollutantFilterCO2Button.style.background = emissionColors["CO2, AIR"];
+		pollutantFilterCOButton.style.background = emissionColors["CO, AIR"];
 		function togglePollutantFilter(button) {
 			return function(){
-				button.classList.toggle('is-info');
+				button.classList.toggle('is-activated');
+				if(button.classList.contains('is-activated')) button.style.background = emissionColors[button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR"]
+				else button.style.background = '#fff'
 				console.log(button.id);
 				toggleFilterEmittersByPollutant(button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR");
 			}
@@ -359,14 +396,19 @@
 		
 
 		function filterEmittersByNACE(naceList){
-			console.log(naceList);
+			// console.log(naceList);
 			let naceButtons = document.getElementsByClassName('nace-button');
 			for(var i=0; i<naceButtons.length; i++){
-				if(naceList == null || naceButtons[i].id.replace("-filter-button", "") in naceList){
-					naceButtons[i].classList.add('is-info');
+				let naceName = naceButtons[i].id.replace("-filter-button", "");
+				if(naceName in naceList){
+					naceButtons[i].classList.add('is-activated');
+					naceButtons[i].style.background = naceColors[naceName];	
+					naceButtons[i].style.color = pickTextColorBasedOnBgColorAdvanced(naceColors[naceName]);					
 				}
 				else {
-					naceButtons[i].classList.remove('is-info');
+					naceButtons[i].classList.remove('is-activated');
+					naceButtons[i].style.background = '#fff';
+					naceButtons[i].style.color = '#000';
 				}
 			}
 			for(marker in markers){
@@ -381,7 +423,12 @@
 				}
 			}
 		}
-		
+
+		let naceDeselectButton = document.getElementById('nace-deselect-all');
+		function deselectAllNaceFilter() {
+			filterEmittersByNACE([]);
+		}
+		naceDeselectButton.addEventListener('click', deselectAllNaceFilter);
 
 		let distanceChemicalPlant = document.getElementById('distance-chemical-plant');
 		let polyolFilter = document.getElementById('polyol-filter-button');
@@ -427,57 +474,45 @@
 		let categoryMenuEntry = (name) => {
 			let button = d3.select('#naceCategories')
 				.append('a')
-				.attr('id', name + '-filter-button')
-				.text(name)
-				.attr('class', 'button is-small is-info is-fullwidth nace-button')
-				.on('click', (a,b,c) => { toggleFilterNACE(c[0].id) });
-			console.log(button);
+				.attr('id', name + '-filter-button')				
+				.attr('class', 'button is-small is-activated is-fullwidth nace-button')
+				.style('background-color', naceColors[name])
+				.style('color', pickTextColorBasedOnBgColorAdvanced(naceColors[name]))
+				.on('click', (a,b,c) => { toggleFilterNACE(c[0].id) })
+				.text(name);
 		}
 
 		let toggleFilterNACE = (buttonId) => {
-			document.getElementById(buttonId).classList.toggle('is-info');
+			document.getElementById(buttonId).classList.toggle('is-activated');
 			for(var i=0;i<compatFilterButtons.length;i++){
 				compatFilterButtons[i].classList.remove('is-info');
 			}
+			document.getElementById('compat-filter-manual-button').classList.add('is-info');
 			let naceButtons = document.getElementsByClassName('nace-button');
 			naceList = {}
 			for(var i=0; i<naceButtons.length; i++){
-				naceButtons[i].classList.contains('is-info')?naceList[naceButtons[i].id.replace("-filter-button", "")] = true:false;
+				naceButtons[i].classList.contains('is-activated') ? naceList[naceButtons[i].id.replace("-filter-button", "")] = true:false;
 			}
 			filterEmittersByNACE(naceList);
 		}
 
-		let fillColors = {
-			"CO2, AIR": 'rgb(240, 175, 67)',
-			"CO, AIR": 'rgb(218,73,106)'
-		};
-		let borderColors = {
-			"Manufacture of refined petroleum products": '#c7428f',
-			"Manufacture of fertilisers and nitrogen compounds": '#9884b0',
-			"Manufacture of cement": '#5a6067',
-			"Manufacture of lime and plaster": '#000',
-			"Production of electricity": '#b06ca4',
-			"Manufacture of other inorganic basic chemicals": '#7995b8',
-			"Manufacture of basic iron and steel and of ferro-alloys": 'red' //ToDo: find better colors
-		};
-
 		let addNACEFilters = () => {
-			for(var nace in borderColors){
+			for(var nace in naceColors){
 				categoryMenuEntry(nace);
 			}
 		}
 
 		var markers = {};
 		let loadPRTRlayers = (data) => {
-			console.log(data);
+			//console.log(data);
 			for (emission in data) {
 				if (emission != "stats") {
 					markers[emission] = L.geoJson(data[emission], {
 						pointToLayer: function (feature, latlng) {
 							return L.circleMarker(latlng, {
 								radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
-								fillColor: fillColors[feature.properties.PollutantName],
-								color: borderColors[feature.properties.NACEMainEconomicActivityName],
+								color: emissionColors[feature.properties.PollutantName],
+								fillColor: naceColors[feature.properties.NACEMainEconomicActivityName],
 								weight: 2,
 								opacity: 0.7,
 								fillOpacity: 0.6
@@ -592,9 +627,14 @@
 
 		function addEmitterPopupHandler(feature, displayName) {
 			if (feature.properties) {
+				displayName = displayName.replace('CO2', 'CO<sub>2</sub>');
+				let otherEmission = '';
+				if (feature.properties.co2Amount) otherEmission += feature.properties.co2Amount + ' Mt CO<sub>2</sub>';
+				if (feature.properties.coAmount) otherEmission += feature.properties.coAmount + ' Mt CO';
 				return `<h3>${feature.properties.FacilityName}</h3>
 								<i>${feature.properties.NACEMainEconomicActivityName}</i>
 								<br />${feature.properties.MTonnes} Mt ${displayName}
+								<br />(${otherEmission})
 				`
 			}
 			else {
@@ -614,6 +654,22 @@
 			let tabbedDivs = document.getElementsByClassName("tabbedDiv " + multiTabbedClassName);
 			[].forEach.call(tabbedDivs, function (el) { el.style.display = "none" });
 			document.getElementById(name).style.display = "block";
+		}
+
+		function pickTextColorBasedOnBgColorAdvanced(bgColor) {
+			var color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
+			var r = parseInt(color.substring(0, 2), 16); // hexToR
+			var g = parseInt(color.substring(2, 4), 16); // hexToG
+			var b = parseInt(color.substring(4, 6), 16); // hexToB
+			var uicolors = [r / 255, g / 255, b / 255];
+			var c = uicolors.map((col) => {
+				if (col <= 0.03928) {
+				return col / 12.92;
+				}
+				return Math.pow((col + 0.055) / 1.055, 2.4);
+			});
+			var L = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
+			return (L > 0.179) ? '#000' : '#fff';
 		}
 
 	</script>

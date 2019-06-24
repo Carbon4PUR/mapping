@@ -49,6 +49,9 @@ body .sidebar-tabs > ul > li {
   margin-top: 1em;
   margin-bottom: 1em;
 }
+.button.is-activated {
+  border-color: transparent;
+}
 
 svg {
   stroke-width: 0;
