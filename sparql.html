@@ -32,13 +32,18 @@ var asyncGetData = function asyncGetDataFromSparql(emissionName){
                 sortedFeatures[emissionName].features = col;
                 let m = col.reduce((a,b)=>a.properties.MTonnes>b.properties.MTonnes?a:b).properties.MTonnes; 
                 sortedFeatures.stats.max[emissionName] = m;
-                if(sortedFeatures.stats.totalMax<m) sortedFeatures.stats.totalMax=m;                
+                if(sortedFeatures.stats.totalMax<m) sortedFeatures.stats.totalMax=m;
+                for(let i=0;i<col.length;i++){
+                    let cur = col[i];
+                    if(isNaN(sortedFeatures.stats.totals[emissionName][cur.properties.NACEMainEconomicActivityName])) sortedFeatures.stats.totals[emissionName][cur.properties.NACEMainEconomicActivityName] = 0;
+                    sortedFeatures.stats.totals[emissionName][cur.properties.NACEMainEconomicActivityName] += cur.properties.MTonnes;
+                }
                 resolve(sortedFeatures)
             });
     })
 };
 
-var sortedFeatures = {'stats': {'totalMax' : 0, max:{}}};
+var sortedFeatures = {'stats': {'totalMax' : 0, max:{}, totals:{"CO2, AIR":{}, "CO, AIR":{}}}};
 var actions = ["CO2, AIR", "CO, AIR"].map(asyncGetData);
 var results = Promise.all(actions);
 results.then(data => {// or just .then(console.log)

@@ -5,6 +5,26 @@
     "max": {
       "CO, AIR": 0.185,
       "CO2, AIR": 37.6
+    },
+    "totals": {
+      "CO2, AIR": {
+        "Manufacture of refined petroleum products": 138.14400000000003,
+        "Manufacture of other inorganic basic chemicals": 15.947999999999999,
+        "Manufacture of fertilisers and nitrogen compounds": 24.802,
+        "Manufacture of cement": 122.20299999999996,
+        "Manufacture of lime and plaster": 21.181000000000004,
+        "Manufacture of basic iron and steel and of ferro-alloys": 167.86599999999999,
+        "Production of electricity": 969.6960000000004
+      },
+      "CO, AIR": {
+        "Manufacture of refined petroleum products": 0.056258,
+        "Manufacture of other inorganic basic chemicals": 0.093351,
+        "Manufacture of fertilisers and nitrogen compounds": 0.004443,
+        "Manufacture of cement": 0.25531400000000004,
+        "Manufacture of lime and plaster": 0.10207699999999996,
+        "Manufacture of basic iron and steel and of ferro-alloys": 1.9912699999999994,
+        "Production of electricity": 0.1852610000000001
+      }
     }
   },
   "CO2, AIR": {
