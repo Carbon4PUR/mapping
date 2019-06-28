@@ -172,10 +172,12 @@
 						target="_blank">E-PRTR</a>. The data was queried via the SPARQL-Endpoint <a
 						href="http://semantic.eea.europa.eu/sparql"
 						target="_blank">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
-						href="sparql.txt" target="_blank">here</a>. Some errors have been corrected manually, e.g. the coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct location in Denmark.<br>
+						href="sparql.txt" target="_blank">here</a>. Some errors have been corrected manually, e.g. the
+					coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
+					location in Denmark.<br>
 					All chemical plants and polyol plants have been gathered manually via desk research, publications
 					and interviews. There is manual
-	 promise that this data is complete or correct. If you have suggestions,
+					promise that this data is complete or correct. If you have suggestions,
 					please <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a>.
 				</div>
 			</div>
@@ -189,28 +191,36 @@
 				<div class="filterGroup">Filter by compatibility with Carbon4PUR cleaning step:
 					<div class="buttons has-addons">
 						<a id="compat-filter-loop-button" class="button is-info is-small">chemical looping</a>
-						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>						
+						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>
 						<a id="compat-filter-manual-button" class="button is-small">Manual</a>
 					</div>
 				</div>
 				<hr>
 				<div class="filterGroup">Or manually filter:
 					<div class="buttons">
-						<a id="pollutant-filter-CO2-button" class="button is-activated is-small"><span>CO<sub>2</sub></span></a>
+						<a id="pollutant-filter-CO2-button"
+							class="button is-activated is-small"><span>CO<sub>2</sub></span></a>
 						<a id="pollutant-filter-CO-button" class="button is-activated is-small">CO</a>
 					</div>
 				</div>
 				<div class="filterGroup">
 					<div>
 						<span class="is-pulled-left">Only selected plant types: </span>
-						<span class="is-pulled-right" style="margin-top:-5px; margin-bottom:10px;"><a class="button is-small" id="nace-deselect-all">Deselect all</a></span>
+						<span class="is-pulled-right" style="margin-top:-5px; margin-bottom:10px;"><a
+								class="button is-small" id="nace-deselect-all">Deselect all</a></span>
 						<span class=" is-clearfix"></span>
-					</div>				
+					</div>
 					<div class="buttons" id="naceCategories"></div>
 					<div class="sumsEmissions">Total emissions in Europe for selected filters:
 						<table>
-							<tr><td>CO<sub>2</sub>: </td><td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO2"></output></td></tr>
-							<tr><td>CO: </td><td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO"></output></td></tr>
+							<tr>
+								<td>CO<sub>2</sub>: </td>
+								<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO2"></output></td>
+							</tr>
+							<tr>
+								<td>CO: </td>
+								<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO"></output></td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -225,17 +235,19 @@
 				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
 					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="100"
 						value="50" step="1" type="range">
-					<output for="distance-chemical-plant-slider">50</output>
+					<output for="distance-chemical-plant-slider" id="distance-chemical-plant-slider-output">50</output>
 					<a class="button is-small" id="polyol-filter-button">Only show polyol plants</a>
+					<a class="button is-small" id="radius-filter-button">Only show emitters within radius of chemical
+						plant</a>
 				</div>
 
 				<hr>
 				<div class="filterGroup">
 					<a class="button is-small" id="size-filter-button">Only clusters with enough sources for x kt
 						polyol:</a><br />
-					<input id="sliderPolyol" class="slider has-output is-fullwidth" min="0" max="100" value="5" step="1"
-						type="range">
-					<output for="sliderPolyol">5</output>
+					<input id="polyol-slider" class="slider has-output is-fullwidth" min="0" max="100" value="5"
+						step="1" type="range">
+					<output for="polyol-slider" id="polyol-slider-output">5</output>
 				</div>
 			</div>
 
@@ -265,433 +277,8 @@
 	<link rel="stylesheet" href="vendor/leaflet-sidebar2.min.css" />
 	<script src="vendor/leaflet-sidebar2.min.js"></script>
 	<link rel="stylesheet" href="vendor/leaflet-sidebar2.min.css" />
-	<script src="dataModel.js"></script>
+	<script src="main.js"></script>
 
-	<script>
-		L.GeoJSON.include({
-    setFilter: function(_) {
-        if (!this._geojson) {
-            this._geojson = this.toGeoJSON()
-        }
-        this.options.filter = _
-        this.clearLayers()
-        this.addData(this._geojson)
-        return this
-    }
-})
-
-let data;
-
-
-		let emissionColors = {
-			"CO2, AIR": 'rgb(240, 175, 67)',
-			"CO, AIR": 'rgb(218,73,106)'
-		};
-		let naceColors = {
-			"Manufacture of refined petroleum products": '#c7428f',
-			"Manufacture of fertilisers and nitrogen compounds": '#9884b0',
-			"Manufacture of cement": '#5a6067',
-			"Manufacture of lime and plaster": '#000000',
-			"Production of electricity": '#b06ca4',
-			"Manufacture of other inorganic basic chemicals": '#7995b8',
-			"Manufacture of basic iron and steel and of ferro-alloys": '#ff0000' //ToDo: find better colors
-		};
-		let naceBgColors = {
-			"Manufacture of refined petroleum products": '#000',
-			"Manufacture of fertilisers and nitrogen compounds": '#000',
-			"Manufacture of cement": '#fff',
-			"Manufacture of lime and plaster": '#fff',
-			"Production of electricity": '#000',
-			"Manufacture of other inorganic basic chemicals": '#000',
-			"Manufacture of basic iron and steel and of ferro-alloys": '#000' //ToDo: find better colors
-		};
-		let fullNaceList = {
-			"Manufacture of refined petroleum products": true,
-			"Manufacture of fertilisers and nitrogen compounds": true,
-			"Manufacture of cement": true,
-			"Manufacture of lime and plaster": true,
-			"Production of electricity": true,
-			"Manufacture of other inorganic basic chemicals": true,
-			"Manufacture of basic iron and steel and of ferro-alloys": true //ToDo: find better colors
-		};
-
-
-		document.addEventListener('DOMContentLoaded', function () {
-			// Find output DOM associated to the DOM element passed as parameter
-			function findOutputForSlider(element) {
-				var idVal = element.id;
-				outputs = document.getElementsByTagName('output');
-				for (var i = 0; i < outputs.length; i++) {
-					if (outputs[i].htmlFor == idVal)
-						return outputs[i];
-				}
-			}
-			// Get all document sliders
-			var sliders = document.querySelectorAll('input[type="range"].slider');
-			[].forEach.call(sliders, function (slider) {
-				// bug with handle position on load, so we just reset the value to the attribute "value"
-				slider.value = slider.getAttribute("value");
-				var output = findOutputForSlider(slider);
-				if (output) {
-					// Add event listener to update output when slider value change
-					slider.addEventListener('input', function (event) {
-						// Update output with slider value
-						output.value = event.target.value;
-					});
-				}
-			});
-		});
-
-		let mapLayoutGreen = document.getElementById('map-layout-green');
-		let mapLayoutLight = document.getElementById('map-layout-light');
-		let toggleMapLayout = () => {
-			mapLayoutGreen.classList.toggle('is-info');
-			mapLayoutLight.classList.toggle('is-info');
-			if (mapLayoutGreen.classList.contains('is-info')) {
-				map.removeLayer(light);
-				map.addLayer(green);
-			}
-			else {
-				map.removeLayer(green);
-				map.addLayer(light);
-			}
-		};
-		mapLayoutGreen.addEventListener('click', toggleMapLayout);
-		mapLayoutLight.addEventListener('click', toggleMapLayout);
-
-		let compatFilterButtons = [document.getElementById('compat-filter-manual-button'),
-		document.getElementById('compat-filter-loop-button'),
-		document.getElementById('compat-filter-cat-button')];
-		function toggleCompatFilter(event) {
-			for(var i=0;i<compatFilterButtons.length;i++){
-				compatFilterButtons[i].classList.remove('is-info');
-			}
-			event.target.classList.add('is-info');
-			var naceList;
-			if(event.target.id == 'compat-filter-manual-button'){
-				return true;
-			}
-			else if(event.target.id == 'compat-filter-loop-button'){
-				naceList = fullNaceList;
-			}
-			else {
-				naceList = {'Manufacture of other inorganic basic chemicals': true, 'Manufacture of basic iron and steel and of ferro-alloys': true};
-			}
-			filterEmittersByNACE(naceList = naceList);	
-		};
-		for(var i=0;i<compatFilterButtons.length;i++){
-			compatFilterButtons[i].addEventListener('click', toggleCompatFilter);
-		}
-
-		let pollutantFilterCO2Button = document.getElementById('pollutant-filter-CO2-button'),
-		pollutantFilterCOButton = document.getElementById('pollutant-filter-CO-button');
-		pollutantFilterCO2Button.style.background = emissionColors["CO2, AIR"];
-		pollutantFilterCOButton.style.background = emissionColors["CO, AIR"];
-		function togglePollutantFilter(button) {
-			return function(){
-				button.classList.toggle('is-activated');
-				if(button.classList.contains('is-activated')) button.style.background = emissionColors[button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR"]
-				else button.style.background = '#fff'
-				//console.log(button.id);
-				getFilteredTotals();
-				toggleFilterEmittersByPollutant(button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR");
-			}
-		}
-		function toggleFilterEmittersByPollutant(pollutant){
-			if (map.hasLayer(markers[pollutant])) {
-				map.removeLayer(markers[pollutant]);
-			}
-			else {
-				map.addLayer(markers[pollutant]);
-			}
-		}
-		pollutantFilterCO2Button.addEventListener('click', togglePollutantFilter(pollutantFilterCO2Button));
-		pollutantFilterCOButton.addEventListener('click', togglePollutantFilter(pollutantFilterCOButton));
-		
-		let naceButtons = document.getElementsByClassName('nace-button');
-		function filterEmittersByNACE(naceList){
-			// console.log(naceList);						
-			for(var i=0; i<naceButtons.length; i++){
-				let naceName = naceButtons[i].id.replace("-filter-button", "");
-				if(naceName in naceList){
-					naceButtons[i].classList.add('is-activated');
-					naceButtons[i].style.background = naceColors[naceName];	
-					naceButtons[i].style.color = naceBgColors[naceName];
-				}
-				else {
-					naceButtons[i].classList.remove('is-activated');
-					naceButtons[i].style.background = '#fff';
-					naceButtons[i].style.color = '#000';
-				}
-			}
-			getFilteredTotals();
-			for(marker in markers){
-				var m = markers[marker];
-				if(naceList != null){
-					m.setFilter(function(feature){
-						return (feature.properties.NACEMainEconomicActivityName in naceList);
-					});
-				}
-				else {
-					m.setFilter(function(f){return true})				
-				}
-			}
-		}
-
-		let co2FilteredSumOutput = document.getElementById('sumCO2'),
-		coFilteredSumOutput = document.getElementById('sumCO');
-		function getFilteredTotals(){
-			let co2sum=0, cosum=0;
-			for(var i=0; i<naceButtons.length; i++){
-				let naceName = naceButtons[i].id.replace("-filter-button", "");
-				if(naceButtons[i].classList.contains('is-activated')){
-					if(pollutantFilterCOButton.classList.contains('is-activated')) cosum += globalData.stats.totals['CO, AIR'][naceName]
-					if(pollutantFilterCO2Button.classList.contains('is-activated')) co2sum += globalData.stats.totals['CO2, AIR'][naceName]
-				}
-			}
-			co2FilteredSumOutput.style.background = '#ddc';
-			coFilteredSumOutput.style.background = '#ddc';
-			setTimeout(function(){
-				co2FilteredSumOutput.style.background = '#fff';
-				coFilteredSumOutput.style.background = '#fff';
-			}, 500);
-			co2FilteredSumOutput.textContent = formatSI(co2sum) + ' MT';
-			coFilteredSumOutput.textContent = formatSI(cosum) + ' MT';
-		}
-
-		let naceDeselectButton = document.getElementById('nace-deselect-all');
-		function deselectAllNaceFilter() {
-			filterEmittersByNACE([]);
-		}
-		naceDeselectButton.addEventListener('click', deselectAllNaceFilter);
-
-		let distanceChemicalPlant = document.getElementById('distance-chemical-plant');
-		let polyolFilter = document.getElementById('polyol-filter-button');
-		let togglePolyolFilter = () => {
-			polyolFilter.classList.toggle('is-info');
-		};
-		polyolFilter.addEventListener('click', togglePolyolFilter);
-
-		let sizeFilterButton = document.getElementById('size-filter-button');
-		let toggleSizeFilter = () => {
-			sizeFilterButton.classList.toggle('is-info');
-			let isActive = sizeFilterButton.classList.contains('is-info');
-			if (isActive) {
-				console.log('Size filter now active');
-			}
-		}
-		sizeFilterButton.addEventListener('click', toggleSizeFilter);
-
-		/* Set up the map with initial center and zoom level */
-
-		let map = L.map('map', {
-			center: [51.65892, 6.41601], // roughly show Europe
-			zoom: 5, // roughly show Europe (from 1 to 18 -- decrease to zoom out, increase to zoom in)
-			scrollWheelZoom: false,
-			zoomControl: false // to put the zoom butons on the right
-		});
-		L.control.zoom({
-			position: 'topright'
-		}).addTo(map);
-		/* Carto light-gray basemap tiles with labels */
-		let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
-		})
-		/* Thunderforest green tiles with more information */
-		let green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
-			attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
-		})
-			.addTo(map);
-		let overlays = {};
-		var sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map);
-
-		var formatSI = d3.format(',.2f');
-		let categoryMenuEntry = (name) => {
-			let emissionSums = formatSI(globalData.stats.totals['CO2, AIR'][name]) + 'Mt CO2, ' + formatSI(globalData.stats.totals['CO, AIR'][name]) + ' Mt CO';
-			let button = d3.select('#naceCategories')
-				.append('a')
-				.attr('id', name + '-filter-button')				
-				.attr('class', 'button is-small is-activated is-fullwidth nace-button')
-				.style('background-color', naceColors[name])
-				.style('color', naceBgColors[name])
-				.on('click', (a,b,c) => { toggleFilterNACE(c[0].id) })				
-				.attr('title', emissionSums)
-				.text(name);
-		}
-
-		let toggleFilterNACE = (buttonId) => {
-			document.getElementById(buttonId).classList.toggle('is-activated');
-			for(var i=0;i<compatFilterButtons.length;i++){
-				compatFilterButtons[i].classList.remove('is-info');
-			}
-			document.getElementById('compat-filter-manual-button').classList.add('is-info');
-			let naceButtons = document.getElementsByClassName('nace-button');
-			naceList = {}
-			for(var i=0; i<naceButtons.length; i++){
-				naceButtons[i].classList.contains('is-activated') ? naceList[naceButtons[i].id.replace("-filter-button", "")] = true:false;
-			}
-			filterEmittersByNACE(naceList);
-		}
-
-		let addNACEFilters = () => {
-			for(var nace in naceColors){
-				categoryMenuEntry(nace);
-			}
-		}
-
-		var markers = {};
-		let loadPRTRlayers = (data) => {
-			//console.log(data);
-			for (emission in data) {
-				if (emission != "stats") {
-					markers[emission] = L.geoJson(data[emission], {
-						pointToLayer: function (feature, latlng) {
-							return L.circleMarker(latlng, {
-								radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
-								color: emissionColors[feature.properties.PollutantName],
-								fillColor: naceColors[feature.properties.NACEMainEconomicActivityName],
-								weight: 2,
-								opacity: 0.7,
-								fillOpacity: 0.6
-							}).bindPopup(addEmitterPopupHandler(feature, emission))
-						}
-					}).addTo(map);
-				}
-			}
-			globalData = data;
-		}
-
-		fetch('prtr.json')
-			.then(function (response) {
-				//console.log(response);
-				return response.json();
-			}, function (reject) {
-				console.log(reject);
-			})
-			.then(loadPRTRlayers)
-			.then(createScale)
-			.then(addNACEFilters)
-			.then(getFilteredTotals)
-
-		function createScale() {
-			var height = 120
-			var width = 185
-			var svg = d3.select("#scale")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height)
-
-			// The scale you use for bubble size
-			var size = d3.scaleSqrt()
-				.domain([0, globalData.stats.totalMax])  // What's in the data, let's say it is percentage
-				.range([0, 50])  // Size in pixel
-
-			// Add legend: circles
-			var valuesToShow = [globalData.stats.totalMax / 100, globalData.stats.totalMax / 10, globalData.stats.totalMax]
-			var xCircle = 60
-			var xLabel = 150
-			var yCircle = 110
-			svg
-				.selectAll("legend")
-				.data(valuesToShow)
-				.enter()
-				.append("circle")
-				.attr("cx", xCircle)
-				.attr("cy", function (d) { return yCircle - size(d) })
-				.attr("r", function (d) { return size(d) })
-				.style("fill", "none")
-				.style("stroke", "black")
-				.style("stroke-width", "0.8")
-				.attr("stroke", "black")
-
-			// Add legend: segments
-			svg
-				.selectAll("legend")
-				.data(valuesToShow)
-				.enter()
-				.append("line")
-				.attr('x1', function (d) { return xCircle + size(d) })
-				.attr('x2', xLabel)
-				.attr('y1', function (d) { return yCircle - size(d) })
-				.attr('y2', function (d) { return yCircle - size(d) })
-				.attr('stroke', 'black')
-				.style("stroke", "black")
-				.style("stroke-width", "0.8")
-				.style('stroke-dasharray', ('2,2'))
-
-			// Add legend: labels
-			svg
-				.selectAll("legend")
-				.data(valuesToShow)
-				.enter()
-				.append("text")
-				.attr('x', xLabel)
-				.attr('y', function (d) { return yCircle - size(d) })
-				.text(function (d) { return formatSI(d) }) // to display in Mt
-				.style("font-size", 10)
-				.attr('alignment-baseline', 'middle')
-		}
-
-		/* helper functions */
-		/*let toggleActive = layer => {
-			if (layer.isActive) {
-				map.removeLayer(layer);
-				layer.isActive = false;
-			}
-			else {
-				map.addLayer(layer);
-				layer.isActive = true;
-			}
-		}*/
-		function addConsumerPopupHandler(feature) {
-			var htmlstring = '<h3>' + feature.FacilityName + '</h3><table class="popupTable"><tr><th></th><th colspan="5">Potential of regulated emissions in a radius of:</th></tr><tr><th></th><th>500m</th><th>1km</th><th>5km</th><th>10km</th><th>50km</th></tr><tr>';
-			for (em in feature.potentials["50000"]) {
-				let emName = em;
-				if (em == "CO2") emName = "CO<sub>2</sub>";
-				htmlstring += "<td>" + emName + "</td>";
-				for (dist in feature.potentials) {
-					if (feature.potentials[dist][em]) {
-						htmlstring += "<td>" + feature.potentials[dist][em].toFixed(2) + ' MT</td>';
-					}
-					else { htmlstring += "<td></td>"; }
-				}
-				htmlstring += "</tr><tr>";
-			}
-			htmlstring = htmlstring.slice(0, -4) + '</table>';
-			return htmlstring;
-		};
-
-		function addEmitterPopupHandler(feature, displayName) {
-			if (feature.properties) {
-				displayName = displayName.replace('CO2', 'CO<sub>2</sub>');
-				let otherEmission = '';
-				if (feature.properties.co2Amount) otherEmission += feature.properties.co2Amount + ' Mt CO<sub>2</sub>';
-				if (feature.properties.coAmount) otherEmission += feature.properties.coAmount + ' Mt CO';
-				return `<h3>${feature.properties.FacilityName}</h3>
-								<i>${feature.properties.NACEMainEconomicActivityName}</i>
-								<br />${feature.properties.MTonnes} Mt ${displayName}
-								<br />(${otherEmission})
-				`
-			}
-			else {
-				console.log(feature);
-			}
-		}
-
-		map.on('focus', () => {
-			map.scrollWheelZoom.enable();
-		});
-		map.on('blur', () => {
-			map.scrollWheelZoom.disable();
-		});
-
-		// only works with one tabbed area! Otherwise select by sub Classname
-		let showTabbed = (name, multiTabbedClassName = "") => {
-			let tabbedDivs = document.getElementsByClassName("tabbedDiv " + multiTabbedClassName);
-			[].forEach.call(tabbedDivs, function (el) { el.style.display = "none" });
-			document.getElementById(name).style.display = "block";
-		}
-	</script>
 </body>
 
 </html>
