@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Converter tool from csv list</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta charset="utf-8">
+	</script>
+</head>
+
+<body>
+	<script>	
+	
+		let globalChemParks, globalEmissions;
+
+		fetch("chemicalParks.json")
+			.then((response) => { return response.json() },
+				(reject) => { console.error(reject) })
+			.then(myBlob => globalChemParks = myBlob)
+			.then(() => fetch('prtr.json'))
+			.then((response) => { return response.json() },
+				(reject) => { console.error(reject) })
+			.then(json => addDistances(json));
+	
+
+		function addDistances(json) {
+			return new Promise((resolve, reject) => {				
+				for(eCat in json){
+					if(eCat != "stats"){
+						for(f in json[eCat].features){
+							let feat = json[eCat].features[f];
+							for(cat in globalChemParks){
+								//console.log(globalChemParks);
+								for(park in globalChemParks[cat].features){
+									let p = globalChemParks[cat].features[park];
+									let d = distance(feat.geometry.coordinates[1], feat.geometry.coordinates[0], p.geometry.coordinates[1], p.geometry.coordinates[0])
+									
+									
+									if(d<100001){
+										if(!feat.properties.distances) feat.properties.distances = {}
+										if(!feat.properties.distances[cat]) feat.properties.distances[cat] = {}
+											feat.properties.distances[cat][p.properties.FacilityName] = d
+											console.log(p.properties.FacilityName)
+									}
+								}
+							}
+						}
+					}
+				}
+				console.log(json)
+				resolve()
+
+				
+			});
+		}
+
+		function distance(lat1, lng1, lat2, lng2) {
+			var rad = Math.PI / 180,
+				lt1 = lat1 * rad,
+				lt2 = lat2 * rad,
+				sinDLat = Math.sin((lat2 - lat1) * rad / 2),
+				sinDLon = Math.sin((lng2 - lng1) * rad / 2),
+				a = sinDLat * sinDLat + Math.cos(lt1) * Math.cos(lt2) * sinDLon * sinDLon,
+				c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+			return 6371000 * c;
+		}
+
+	</script>
+</body>
+
+</html>

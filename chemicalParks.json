@@ -1102,7 +1102,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "BASF Antwerpen N.V.  ",
+          "FacilityName": "BASF Antwerpen N.V.  ",
           "Country": "Belgien",
           "City": "Antwerpen"
         },
@@ -1117,7 +1117,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Covestro Tielt N.V.  ",
+          "FacilityName": "Covestro Tielt N.V.  ",
           "Country": "Belgien",
           "City": "Antwerpen"
         },
@@ -1132,7 +1132,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Polyol Belgium N.V.  ",
+          "FacilityName": "Polyol Belgium N.V.  ",
           "Country": "Belgien",
           "City": "Tertre"
         },
@@ -1147,7 +1147,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "CovestroFrance SNC   ",
+          "FacilityName": "CovestroFrance SNC   ",
           "Country": "France",
           "City": "Fos"
         },
@@ -1162,7 +1162,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "BASF/Schwarzheide GmbH   ",
+          "FacilityName": "BASF/Schwarzheide GmbH   ",
           "Country": "Germany",
           "City": "Schwarzheide"
         },
@@ -1177,7 +1177,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Covestro Deutschland AG",
+          "FacilityName": "Covestro Deutschland AG",
           "Country": "Germany",
           "City": "Dormagen"
         },
@@ -1192,7 +1192,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Covestro Deutschland AG",
+          "FacilityName": "Covestro Deutschland AG",
           "Country": "Germany",
           "City": "Dormagen"
         },
@@ -1207,7 +1207,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Dow Benelux N.V.  ",
+          "FacilityName": "Dow Benelux N.V.  ",
           "Country": "Netherlands",
           "City": "Terneuzen"
         },
@@ -1222,7 +1222,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Huntsman Holland B.V.  ",
+          "FacilityName": "Huntsman Holland B.V.  ",
           "Country": "Netherlands",
           "City": "Rotterdam"
         },
@@ -1237,7 +1237,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Shell Nederland Chemie B.V. ",
+          "FacilityName": "Shell Nederland Chemie B.V. ",
           "Country": "Netherlands",
           "City": "Rotterdam"
         },
@@ -1252,7 +1252,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Dow Chemical Iberica S.A. ",
+          "FacilityName": "Dow Chemical Iberica S.A. ",
           "Country": "Spain",
           "City": "Tarragona"
         },
@@ -1267,7 +1267,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Repsol Quinica S.A.   ",
+          "FacilityName": "Repsol Quinica S.A.   ",
           "Country": "Spain",
           "City": "Tarragona"
         },
@@ -1282,7 +1282,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Repsol Quinica S.A.   ",
+          "FacilityName": "Repsol Quinica S.A.   ",
           "Country": "Spain",
           "City": "Puertollano"
         },
@@ -1297,7 +1297,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "MOL Petrochemicals Plc.",
+          "FacilityName": "MOL Petrochemicals Plc.",
           "Country": "Slowakia",
           "City": "Bratislava"
         },
@@ -1312,7 +1312,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "MOL Petrochemicals Plc.",
+          "FacilityName": "MOL Petrochemicals Plc.",
           "Country": "Hungary",
           "City": "Tisaujvaros"
         },
@@ -1327,7 +1327,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "PCC Rokita S.A.  ",
+          "FacilityName": "PCC Rokita S.A.  ",
           "Country": "Poland",
           "City": "Brzeg Dolny"
         },
@@ -1342,7 +1342,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Oltchim    ",
+          "FacilityName": "Oltchim    ",
           "Country": "Romania",
           "City": "Ramnicu Valcea"
         },
@@ -1357,7 +1357,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "Fortischem",
+          "FacilityName": "Fortischem",
           "Country": "Slovakia",
           "City": "Novaky"
         },
@@ -1372,7 +1372,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "BorsodChem",
+          "FacilityName": "BorsodChem",
           "Country": "Hungary",
           "City": "Kazincbarcika"
         },
@@ -1387,7 +1387,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Company": "NEO Group",
+          "FacilityName": "NEO Group",
           "Country": "Lithuania",
           "City": "Klaipeda"
         },

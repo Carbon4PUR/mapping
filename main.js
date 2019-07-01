@@ -90,6 +90,8 @@ let fullNaceList = {
 /*********************************************************/
 /* Keep a copy of the loaded jsons, in case we need them */
 let globalEmissionData, globalChemicalData;
+/* Cluster object containing information for each chemical park about its neighboring emissions */
+let globalClusters = {};
 
 /***********************/
 /* Handle interactions */
@@ -276,27 +278,24 @@ polyolFilter.addEventListener('click', togglePolyolFilter);
 
 /**
  * Calculate distance of each emission to each chemical plant and decide if it should be displayed
- * Potential optimization: precalculate the minimal distance in json
  */
 function updateDistanceFilter() {
     for (marker in markers) {
         var m = markers[marker]
         if (radiusFilter.classList.contains('is-info')) {
-            m.setFilter(function (feature) {
+            m.setFilter(function (feature) {  
                 let minDistance = 99999999 // in meter, must be bigger than the max filter
-                if (!polyolFilter.classList.contains('is-info')) {
-                    chemicalParkMarkers['chemical parks'].eachLayer((layer) => {
-                        let latlng2 = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0])
-                        minDistance = Math.min(minDistance, layer._latlng.distanceTo(latlng2))
-
-                    })
-
-                }
-                chemicalParkMarkers['polyol plants'].eachLayer((layer) => {
-                    let latlng2 = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0])
-                    minDistance = Math.min(minDistance, layer._latlng.distanceTo(latlng2))
-
-                })                
+                if(feature.properties.distances){
+                    if (!polyolFilter.classList.contains('is-info')){
+                        if(feature.properties.distances['chemical parks']){
+                            minDistance = Math.min(minDistance, Object.entries(feature.properties.distances['chemical parks']).reduce((old, [key, value]) => Math.min(value, old), minDistance))
+                            
+                        }
+                    }
+                    if(feature.properties.distances['polyol plants']){                        
+                        minDistance = Math.min(minDistance, Object.entries(feature.properties.distances['polyol plants']).reduce((old, [key, value]) => Math.min(value, old), minDistance))
+                    }
+                }                           
                 return minDistance < distanceChemicalPlantOutput.value * 1000
             });
         }
@@ -305,6 +304,7 @@ function updateDistanceFilter() {
         }
     }
 }
+
 /**
  * Toggle if only emissions within defined radius are shown or all
  */
@@ -314,14 +314,36 @@ let toggleRadiusFilter = () => {
 };
 radiusFilter.addEventListener('click', toggleRadiusFilter);
 
+
+
+/**
+ * Toggles if the button is pressed limiting the view to only plants with at least x kt polyol
+ */
 let toggleSizeFilter = () => {
-    sizeFilterButton.classList.toggle('is-info');
-    let isActive = sizeFilterButton.classList.contains('is-info');
-    if (isActive) {
-        console.log('Size filter now active');
-    }
+    sizeFilterButton.classList.toggle('is-info')
+    filterBySize()   
 }
 sizeFilterButton.addEventListener('click', toggleSizeFilter);
+
+let filterBySize = () => {
+    let isActive = sizeFilterButton.classList.contains('is-info');
+    // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
+    let minCOavailability = polyolOutput.value * 15 / 50000
+    for (marker in chemicalParkMarkers) {
+        var m = chemicalParkMarkers[marker]
+        if (isActive) {
+            console.log('Size filter now active');
+            m.setFilter(feature => {
+                return feature.properties.availability['CO, AIR'] > minCOavailability;
+            })
+        }
+        else {
+            m.setFilter(feature => {
+                return true
+            })
+        }
+    }
+}
 
 /* Glitch in the slider, reset the value to put button in middle of slider */
 distanceChemicalPlantSlider.value = distanceChemicalPlantSlider.getAttribute("value");
@@ -343,7 +365,8 @@ distanceChemicalPlantSlider.addEventListener('input', function (event) {
 });
 polyolSlider.addEventListener('input', function (event) {
     // Update output with slider value
-    polyolOutput.value = event.target.value;
+    polyolOutput.value = event.target.value
+    filterBySize()
 });
 
 /***********************/
@@ -392,7 +415,7 @@ function loadPRTRlayers(data) {
                         fillColor: naceColors[feature.properties.NACEMainEconomicActivityName],
                         weight: 2,
                         opacity: 0.7,
-                        fillOpacity: 0.6
+                        fillOpacity: 0.4
                     }).bindPopup(addEmitterPopupHandler(feature, emission))
                 }
             }).addTo(map);
@@ -430,7 +453,31 @@ function addEmitterPopupHandler(feature, type) {
 * @param {Object} data Object loaded from json data containing several geoJSON Objects. Each feature should contain a "properties" with FacilityName 
 */
 let loadChemicalParks = (data) => {
-    //console.log(data);
+    // copy distance information to markers
+    for (emission in globalEmissionData) {
+        if (emission != "stats") {
+            for (f in globalEmissionData[emission].features) {
+                let feat = globalEmissionData[emission].features[f]
+                if(feat.properties.distances){
+                    for(e in feat.properties.distances){
+                        for(chem in feat.properties.distances[e]){
+                            for(c in data[e].features){
+                                if(data[e].features[c].properties.FacilityName == chem){
+                                    if(!data[e].features[c].properties.distances) data[e].features[c].properties.distances = []
+                                    data[e].features[c].properties.distances.push({
+                                        'name': feat.properties.FacilityName,
+                                        'distance': feat.properties.distances[e][chem],
+                                        'type': emission,
+                                        'value': feat.properties.MTonnes
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     for (type in data) {
         if (type != "stats") {
             chemicalParkMarkers[type] = L.geoJson(data[type], {
@@ -445,6 +492,9 @@ let loadChemicalParks = (data) => {
             }).addTo(map);
         }
     }
+    
+    
+    // keep global reference
     globalChemicalData = data;
 }
 
@@ -458,12 +508,30 @@ let loadChemicalParks = (data) => {
 function addConsumerPopupHandler(feature, type) {
     if (feature.properties) {
         return `<h3>${feature.properties.FacilityName}</h3>
-                <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>`;
+                <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>
+                <br>` + consumerPopupAvailability(feature);
     }
     else {
         console.log(feature);
     }
 };
+
+
+function consumerPopupAvailability(feature) {
+    let p = feature.properties
+    p.availability = {['CO2, AIR'] : 0, ['CO, AIR'] : 0};
+    if(p.distances != undefined){
+        for(e in p.distances){
+            if(p.distances[e].distance < distanceChemicalPlantOutput.value * 1000){                
+                p.availability[p.distances[e].type] += p.distances[e].value
+            }
+        }
+    }
+    
+    return 'Available emissions in '+distanceChemicalPlantOutput.value+'&nbsp;km:<br>CO<sub>2</sub>: '+
+                    formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT<br>CO: '+
+                    formatSI(feature.properties.availability['CO, AIR'])+'&nbsp;MT';
+}
 
 /**
  * Create circles with different sizes as a legend
@@ -534,7 +602,7 @@ let createScale = () => {
 /*************************************************/
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetch('prtr.json')
+    fetch('emissions.json')
         .then((response) => { return response.json() },
             (reject) => { console.error(reject) })
         .then(loadPRTRlayers)
