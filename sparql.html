@@ -43,7 +43,7 @@ var asyncGetData = function asyncGetDataFromSparql(emissionName){
     })
 };
 
-var sortedFeatures = {'stats': {'totalMax' : 0, max:{}, totals:{"CO2, AIR":{}, "CO, AIR":{}}}};
+var sortedFeatures = {'stats': {'totalMax' : 0, max:{}, totals:{"CO2, AIR":{}, "CO, AIR":{}}, "Description": "BEFORE CHANGING: PLEASE NOTE: the location for 'FJERNVARME FYN FYNSVÆRKET A/S' has to be changed from (9.80973039123284°, 5.33467590910096°) to 10.404647, 55.428245"}};
 var actions = ["CO2, AIR", "CO, AIR"].map(asyncGetData);
 var results = Promise.all(actions);
 results.then(data => {// or just .then(console.log)
@@ -88,7 +88,7 @@ SELECT ?FacilityName ?FacilityDetails ?CountryName ?Lat ?Long ?ReportingYear ?NA
     <http://prtr.ec.europa.eu/rdf/nACEActivity/20.13>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/23.52>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/35.11>
-    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.02>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.20>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/23.51>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/20.15>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/19.20>

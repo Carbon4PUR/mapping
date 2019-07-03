@@ -49,58 +49,66 @@ map.on('blur', () => {
 /* Definitions of colors, NACE categories etc. */
 
 // show all numbers with 1,000.00 format
-var formatSI = d3.format(',.2f');
+var formatSI = d3.format(',.2f')
 
 let emissionColors = {
-    "CO2, AIR": 'rgb(240, 175, 67)',
-    "CO, AIR": 'rgb(218,73,106)'
-};
-let chemicalColors = {
-    "chemical parks": "rgb(0,168,189)",
-    "polyol plants": "rgb(12,168,118)"
-}
-let naceColors = {
-    "Manufacture of refined petroleum products": '#c7428f',
-    "Manufacture of fertilisers and nitrogen compounds": '#9884b0',
-    "Manufacture of cement": '#5a6067',
-    "Manufacture of lime and plaster": '#000000',
-    "Production of electricity": '#b06ca4',
-    "Manufacture of other inorganic basic chemicals": '#7995b8',
-    "Manufacture of basic iron and steel and of ferro-alloys": '#ff0000' //ToDo: find better colors
-};
-let naceBgColors = {
-    "Manufacture of refined petroleum products": '#000',
-    "Manufacture of fertilisers and nitrogen compounds": '#000',
-    "Manufacture of cement": '#fff',
-    "Manufacture of lime and plaster": '#fff',
-    "Production of electricity": '#000',
-    "Manufacture of other inorganic basic chemicals": '#000',
-    "Manufacture of basic iron and steel and of ferro-alloys": '#000' //ToDo: find better colors
-};
-let fullNaceList = {
-    "Manufacture of refined petroleum products": true,
-    "Manufacture of fertilisers and nitrogen compounds": true,
-    "Manufacture of cement": true,
-    "Manufacture of lime and plaster": true,
-    "Production of electricity": true,
-    "Manufacture of other inorganic basic chemicals": true,
-    "Manufacture of basic iron and steel and of ferro-alloys": true //ToDo: find better colors
-};
+    "CO2, AIR": 'rgb(241, 177, 48)',
+    "CO, AIR": 'rgb(234,110,57)'
+},
+    chemicalColors = {
+        "chemical parks": "rgb(0,168,189)",
+        "polyol plants": "rgb(12,168,118)"
+    },
+    nace = {
+        "Manufacture of basic iron and steel and of ferro-alloys": { style: 'nace-iron', color: '#ff0000', looping: true, catalytic: true, active: true },
+        "Manufacture of other inorganic basic chemicals": { style: 'nace-inorganic', color: 'rgb(214,70,111)', looping: true, catalytic: true, active: true },
+        "Production of electricity": { style: 'nace-electricity', color: 'rgb(190,85,153)', looping: true, catalytic: false, active: true },
+        "Extraction of natural gas": { style: 'nace-ng', color: 'rgb(151,133,176)', looping: true, catalytic: false, active: true }, // find color
+        "Manufacture of refined petroleum products": { style: 'nace-petroleum', color: 'rgb(103,155,186)', looping: true, catalytic: false, active: true },
+        "Manufacture of cement": { style: 'nace-cement', color: '#5a6067', looping: true, catalytic: false, active: true },
+        "Manufacture of lime and plaster": { style: 'nace-lime', color: '#000000', looping: true, catalytic: false, active: true },
+        "Manufacture of fertilisers and nitrogen compounds": { style: 'nace-fertilisers', color: '#938e99', looping: true, catalytic: false, active: true }
+    }
+
 
 /*********************************************************/
 /* Keep a copy of the loaded jsons, in case we need them */
 let globalEmissionData, globalChemicalData;
-/* Cluster object containing information for each chemical park about its neighboring emissions */
-let globalClusters = {};
 
 /***********************/
 /* Handle interactions */
 /***********************/
 
-/***********************/
+/************/
 /* Info tab */
+let resetButton = document.getElementById('reset-filters-button')
 
-/***********************/
+function resetFilters() {
+    // reset to "chemical looping"
+    compatFilterButtons[1].click()
+    // activate CO and CO2 (the return-function returns a function, so () to execute it)    
+    if (!pollutantFilterCOButton.classList.contains('is-activated')) returnTogglePollutantFilter(pollutantFilterCOButton)()
+    if (!pollutantFilterCO2Button.classList.contains('is-activated')) returnTogglePollutantFilter(pollutantFilterCO2Button)()
+    // set distance to 25 km
+    distanceChemicalPlantSlider.value = 25
+    // deactivate filter buttons
+    if (polyolFilterButton.classList.contains('is-info')) togglePolyolFilter()
+    if (radiusFilterButton.classList.contains('is-info')) toggleRadiusFilter()
+    if (sizeFilterButton.classList.contains('is-info')) toggleSizeFilter()
+    // set min size to 5 kt
+    polyolSlider.value = 5
+    polyolOutput.value = 5
+    // launch update
+    if (document.createEvent) {     // all browsers except IE before version 9
+        var changeEvent = document.createEvent("Event");
+        changeEvent.initEvent("input");
+        distanceChemicalPlantSlider.dispatchEvent(changeEvent)
+    }
+
+}
+resetButton.addEventListener('click', resetFilters)
+
+/*****************/
 /* Emissions tab */
 let compatFilterButtons = [document.getElementById('compat-filter-manual-button'),
 document.getElementById('compat-filter-loop-button'),
@@ -125,29 +133,42 @@ function toggleCompatFilter(event) {
         compatFilterButtons[i].classList.remove('is-info');
     }
     event.target.classList.add('is-info');
-    var naceList;
-    if (event.target.id == 'compat-filter-manual-button') {
-        return true;
+    if (event.target.id == 'compat-filter-cat-button') {
+        for (name in nace) {
+            nace[name].active = nace[name].catalytic
+        }
     }
     else if (event.target.id == 'compat-filter-loop-button') {
-        naceList = fullNaceList;
+        for (name in nace) {
+            nace[name].active = nace[name].looping
+        }
     }
-    else {
-        naceList = { 'Manufacture of other inorganic basic chemicals': true, 'Manufacture of basic iron and steel and of ferro-alloys': true };
-    }
-    filterEmittersByNACE(naceList = naceList);
-};
+    updateNaceButtons()
+    updateEmissionsFilter()
+}
 for (var i = 0; i < compatFilterButtons.length; i++) {
     compatFilterButtons[i].addEventListener('click', toggleCompatFilter);
 }
 
-function togglePollutantFilter(button) {
+function updateNaceButtons() {
+    for (var i = 0; i < naceButtons.length; i++) {
+        let naceName = naceButtons[i].id.replace("-filter-button", "");
+        if (nace[naceName].active) {
+            naceButtons[i].classList.add('is-activated', nace[naceName].style);
+        }
+        else {
+            naceButtons[i].classList.remove('is-activated', nace[naceName].style);
+        }
+    }
+}
+
+function returnTogglePollutantFilter(button) {
     return function () {
         button.classList.toggle('is-activated');
         if (button.classList.contains('is-activated')) button.style.background = emissionColors[button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR"]
         else button.style.background = '#fff'
         //console.log(button.id);
-        getFilteredTotals();
+        getFilteredTotals()
         toggleFilterEmittersByPollutant(button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR");
     }
 }
@@ -159,37 +180,9 @@ function toggleFilterEmittersByPollutant(pollutant) {
         map.addLayer(markers[pollutant]);
     }
 }
-pollutantFilterCO2Button.addEventListener('click', togglePollutantFilter(pollutantFilterCO2Button));
-pollutantFilterCOButton.addEventListener('click', togglePollutantFilter(pollutantFilterCOButton));
+pollutantFilterCO2Button.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCO2Button));
+pollutantFilterCOButton.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCOButton));
 
-function filterEmittersByNACE(naceList) {
-    // console.log(naceList);						
-    for (var i = 0; i < naceButtons.length; i++) {
-        let naceName = naceButtons[i].id.replace("-filter-button", "");
-        if (naceName in naceList) {
-            naceButtons[i].classList.add('is-activated');
-            naceButtons[i].style.background = naceColors[naceName];
-            naceButtons[i].style.color = naceBgColors[naceName];
-        }
-        else {
-            naceButtons[i].classList.remove('is-activated');
-            naceButtons[i].style.background = '#fff';
-            naceButtons[i].style.color = '#000';
-        }
-    }
-    getFilteredTotals();
-    for (marker in markers) {
-        var m = markers[marker];
-        if (naceList != null) {
-            m.setFilter(function (feature) {
-                return (feature.properties.NACEMainEconomicActivityName in naceList);
-            });
-        }
-        else {
-            m.setFilter(function (f) { return true })
-        }
-    }
-}
 
 function getFilteredTotals() {
     let co2sum = 0, cosum = 0;
@@ -211,48 +204,51 @@ function getFilteredTotals() {
 }
 
 function deselectAllNaceFilter() {
-    filterEmittersByNACE([]);
+    for (name in nace) {
+        nace[name].active = false
+    }
+    updateNaceButtons()
+    updateEmissionsFilter()
 }
 naceDeselectButton.addEventListener('click', deselectAllNaceFilter);
 
-let categoryMenuEntry = (name) => {
-    let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + 'Mt CO2, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Mt CO';
-    let button = d3.select('#naceCategories')
-        .append('a')
-        .attr('id', name + '-filter-button')
-        .attr('class', 'button is-small is-activated is-fullwidth nace-button')
-        .style('background-color', naceColors[name])
-        .style('color', naceBgColors[name])
-        .on('click', (a, b, c) => { toggleFilterNACE(c[0].id) })
-        .attr('title', emissionSums)
-        .text(name);
-}
-
 let toggleFilterNACE = (buttonId) => {
-    document.getElementById(buttonId).classList.toggle('is-activated');
+    // put compat button in "manual" mode
     for (var i = 0; i < compatFilterButtons.length; i++) {
         compatFilterButtons[i].classList.remove('is-info');
     }
-    document.getElementById('compat-filter-manual-button').classList.add('is-info');
-    let naceButtons = document.getElementsByClassName('nace-button');
-    naceList = {}
-    for (var i = 0; i < naceButtons.length; i++) {
-        naceButtons[i].classList.contains('is-activated') ? naceList[naceButtons[i].id.replace("-filter-button", "")] = true : false;
-    }
-    filterEmittersByNACE(naceList);
+    document.getElementById('compat-filter-manual-button').classList.add('is-info')
+    // update nace object
+    nace[buttonId.replace("-filter-button", "")].active = !nace[buttonId.replace("-filter-button", "")].active
+    // color active buttons
+    updateNaceButtons()
+    // only display active emissions
+    updateEmissionsFilter()
 }
 
-let addNACEFilters = () => {
-    for (var nace in naceColors) {
-        categoryMenuEntry(nace);
+/**
+ * Dirty hack to display a button for each NACE category.
+ * Should probably not come from the color list
+ *
+ */
+function addNACEFilters() {
+    for (var name in nace) {
+        let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + 'Mt CO2, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Mt CO';
+        let button = d3.select('#naceCategories')
+            .append('a')
+            .attr('id', name + '-filter-button')
+            .attr('class', 'button is-small is-activated is-fullwidth nace-button ' + nace[name].style)
+            .on('click', (a, b, c) => { toggleFilterNACE(c[0].id) })
+            .attr('title', emissionSums)
+            .text(name);
     }
 }
 
 /***********************/
 /* Chemical plants tab */
 let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
-    polyolFilter = document.getElementById('polyol-filter-button'),
-    radiusFilter = document.getElementById('radius-filter-button')
+    polyolFilterButton = document.getElementById('polyol-filter-button'),
+    radiusFilterButton = document.getElementById('radius-filter-button')
 
 let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
     distanceChemicalPlantOutput = document.getElementById('distance-chemical-plant-slider-output'),
@@ -265,54 +261,97 @@ let sizeFilterButton = document.getElementById('size-filter-button');
  * Toggle if only polyol plants are shown or all chemical plants
  */
 let togglePolyolFilter = () => {
-    polyolFilter.classList.toggle('is-info')
+    polyolFilterButton.classList.toggle('is-info')
     if (map.hasLayer(chemicalParkMarkers['chemical parks'])) {
-        map.removeLayer(chemicalParkMarkers['chemical parks']);        
+        map.removeLayer(chemicalParkMarkers['chemical parks']);
     }
     else {
         map.addLayer(chemicalParkMarkers['chemical parks']);
     }
-    updateDistanceFilter()
+    updateEmissionsFilter()
 };
-polyolFilter.addEventListener('click', togglePolyolFilter);
+polyolFilterButton.addEventListener('click', togglePolyolFilter);
 
 /**
- * Calculate distance of each emission to each chemical plant and decide if it should be displayed
+ * Decide for each emission if it should be displayed depending on all active filters
  */
-function updateDistanceFilter() {
+function updateEmissionsFilter() {
     for (marker in markers) {
         var m = markers[marker]
-        if (radiusFilter.classList.contains('is-info')) {
-            m.setFilter(function (feature) {  
-                let minDistance = 99999999 // in meter, must be bigger than the max filter
-                if(feature.properties.distances){
-                    if (!polyolFilter.classList.contains('is-info')){
-                        if(feature.properties.distances['chemical parks']){
-                            minDistance = Math.min(minDistance, Object.entries(feature.properties.distances['chemical parks']).reduce((old, [key, value]) => Math.min(value, old), minDistance))
-                            
+        m.setFilter(function (feature) {
+            let isVisible = true
+            isVisible = (nace[feature.properties.NACEMainEconomicActivityName].active)
+            // if selected, only show those next to chemParks
+            if (isVisible && radiusFilterButton.classList.contains('is-info')) {
+                isVisible =
+                    // if the chemical parks are not limited to polyol plants, check for distance to chemParks
+                    (!polyolFilterButton.classList.contains('is-info') && decideIfInDistance(feature, 'chemical parks'))
+                    // and always check for distance to polyol plants
+                    || decideIfInDistance(feature, 'polyol plants')
+            }
+            // if selected, only show clusters with enough CO for x kt polyol
+            if (isVisible && sizeFilterButton.classList.contains('is-info')) {
+                isVisible = decideIfInVisibleCluster(feature)
+            }
+            return isVisible
+        });
+    }
+    getFilteredTotals()
+}
+
+/**
+ * Checks if the feature is within the radius of a chemical cluster that has enough CO emissions
+ *
+ * @param {*} feature: an emission feature
+ * @returns
+ */
+function decideIfInVisibleCluster(feature) {
+    let minCOavailability = polyolOutput.value * 15 / 50000
+    if (!polyolFilterButton.classList.contains('is-info')) {
+        for (d in feature.properties.distances) {
+            for (c in feature.properties.distances[d]) {
+                let chem = feature.properties.distances[d][c]
+                if (chem < distanceChemicalPlantOutput.value * 1000) {
+                    for (marker in chemicalParkMarkers) {
+                        for (f in chemicalParkMarkers[marker]._geojson.features) {
+                            let feat = chemicalParkMarkers[marker]._geojson.features[f]
+                            if (feat.properties.FacilityName == c) {
+                                return feat.properties.availability['CO, AIR'] > minCOavailability
+                            }
+
                         }
                     }
-                    if(feature.properties.distances['polyol plants']){                        
-                        minDistance = Math.min(minDistance, Object.entries(feature.properties.distances['polyol plants']).reduce((old, [key, value]) => Math.min(value, old), minDistance))
-                    }
-                }                           
-                return minDistance < distanceChemicalPlantOutput.value * 1000
-            });
-        }
-        else {
-            m.setFilter(function (feature) { return true })
+                }
+            }
         }
     }
+    return false
+}
+
+/**
+ * Returns true if the feature is within the defined distance of an active chemical or polyol plant
+ *
+ * @param {*} feature: A feature with properties, geometry and
+ * @param {string} typeOfChemicalPlant: either 'chemical parks' or 'polyol plants'
+ */
+function decideIfInDistance(feature, typeOfChemicalPlant) {
+    let minDistance = 99999999 // in meter, must be bigger than the max filter
+    if (feature.properties.distances) {
+        if (feature.properties.distances[typeOfChemicalPlant]) {
+            minDistance = Math.min(minDistance, Object.entries(feature.properties.distances[typeOfChemicalPlant]).reduce((old, [, value]) => Math.min(value, old), minDistance))
+        }
+    }
+    return minDistance < distanceChemicalPlantOutput.value * 1000
 }
 
 /**
  * Toggle if only emissions within defined radius are shown or all
  */
 let toggleRadiusFilter = () => {
-    radiusFilter.classList.toggle('is-info')
-    updateDistanceFilter()
+    radiusFilterButton.classList.toggle('is-info')
+    updateEmissionsFilter()
 };
-radiusFilter.addEventListener('click', toggleRadiusFilter);
+radiusFilterButton.addEventListener('click', toggleRadiusFilter);
 
 
 
@@ -321,27 +360,20 @@ radiusFilter.addEventListener('click', toggleRadiusFilter);
  */
 let toggleSizeFilter = () => {
     sizeFilterButton.classList.toggle('is-info')
-    filterBySize()   
+    updatePolyolSizeFilter()
+    updateEmissionsFilter()
 }
 sizeFilterButton.addEventListener('click', toggleSizeFilter);
 
-let filterBySize = () => {
+let updatePolyolSizeFilter = () => {
     let isActive = sizeFilterButton.classList.contains('is-info');
     // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 15 / 50000
     for (marker in chemicalParkMarkers) {
         var m = chemicalParkMarkers[marker]
-        if (isActive) {
-            console.log('Size filter now active');
-            m.setFilter(feature => {
-                return feature.properties.availability['CO, AIR'] > minCOavailability;
-            })
-        }
-        else {
-            m.setFilter(feature => {
-                return true
-            })
-        }
+        m.setFilter(feature => {
+            return isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true
+        })
     }
 }
 
@@ -355,18 +387,22 @@ distanceChemicalPlantSlider.addEventListener('input', function (event) {
     // Update size of circle
     for (layer in chemicalParkMarkers) {
         chemicalParkMarkers[layer].eachLayer((layer) => {
-            return layer.setRadius(event.target.value * 1000);
+            // update the popups for all chemical clusters
+            layer.setPopupContent(addConsumerPopupHandler(layer.feature, type))
+            return layer.setRadius(event.target.value * 1000)
         })
     }
     // if emissions limited to distance, update filter    
-    if (radiusFilter.classList.contains('is-info')) {        
-        updateDistanceFilter()
+    if (radiusFilterButton.classList.contains('is-info')) {
+        updateEmissionsFilter()
     }
+
+
 });
 polyolSlider.addEventListener('input', function (event) {
     // Update output with slider value
     polyolOutput.value = event.target.value
-    filterBySize()
+    updatePolyolSizeFilter()
 });
 
 /***********************/
@@ -412,8 +448,8 @@ function loadPRTRlayers(data) {
                     return L.circleMarker(latlng, {
                         radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
                         color: emissionColors[feature.properties.PollutantName],
-                        fillColor: naceColors[feature.properties.NACEMainEconomicActivityName],
-                        weight: 2,
+                        fillColor: nace[feature.properties.NACEMainEconomicActivityName].color,
+                        weight: 1,
                         opacity: 0.7,
                         fillOpacity: 0.4
                     }).bindPopup(addEmitterPopupHandler(feature, emission))
@@ -437,11 +473,10 @@ function addEmitterPopupHandler(feature, type) {
         let otherEmission = '';
         if (feature.properties.co2Amount) otherEmission += feature.properties.co2Amount + ' Mt CO<sub>2</sub>';
         if (feature.properties.coAmount) otherEmission += feature.properties.coAmount + ' Mt CO';
-        return `<h3>${feature.properties.FacilityName}</h3>
+        return `<h2>${feature.properties.FacilityName}</h2>
                         <i>${feature.properties.NACEMainEconomicActivityName}</i>
-                        <br />${feature.properties.MTonnes} Mt ${type}
-                        <br />(${otherEmission})
-        `
+                        <br />${feature.properties.MTonnes} Mt ${type}` + (otherEmission != '' ? `<br />(${otherEmission})` : '')
+
     }
     else {
         console.log(feature);
@@ -453,17 +488,17 @@ function addEmitterPopupHandler(feature, type) {
 * @param {Object} data Object loaded from json data containing several geoJSON Objects. Each feature should contain a "properties" with FacilityName 
 */
 let loadChemicalParks = (data) => {
-    // copy distance information to markers
+    // copy distance information to markers. This could be done while creating the json arrays to speedup the load time.
     for (emission in globalEmissionData) {
         if (emission != "stats") {
             for (f in globalEmissionData[emission].features) {
                 let feat = globalEmissionData[emission].features[f]
-                if(feat.properties.distances){
-                    for(e in feat.properties.distances){
-                        for(chem in feat.properties.distances[e]){
-                            for(c in data[e].features){
-                                if(data[e].features[c].properties.FacilityName == chem){
-                                    if(!data[e].features[c].properties.distances) data[e].features[c].properties.distances = []
+                if (feat.properties.distances) {
+                    for (e in feat.properties.distances) {
+                        for (chem in feat.properties.distances[e]) {
+                            for (c in data[e].features) {
+                                if (data[e].features[c].properties.FacilityName == chem) {
+                                    if (!data[e].features[c].properties.distances) data[e].features[c].properties.distances = []
                                     data[e].features[c].properties.distances.push({
                                         'name': feat.properties.FacilityName,
                                         'distance': feat.properties.distances[e][chem],
@@ -482,8 +517,7 @@ let loadChemicalParks = (data) => {
         if (type != "stats") {
             chemicalParkMarkers[type] = L.geoJson(data[type], {
                 pointToLayer: function (feature, latlng) {
-                    // this is morally so wrong. The 50 should be loaded from the slider or a config
-                    return L.circle(latlng, 50 * 1000, { // radius expected in m, slider in km
+                    return L.circle(latlng, distanceChemicalPlantOutput.value * 1000, { // radius expected in m, slider in km
                         fillColor: chemicalColors[type],
                         weight: 0,
                         fillOpacity: 0.4
@@ -492,8 +526,8 @@ let loadChemicalParks = (data) => {
             }).addTo(map);
         }
     }
-    
-    
+
+
     // keep global reference
     globalChemicalData = data;
 }
@@ -519,18 +553,18 @@ function addConsumerPopupHandler(feature, type) {
 
 function consumerPopupAvailability(feature) {
     let p = feature.properties
-    p.availability = {['CO2, AIR'] : 0, ['CO, AIR'] : 0};
-    if(p.distances != undefined){
-        for(e in p.distances){
-            if(p.distances[e].distance < distanceChemicalPlantOutput.value * 1000){                
+    p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 };
+    if (p.distances != undefined) {
+        for (e in p.distances) {
+            if (p.distances[e].distance < distanceChemicalPlantOutput.value * 1000) {
                 p.availability[p.distances[e].type] += p.distances[e].value
             }
         }
     }
-    
-    return 'Available emissions in '+distanceChemicalPlantOutput.value+'&nbsp;km:<br>CO<sub>2</sub>: '+
-                    formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT<br>CO: '+
-                    formatSI(feature.properties.availability['CO, AIR'])+'&nbsp;MT';
+
+    return 'Available emissions in ' + distanceChemicalPlantOutput.value + '&nbsp;km:<br>CO<sub>2</sub>: ' +
+        formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT<br>CO: ' +
+        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT';
 }
 
 /**
@@ -613,14 +647,85 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then((response) => { return response.json() },
             (reject) => { console.error(reject) })
         .then(loadChemicalParks)
+        .then(checkIfIntro)
 })
 
-/********************/
-/* Helper functions */
-/********************/
-/*
-function distance(feature1, feature2){
-    let x = feature1.geometry.coordinates[1] - feature2.geometry.coordinates[1],
-    y= (feature1.geometry.coordinates[0]-feature2.geometry.coordinates[0]) * Math.cos(feature2.geometry.coordinates[1)
-    return 110.25 * Math.sqrt(x*x+y*y)
-}*/
+
+/***********************************/
+/* Helper functions (cookies etc.) */
+/***********************************/
+const setCookie = (name, value, days = 100, path = '/') => {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString()
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path
+}
+
+const getCookie = (name) => {
+    return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=')
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r
+    }, '')
+}
+
+const deleteCookie = (name, path = "/") => {
+    setCookie(name, '', -1, path)
+}
+
+/***********************************/
+/* Intro.js tour                   */
+/***********************************/
+function setCookieNoTour(){
+    setCookie('no-tour', 'true')
+    introJs().exit()
+}
+
+document.getElementById('show-intro').addEventListener('click', () => {
+    deleteCookie('no-tour')
+    startIntro()
+})
+function checkIfIntro(){
+    if(!getCookie('no-tour')){
+        startIntro()
+    }
+}
+function startIntro(){
+        var intro = introJs();
+        intro.onexit(() => sidebar.open('info-content'))
+        intro.setOptions({
+            steps: [
+            { 
+                intro: `Welcome to the Carbon4PUR mapping! If you want, you can follow this short introduction to see the main functions, or you can skip the tour.<br>
+                <a class='button is-small is-warning' id="set-cookie-no-tour">Click here if you don't want to see the tour again</a>`
+            },
+            {
+                element: "#sidebar-close-info-span",
+                intro: "This closes the sidebar so you can focus on the map."
+            },
+            {
+                element: '#info-tab-li',
+                intro: "Here you find information about the map and the data",
+
+            },
+            {
+                element: '#emitter-tab-li',
+                intro: "In this tab, you can filter the bubbles on the map representing emissions.",
+                position: 'right'
+            },
+            {
+                element: '#consumer-tab-li',
+                intro: 'Here you can filter by chemical parks and polyol plants.',
+                position: 'left'
+            },
+            {
+                element: '#settings-tab-li',
+                intro: "And if you like another map layout, click here.",
+                position: 'bottom'
+            },
+            {
+                intro: "Click on any bubble to see more information about it.<br>That's it, now play with it."
+            }
+            ]
+        });
+        sidebar.open('info-content')
+        intro.start();
+        document.getElementById('set-cookie-no-tour').addEventListener('click', setCookieNoTour)
+  }

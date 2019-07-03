@@ -16,7 +16,7 @@ SELECT ?FacilityName ?FacilityDetails ?CountryName ?Lat ?Long ?ReportingYear ?NA
     <http://prtr.ec.europa.eu/rdf/nACEActivity/20.13>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/23.52>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/35.11>
-    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.02>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.20>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/23.51>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/20.15>
     <http://prtr.ec.europa.eu/rdf/nACEActivity/19.20>

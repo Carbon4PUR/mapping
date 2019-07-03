@@ -5,6 +5,7 @@ The mapping activities from the Carbon4PUR project.
 ## Emissions
 Open sparql.html and wait for it to complete. The result will be logged in the console. Copy the object and paste it in prtr.json.
 Careful: we corrected the coordinates for one plant (see comment in top of file), please keep those changes in the new version.
+Attention: Don't forget to run chemicalParkDistances.html (see chapter "distances" below)
 
 ## Chemical parks and polyol plants
 The list of all chemical plants known to us is in chemicalparks.csv. It has been converted with a previous version of the polyolConverter.html

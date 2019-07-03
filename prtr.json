@@ -8,28 +8,316 @@
     },
     "totals": {
       "CO2, AIR": {
-        "Manufacture of refined petroleum products": 138.14400000000003,
+        "Extraction of natural gas": 5.21,
+        "Manufacture of refined petroleum products": 141.717,
         "Manufacture of other inorganic basic chemicals": 15.947999999999999,
         "Manufacture of fertilisers and nitrogen compounds": 24.802,
-        "Manufacture of cement": 122.20299999999996,
-        "Manufacture of lime and plaster": 21.181000000000004,
+        "Manufacture of cement": 126.25199999999998,
+        "Manufacture of lime and plaster": 21.287,
         "Manufacture of basic iron and steel and of ferro-alloys": 167.86599999999999,
-        "Production of electricity": 969.6960000000004
+        "Production of electricity": 988.2660000000001
       },
       "CO, AIR": {
-        "Manufacture of refined petroleum products": 0.056258,
+        "Extraction of natural gas": 0.00077,
+        "Manufacture of refined petroleum products": 0.058138,
         "Manufacture of other inorganic basic chemicals": 0.093351,
         "Manufacture of fertilisers and nitrogen compounds": 0.004443,
-        "Manufacture of cement": 0.25531400000000004,
-        "Manufacture of lime and plaster": 0.10207699999999996,
-        "Manufacture of basic iron and steel and of ferro-alloys": 1.9912699999999994,
-        "Production of electricity": 0.1852610000000001
+        "Manufacture of cement": 0.26996600000000004,
+        "Manufacture of lime and plaster": 0.10318699999999996,
+        "Manufacture of basic iron and steel and of ferro-alloys": 1.9926569999999995,
+        "Production of electricity": 0.1857680000000001
       }
     }
   },
   "CO2, AIR": {
     "type": "FeatureCollection",
     "features": [
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            7.780844,
+            64.3529358
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Draugen",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=191961",
+          "ReportingYear": "2017",
+          "MTonnes": 0.194,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            5.512849,
+            59.27473
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Gassco Kårstø",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=192144",
+          "ReportingYear": "2017",
+          "MTonnes": 1.21,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            3.895116,
+            61.3318863
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Gjøa",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=192618",
+          "ReportingYear": "2017",
+          "MTonnes": 0.114,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -1.84165,
+            57.5803
+          ]
+        },
+        "properties": {
+          "CountryName": "United Kingdom",
+          "FacilityName": "Golden Eye Module",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=14456",
+          "ReportingYear": "2017",
+          "MTonnes": 0.341,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.00077
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            23.602005,
+            70.69107
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Hammerfest LNG",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=192426",
+          "ReportingYear": "2017",
+          "MTonnes": 0.997,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            2.227158,
+            59.5735626
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Heimdal",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=191967",
+          "ReportingYear": "2017",
+          "MTonnes": 0.151,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            6.549454,
+            64.99371
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Kristin",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=191975",
+          "ReportingYear": "2017",
+          "MTonnes": 0.314,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            2.497937,
+            61.07978
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Kvitebjørn",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=191983",
+          "ReportingYear": "2017",
+          "MTonnes": 0.206,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            20.195426,
+            46.301205
+          ]
+        },
+        "properties": {
+          "CountryName": "Hungary",
+          "FacilityName": "MOL Nyrt",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=39834",
+          "ReportingYear": "2017",
+          "MTonnes": 0.122,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            16.547028,
+            48.284
+          ]
+        },
+        "properties": {
+          "CountryName": "Austria",
+          "FacilityName": "OMV Austria Exploration u. Production",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=65065",
+          "ReportingYear": "2017",
+          "MTonnes": 0.19,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            17.001421,
+            46.108253
+          ]
+        },
+        "properties": {
+          "CountryName": "Croatia",
+          "FacilityName": "Objekti prerade plina Molve",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=254127",
+          "ReportingYear": "2017",
+          "MTonnes": 0.317,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            0.113695,
+            53.6602
+          ]
+        },
+        "properties": {
+          "CountryName": "United Kingdom",
+          "FacilityName": "Perenco UK Limited, Dimlington Gas Terminal",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=32473",
+          "ReportingYear": "2017",
+          "MTonnes": 0.15,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.716314,
+            58.417244
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Sleipner Vest",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=191970",
+          "ReportingYear": "2017",
+          "MTonnes": 0.29,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.90703,
+            58.36666
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Sleipner Øst",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=192000",
+          "ReportingYear": "2017",
+          "MTonnes": 0.474,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            2.89612,
+            60.78217
+          ]
+        },
+        "properties": {
+          "CountryName": "Norway",
+          "FacilityName": "Veslefrikk",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=191982",
+          "ReportingYear": "2017",
+          "MTonnes": 0.14,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
       {
         "geometry": {
           "type": "Point",
@@ -1029,6 +1317,25 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -8.71059,
+            41.2019
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Petrogal-Refinaria do Porto",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5452",
+          "ReportingYear": "2017",
+          "MTonnes": 0.973,
+          "NACEMainEconomicActivityName": "Manufacture of refined petroleum products",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             5.04,
             43.38
           ]
@@ -1619,6 +1926,26 @@
           "MTonnes": 0.413,
           "NACEMainEconomicActivityName": "Manufacture of refined petroleum products",
           "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.80014,
+            37.9639
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Refinaria de Sines",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5453",
+          "ReportingYear": "2017",
+          "MTonnes": 2.6,
+          "NACEMainEconomicActivityName": "Manufacture of refined petroleum products",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.00188
         },
         "type": "Feature"
       },
@@ -4139,6 +4466,26 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -8.41955,
+            40.2929
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "CIMPOR - Indústria de Cimentos, S.A. - C.P.Souselas",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5367",
+          "ReportingYear": "2017",
+          "MTonnes": 0.864,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.00139
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             8.666388,
             45.887222
           ]
@@ -4543,6 +4890,46 @@
           "NACEMainEconomicActivityName": "Manufacture of cement",
           "PollutantName": "CO2, AIR",
           "coAmount": 0.0035
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -9.00969,
+            38.9238
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Centro de Produção de Alhandra",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5362",
+          "ReportingYear": "2017",
+          "MTonnes": 1.32,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.0057
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.09759,
+            37.1343
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Centro de Produção de Loulé",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5363",
+          "ReportingYear": "2017",
+          "MTonnes": 0.273,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.000992
         },
         "type": "Feature"
       },
@@ -5131,6 +5518,66 @@
           "MTonnes": 0.132,
           "NACEMainEconomicActivityName": "Manufacture of cement",
           "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.98701,
+            39.6572
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Fábrica Cibra-Pataias",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5360",
+          "ReportingYear": "2017",
+          "MTonnes": 0.273,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.00143
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.90367,
+            39.6864
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Fábrica Maceira-Liz",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5361",
+          "ReportingYear": "2017",
+          "MTonnes": 0.369,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.00221
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.93447,
+            38.5019
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Fábrica Secil - Outão",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5408",
+          "ReportingYear": "2017",
+          "MTonnes": 0.95,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.00293
         },
         "type": "Feature"
       },
@@ -8362,6 +8809,25 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -8.84746,
+            39.4476
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "LUSICAL, Companhia Lusitana de Cal  SA",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=38255",
+          "ReportingYear": "2017",
+          "MTonnes": 0.106,
+          "NACEMainEconomicActivityName": "Manufacture of lime and plaster",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             20.208925,
             50.858083
           ]
@@ -11395,6 +11861,25 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -16.723,
+            32.7447
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Atlantic Islands Electricity  (Madeira) S.A.",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=38482",
+          "ReportingYear": "2017",
+          "MTonnes": 0.132,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             9.42461888350124,
             46.8263404971568
           ]
@@ -13865,6 +14350,64 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -8.80699,
+            37.9306
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica Sines",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5485",
+          "ReportingYear": "2017",
+          "MTonnes": 8.4,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.87674,
+            40.052
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica a Biomassa da Figueira da Foz",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=133882",
+          "ReportingYear": "2017",
+          "MTonnes": 0.288,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR",
+          "coAmount": 0.000507
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.77444,
+            40.1242
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica de Lares",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=133888",
+          "ReportingYear": "2017",
+          "MTonnes": 1.28,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             -9.05355143133,
             38.6751901351
           ]
@@ -13875,6 +14418,139 @@
           "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5484",
           "ReportingYear": "2009",
           "MTonnes": 0.248,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -25.484938,
+            37.798227
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica do Caldeirão (TEGEE.RAA.068.01)",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5664",
+          "ReportingYear": "2017",
+          "MTonnes": 0.142,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.11198,
+            39.466
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica do Pego",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5530",
+          "ReportingYear": "2017",
+          "MTonnes": 3.75,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.95025,
+            39.0115
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica do Ribatejo",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5531",
+          "ReportingYear": "2017",
+          "MTonnes": 0.945,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.46105,
+            41.0696
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central de Ciclo Combinado da Tapada do Outeiro",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5403",
+          "ReportingYear": "2017",
+          "MTonnes": 1.47,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.11105,
+            39.4689
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central de Ciclo Combinado do Pego",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=177452",
+          "ReportingYear": "2017",
+          "MTonnes": 1.33,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -9.0504,
+            38.6781
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central de Cogeração da FISIGEN",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=177453",
+          "ReportingYear": "2017",
+          "MTonnes": 0.107,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.85344,
+            40.0606
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central de Cogeração de Lavos",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5491",
+          "ReportingYear": "2017",
+          "MTonnes": 0.182,
           "NACEMainEconomicActivityName": "Production of electricity",
           "PollutantName": "CO2, AIR"
         },
@@ -20701,6 +21377,25 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -8.83216,
+            37.984
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Repsol-Produção de Electricidade e Calor - ACE",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5357",
+          "ReportingYear": "2017",
+          "MTonnes": 0.26,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             6.9907748243318,
             50.9741136426043
           ]
@@ -21382,6 +22077,25 @@
           "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=9263",
           "ReportingYear": "2017",
           "MTonnes": 0.14,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO2, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.80599,
+            38.4937
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "SPCG - Sociedade Portuguesa de Co-Geração Eléctrica, SA",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=133926",
+          "ReportingYear": "2017",
+          "MTonnes": 0.284,
           "NACEMainEconomicActivityName": "Production of electricity",
           "PollutantName": "CO2, AIR"
         },
@@ -24053,6 +24767,26 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -1.84165,
+            57.5803
+          ]
+        },
+        "properties": {
+          "CountryName": "United Kingdom",
+          "FacilityName": "Golden Eye Module",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=14456",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00077,
+          "NACEMainEconomicActivityName": "Extraction of natural gas",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.341
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             22.914165,
             56.312821
           ]
@@ -24384,6 +25118,26 @@
           "NACEMainEconomicActivityName": "Manufacture of refined petroleum products",
           "PollutantName": "CO, AIR",
           "co2Amount": 1.98
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.80014,
+            37.9639
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Refinaria de Sines",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5453",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00188,
+          "NACEMainEconomicActivityName": "Manufacture of refined petroleum products",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 2.6
         },
         "type": "Feature"
       },
@@ -25479,6 +26233,26 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -8.41955,
+            40.2929
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "CIMPOR - Indústria de Cimentos, S.A. - C.P.Souselas",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5367",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00139,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.864
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             14.065833,
             41.445555
           ]
@@ -25712,6 +26486,46 @@
           "NACEMainEconomicActivityName": "Manufacture of cement",
           "PollutantName": "CO, AIR",
           "co2Amount": 0.291
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -9.00969,
+            38.9238
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Centro de Produção de Alhandra",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5362",
+          "ReportingYear": "2017",
+          "MTonnes": 0.0057,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 1.32
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.09759,
+            37.1343
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Centro de Produção de Loulé",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5363",
+          "ReportingYear": "2017",
+          "MTonnes": 0.000992,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.273
         },
         "type": "Feature"
       },
@@ -26091,6 +26905,66 @@
           "NACEMainEconomicActivityName": "Manufacture of cement",
           "PollutantName": "CO, AIR",
           "co2Amount": 0.365
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.98701,
+            39.6572
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Fábrica Cibra-Pataias",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5360",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00143,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.273
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.90367,
+            39.6864
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Fábrica Maceira-Liz",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5361",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00221,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.369
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.93447,
+            38.5019
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Fábrica Secil - Outão",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5408",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00293,
+          "NACEMainEconomicActivityName": "Manufacture of cement",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.95
         },
         "type": "Feature"
       },
@@ -28012,6 +28886,25 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -9.07389,
+            38.6279
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "MICROLIME - Produtos de Cal e Derivados, SA",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=38293",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00111,
+          "NACEMainEconomicActivityName": "Manufacture of lime and plaster",
+          "PollutantName": "CO, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             7.02249287903466,
             51.2800362227478
           ]
@@ -29263,6 +30156,44 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
+            -9.08216,
+            38.6299
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "SN Seixal - Siderurgia Nacional SA",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5505",
+          "ReportingYear": "2017",
+          "MTonnes": 0.00088,
+          "NACEMainEconomicActivityName": "Manufacture of basic iron and steel and of ferro-alloys",
+          "PollutantName": "CO, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.55662,
+            41.2567
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "SN-Maia, Siderurgia Nacional S.A.",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=5495",
+          "ReportingYear": "2017",
+          "MTonnes": 0.000507,
+          "NACEMainEconomicActivityName": "Manufacture of basic iron and steel and of ferro-alloys",
+          "PollutantName": "CO, AIR"
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
             22.840557,
             39.169977
           ]
@@ -30030,6 +30961,26 @@
           "NACEMainEconomicActivityName": "Production of electricity",
           "PollutantName": "CO, AIR",
           "co2Amount": 0.216
+        },
+        "type": "Feature"
+      },
+      {
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.87674,
+            40.052
+          ]
+        },
+        "properties": {
+          "CountryName": "Portugal",
+          "FacilityName": "Central Termoeléctrica a Biomassa da Figueira da Foz",
+          "FacilityDetails": "http://prtr.ec.europa.eu/#/facilitydetails?FacilityID=133882",
+          "ReportingYear": "2017",
+          "MTonnes": 0.000507,
+          "NACEMainEconomicActivityName": "Production of electricity",
+          "PollutantName": "CO, AIR",
+          "co2Amount": 0.288
         },
         "type": "Feature"
       },

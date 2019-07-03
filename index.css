@@ -20,9 +20,6 @@ h3 {
   right: 0;
   left: 40px;
 }
-.popupTable th, .popupTable td {
-  background: #f3f5f9;
-}
 
 ul.is-bullet {
   list-style: disc;
@@ -66,16 +63,6 @@ body .sidebar .sidebar-header {
 body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
   background-color: rgb(218,73,106) !important;
 }
-
-.overIcon {
-  position: absolute;
-  right: 0;
-  top: 2px;
-  font-size: small;
-  text-align: right;
-  vertical-align: top;
-  line-height: 1.1em;
-}
 .svgicon {
   margin: 7px;
   width: 30px;
@@ -86,17 +73,40 @@ body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
   height: 30px;
 }
 
-
-.icon-folder-plus, .icon-folder-minus {
-  margin-left: 5px;
-  margin-bottom: 5px;
+/* NACE categories */
+.nace-iron {
+  background: #ff0000;
+  color: #000;
+}
+.nace-inorganic {
+  background: rgb(214,70,111);
+  color: #000;
+}
+.nace-electricity {
+  background: rgb(190,85,153);
+  color: #000;
+}
+.nace-ng {
+  background: rgb(151,133,176);
+  color: #000;
+}
+.nace-petroleum {
+  background: rgb(103,155,186);
+  color: #000;
+}
+.nace-cement {
+  background: #5a6067;
+  color: #fff;
+}
+.nace-lime {
+  background: #000000;
+  color: #fff;
+}
+.nace-fertilisers {
+  background: #938e99;
+  color: #000;
 }
 
-.tabbedDiv { padding: 5px; display: none;}
-.menuSelect {
-  margin-right: 0.4em;
-  vertical-align: middle;
-}
 
 /* Size legend styling */
 #scale {
