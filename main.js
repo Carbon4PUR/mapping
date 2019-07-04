@@ -1,12 +1,9 @@
 /* allows us to create filters within a Leaflet GeoJSON layer */
 L.GeoJSON.include({
-    setFilter: function (_) {
-        if (!this._geojson) {
-            this._geojson = this.toGeoJSON()
-        }
+    setFilter: function (originalData, _) {
         this.options.filter = _
         this.clearLayers()
-        this.addData(this._geojson)
+        this.addData(originalData)
         return this
     }
 })
@@ -294,7 +291,7 @@ polyolFilterButton.addEventListener('click', togglePolyolFilter);
 function updateEmissionsFilter() {
     for (marker in markers) {
         var m = markers[marker]
-        m.setFilter(function (feature) {
+        m.setFilter(globalEmissionData[marker], function (feature) {
             let isVisible = true
             isVisible = (nace[feature.properties.NACEMainEconomicActivityName].active)
             // if selected, only show those next to chemParks
@@ -323,19 +320,23 @@ function updateEmissionsFilter() {
  */
 function decideIfInVisibleCluster(feature) {
     let minCOavailability = polyolOutput.value * 15 / 50000
-    if (!polyolFilterButton.classList.contains('is-info')) {
+        // check all distances of the emission if there are any chemical plants within the defined radius
         for (d in feature.properties.distances) {
             for (c in feature.properties.distances[d]) {
                 let chem = feature.properties.distances[d][c]
                 if (chem < distanceChemicalPlantOutput.value * 1000) {
+                    // if so, find the corresponding chemical plant and see if it has enough CO
+                    // this should probably be globalChemicalData
                     for (marker in chemicalParkMarkers) {
-                        for (f in chemicalParkMarkers[marker]._geojson.features) {
-                            let feat = chemicalParkMarkers[marker]._geojson.features[f]
-                            if (feat.properties.FacilityName == c) {
-                                return feat.properties.availability['CO, AIR'] > minCOavailability
-                            }
+                        // if only polyol plants are shown, don't check the chemical parks
+                        if (!polyolFilterButton.classList.contains('is-info') || marker == 'polyol plants') {
+                            for (f in chemicalParkMarkers[marker]._layers) {
+                                let feat = chemicalParkMarkers[marker]._layers[f].feature
+                                if (feat.properties.FacilityName == c) {
+                                    return feat.properties.availability['CO, AIR'] > minCOavailability
+                                }
 
-                        }
+                            }
                     }
                 }
             }
@@ -376,6 +377,7 @@ radiusFilterButton.addEventListener('click', toggleRadiusFilter);
  */
 let toggleSizeFilter = () => {
     sizeFilterButton.classList.toggle('is-info')
+    if(sizeFilterButton.classList.contains('is-info')) radiusFilterButton.classList.add('is-info')
     updatePolyolSizeFilter()
     updateEmissionsFilter()
 }
@@ -387,7 +389,7 @@ let updatePolyolSizeFilter = () => {
     let minCOavailability = polyolOutput.value * 15 / 50000
     for (marker in chemicalParkMarkers) {
         var m = chemicalParkMarkers[marker]
-        m.setFilter(feature => {
+        m.setFilter(globalChemicalData[marker], feature => {            
             return isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true
         })
     }
@@ -531,21 +533,24 @@ let loadChemicalParks = (data) => {
     }
     for (type in data) {
         if (type != "stats") {
-            chemicalParkMarkers[type] = L.geoJson(data[type], {
-                pointToLayer: function (feature, latlng) {
-                    return L.circle(latlng, distanceChemicalPlantOutput.value * 1000, { // radius expected in m, slider in km
-                        fillColor: chemicalColors[type],
-                        weight: 0,
-                        fillOpacity: 0.4
-                    }).bindPopup(addConsumerPopupHandler(feature, type))
-                }
-            }).addTo(map);
+            chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map);
         }
     }
-
-
     // keep global reference
     globalChemicalData = data;
+}
+
+function convertGeoJSONToChemLayer(data, type) {
+    return L.geoJson(data[type], {
+        pointToLayer: function (feature, latlng) {
+            feature.properties['type'] = type
+            return L.circle(latlng, distanceChemicalPlantOutput.value * 1000, { // radius expected in m, slider in km
+                fillColor: chemicalColors[feature.properties.type],
+                weight: 0,
+                fillOpacity: 0.4
+            }).bindPopup(addConsumerPopupHandler(feature, type))
+        }
+    })
 }
 
 /**
