@@ -421,6 +421,7 @@ polyolSlider.addEventListener('input', function (event) {
     // Update output with slider value
     polyolOutput.value = event.target.value
     updatePolyolSizeFilter()
+    updateEmissionsFilter()
 });
 
 /***********************/
