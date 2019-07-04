@@ -107,6 +107,12 @@ body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
   color: #000;
 }
 
+/* intro tour */
+#set-cookie-no-tour {
+  margin-right: 0px;
+  margin-left: auto;
+  display: block;
+}
 
 /* Size legend styling */
 #scale {

@@ -704,13 +704,13 @@ function checkIfIntro(){
     }
 }
 function startIntro(){
-        var intro = introJs();
+        var intro = introJs()
         intro.onexit(() => sidebar.open('info-content'))
         intro.setOptions({
             steps: [
             { 
                 intro: `Welcome to the Carbon4PUR mapping! If you want, you can follow this short introduction to see the main functions, or you can skip the tour.<br>
-                <a class='button is-small is-warning' id="set-cookie-no-tour">Click here if you don't want to see the tour again</a>`
+                <button id="set-cookie-no-tour" class="introjs-button" title="This is the only cookie used on this site. If you don't want to use cookies, the tour will be shown on each reload. Click anywhere outside the tour to make it disappear."><p>Don't show the tour again</p><p style="font-size: x-small; color: #746427;">&#9432; This will set a cookie.</p></button>`
             },
             {
                 element: "#sidebar-close-info-span",
@@ -733,14 +733,15 @@ function startIntro(){
             },
             {
                 element: '#settings-tab-li',
-                intro: "And if you like another map layout, click here.",
+                intro: "And if you like another map layout or restart the tour, click here.",
                 position: 'bottom'
             },
             {
                 intro: "Click on any bubble to see more information about it.<br>That's it, now play with it."
             }
             ]
-        });
+        })
+        introJs.fn.oncomplete(setCookieNoTour)
         sidebar.open('info-content')
         intro.start();
         document.getElementById('set-cookie-no-tour').addEventListener('click', setCookieNoTour)
