@@ -112,27 +112,29 @@ resetButton.addEventListener('click', resetFilters)
 /* Emissions tab */
 let compatFilterButtons = [document.getElementById('compat-filter-manual-button'),
 document.getElementById('compat-filter-loop-button'),
-document.getElementById('compat-filter-cat-button')];
+document.getElementById('compat-filter-cat-button')]
 
 let pollutantFilterCO2Button = document.getElementById('pollutant-filter-CO2-button'),
-    pollutantFilterCOButton = document.getElementById('pollutant-filter-CO-button');
+    pollutantFilterCOButton = document.getElementById('pollutant-filter-CO-button')
 
-let naceButtons = document.getElementsByClassName('nace-button');
+let naceButtons = document.getElementsByClassName('nace-button')
 
 let co2FilteredSumOutput = document.getElementById('sumCO2'),
-    coFilteredSumOutput = document.getElementById('sumCO');
+    coFilteredSumOutput = document.getElementById('sumCO'),
+    co2CombinedFilteredSumOutput = document.getElementById('sumCO2combined'),
+    coCombinedFilteredSumOutput = document.getElementById('sumCOcombined')
 
-let naceDeselectButton = document.getElementById('nace-deselect-all');
+let naceDeselectButton = document.getElementById('nace-deselect-all')
 
 /* styling */
-pollutantFilterCO2Button.style.background = emissionColors["CO2, AIR"];
-pollutantFilterCOButton.style.background = emissionColors["CO, AIR"];
+pollutantFilterCO2Button.style.background = emissionColors["CO2, AIR"]
+pollutantFilterCOButton.style.background = emissionColors["CO, AIR"]
 
 function toggleCompatFilter(event) {
     for (var i = 0; i < compatFilterButtons.length; i++) {
-        compatFilterButtons[i].classList.remove('is-info');
+        compatFilterButtons[i].classList.remove('is-info')
     }
-    event.target.classList.add('is-info');
+    event.target.classList.add('is-info')
     if (event.target.id == 'compat-filter-cat-button') {
         for (name in nace) {
             nace[name].active = nace[name].catalytic
@@ -147,60 +149,74 @@ function toggleCompatFilter(event) {
     updateEmissionsFilter()
 }
 for (var i = 0; i < compatFilterButtons.length; i++) {
-    compatFilterButtons[i].addEventListener('click', toggleCompatFilter);
+    compatFilterButtons[i].addEventListener('click', toggleCompatFilter)
 }
 
 function updateNaceButtons() {
     for (var i = 0; i < naceButtons.length; i++) {
-        let naceName = naceButtons[i].id.replace("-filter-button", "");
+        let naceName = naceButtons[i].id.replace("-filter-button", "")
         if (nace[naceName].active) {
-            naceButtons[i].classList.add('is-activated', nace[naceName].style);
+            naceButtons[i].classList.add('is-activated', nace[naceName].style)
         }
         else {
-            naceButtons[i].classList.remove('is-activated', nace[naceName].style);
+            naceButtons[i].classList.remove('is-activated', nace[naceName].style)
         }
     }
 }
 
 function returnTogglePollutantFilter(button) {
     return function () {
-        button.classList.toggle('is-activated');
+        button.classList.toggle('is-activated')
         if (button.classList.contains('is-activated')) button.style.background = emissionColors[button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR"]
         else button.style.background = '#fff'
-        //console.log(button.id);
         getFilteredTotals()
-        toggleFilterEmittersByPollutant(button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR");
+        toggleFilterEmittersByPollutant(button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR")
     }
 }
 function toggleFilterEmittersByPollutant(pollutant) {
     if (map.hasLayer(markers[pollutant])) {
-        map.removeLayer(markers[pollutant]);
+        map.removeLayer(markers[pollutant])
     }
     else {
-        map.addLayer(markers[pollutant]);
+        map.addLayer(markers[pollutant])
     }
 }
-pollutantFilterCO2Button.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCO2Button));
-pollutantFilterCOButton.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCOButton));
+pollutantFilterCO2Button.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCO2Button))
+pollutantFilterCOButton.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCOButton))
 
 
 function getFilteredTotals() {
-    let co2sum = 0, cosum = 0;
-    for (var i = 0; i < naceButtons.length; i++) {
-        let naceName = naceButtons[i].id.replace("-filter-button", "");
-        if (naceButtons[i].classList.contains('is-activated')) {
-            if (pollutantFilterCOButton.classList.contains('is-activated')) cosum += globalEmissionData.stats.totals['CO, AIR'][naceName]
-            if (pollutantFilterCO2Button.classList.contains('is-activated')) co2sum += globalEmissionData.stats.totals['CO2, AIR'][naceName]
+    let co2sum = 0, cosum = 0, co2sumCombined = 0, cosumCombined = 0
+    for (name in nace) {
+        if(nace[name].active){
+            if (pollutantFilterCOButton.classList.contains('is-activated')) cosum += globalEmissionData.stats.totals['CO, AIR'][name]
+            if (pollutantFilterCO2Button.classList.contains('is-activated')) co2sum += globalEmissionData.stats.totals['CO2, AIR'][name]
         }
     }
-    co2FilteredSumOutput.style.background = '#ddc';
-    coFilteredSumOutput.style.background = '#ddc';
+    for (f in globalEmissionData['CO, AIR'].features) {
+        let props = globalEmissionData['CO, AIR'].features[f].properties
+        if (pollutantFilterCOButton.classList.contains('is-activated')
+            && nace[props.NACEMainEconomicActivityName].active
+            && props.co2Amount
+            && props.co2Amount > 0){
+            co2sumCombined += props.co2Amount
+            cosumCombined += props.MTonnes
+        }
+    }
+    co2CombinedFilteredSumOutput.style.background = '#ddc'
+    coCombinedFilteredSumOutput.style.background = '#ddc'
+    co2FilteredSumOutput.style.background = '#ddc'
+    coFilteredSumOutput.style.background = '#ddc'
     setTimeout(function () {
-        co2FilteredSumOutput.style.background = '#fff';
-        coFilteredSumOutput.style.background = '#fff';
-    }, 500);
-    co2FilteredSumOutput.textContent = formatSI(co2sum) + ' MT';
-    coFilteredSumOutput.textContent = formatSI(cosum) + ' MT';
+        co2FilteredSumOutput.style.background = '#fff'
+        coFilteredSumOutput.style.background = '#fff'
+        co2CombinedFilteredSumOutput.style.background = '#fff'
+        coCombinedFilteredSumOutput.style.background = '#fff'
+    }, 500)
+    co2FilteredSumOutput.textContent = formatSI(co2sum) + ' MT'
+    coFilteredSumOutput.textContent = formatSI(cosum) + ' MT'
+    co2CombinedFilteredSumOutput.textContent = formatSI(co2sumCombined) + ' MT'
+    coCombinedFilteredSumOutput.textContent = formatSI(cosumCombined) + ' MT'
 }
 
 function deselectAllNaceFilter() {
@@ -210,12 +226,12 @@ function deselectAllNaceFilter() {
     updateNaceButtons()
     updateEmissionsFilter()
 }
-naceDeselectButton.addEventListener('click', deselectAllNaceFilter);
+naceDeselectButton.addEventListener('click', deselectAllNaceFilter)
 
 let toggleFilterNACE = (buttonId) => {
     // put compat button in "manual" mode
     for (var i = 0; i < compatFilterButtons.length; i++) {
-        compatFilterButtons[i].classList.remove('is-info');
+        compatFilterButtons[i].classList.remove('is-info')
     }
     document.getElementById('compat-filter-manual-button').classList.add('is-info')
     // update nace object
