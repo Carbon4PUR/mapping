@@ -488,13 +488,15 @@ function loadPRTRlayers(data) {
  */
 function addEmitterPopupHandler(feature, type) {
     if (feature.properties) {
-        type = type.replace('CO2', 'CO<sub>2</sub>');
         let otherEmission = '';
-        if (feature.properties.co2Amount) otherEmission += feature.properties.co2Amount + ' Mt CO<sub>2</sub>';
-        if (feature.properties.coAmount) otherEmission += feature.properties.coAmount + ' Mt CO';
-        return `<h2>${feature.properties.FacilityName}</h2>
+        if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Mt CO<sub>2</sub>';
+        if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Mt CO';
+        return `<h2>${feature.properties.FacilityName}</h2>                       
                         <i>${feature.properties.NACEMainEconomicActivityName}</i>
-                        <br />${feature.properties.MTonnes} Mt ${type}` + (otherEmission != '' ? `<br />(${otherEmission})` : '')
+                        <br>
+                        <div class='popup-em'>
+                        Emissions:
+                        <br />${feature.properties.MTonnes} Mt ${type == 'CO, AIR' ? 'CO' : 'CO<sub>2</sub>'}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + '</div>'
 
     }
     else {
@@ -563,7 +565,7 @@ function convertGeoJSONToChemLayer(data, type) {
  */
 function addConsumerPopupHandler(feature, type) {
     if (feature.properties) {
-        return `<h3>${feature.properties.FacilityName}</h3>
+        return `<h2>${feature.properties.FacilityName}</h2>
                 <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>
                 <br>` + consumerPopupAvailability(feature);
     }
@@ -584,9 +586,9 @@ function consumerPopupAvailability(feature) {
         }
     }
 
-    return 'Available emissions in ' + distanceChemicalPlantOutput.value + '&nbsp;km:<br>CO<sub>2</sub>: ' +
-        formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT<br>CO: ' +
-        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT';
+    return '<div class="popup-em">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
+        formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT CO<sub>2</sub><br>' +
+        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT CO</div>';
 }
 
 /**

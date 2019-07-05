@@ -107,6 +107,13 @@ body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
   color: #000;
 }
 
+/* popup */
+.popup-em {
+  background: #eee;
+  display: inline-block;
+  padding: 0.5rem;
+}
+
 /* intro tour */
 #set-cookie-no-tour {
   margin-right: 0px;
