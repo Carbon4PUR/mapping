@@ -491,10 +491,11 @@ function addEmitterPopupHandler(feature, type) {
         let otherEmission = '';
         if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Mt CO<sub>2</sub>';
         if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Mt CO';
+        let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
         return `<h2>${feature.properties.FacilityName}</h2>                       
                         <i>${feature.properties.NACEMainEconomicActivityName}</i>
                         <br>
-                        <div class='popup-em'>
+                        <div class='popup-em' style='background: ${color}'>
                         Emissions:
                         <br />${feature.properties.MTonnes} Mt ${type == 'CO, AIR' ? 'CO' : 'CO<sub>2</sub>'}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + '</div>'
 
@@ -567,7 +568,7 @@ function addConsumerPopupHandler(feature, type) {
     if (feature.properties) {
         return `<h2>${feature.properties.FacilityName}</h2>
                 <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>
-                <br>` + consumerPopupAvailability(feature);
+                <br>` + consumerPopupAvailability(feature, type);
     }
     else {
         console.log(feature);
@@ -575,7 +576,7 @@ function addConsumerPopupHandler(feature, type) {
 };
 
 
-function consumerPopupAvailability(feature) {
+function consumerPopupAvailability(feature, type) {
     let p = feature.properties
     p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 };
     if (p.distances != undefined) {
@@ -586,9 +587,15 @@ function consumerPopupAvailability(feature) {
         }
     }
 
-    return '<div class="popup-em">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
+    return '<div class="popup-em" style="background:'+ translucidColor(chemicalColors[type]) +'">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
         formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT CO<sub>2</sub><br>' +
         formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT CO</div>';
+}
+
+function translucidColor(colorString, opacity=0.6){
+    let c = d3.color(colorString)
+    c.opacity = opacity
+    return c
 }
 
 /**

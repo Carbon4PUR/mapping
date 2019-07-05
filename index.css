@@ -109,9 +109,9 @@ body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
 
 /* popup */
 .popup-em {
-  background: #eee;
   display: inline-block;
   padding: 0.5rem;
+  
 }
 
 /* intro tour */
