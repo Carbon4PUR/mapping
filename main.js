@@ -193,6 +193,7 @@ function getFilteredTotals() {
     for (f in globalEmissionData['CO, AIR'].features) {
         let props = globalEmissionData['CO, AIR'].features[f].properties
         if (pollutantFilterCOButton.classList.contains('is-activated')
+            && pollutantFilterCO2Button.classList.contains('is-activated')
             && nace[props.NACEMainEconomicActivityName].active
             && props.co2Amount
             && props.co2Amount > 0){
@@ -733,23 +734,19 @@ function startIntro(){
             },
             {
                 element: '#info-tab-li',
-                intro: "Here you find information about the map and the data",
-
+                intro: "Here you find information about the map and the data"
             },
             {
                 element: '#emitter-tab-li',
-                intro: "In this tab, you can filter the bubbles on the map representing emissions.",
-                position: 'right'
+                intro: "In this tab, you can filter the bubbles on the map representing emissions."
             },
             {
                 element: '#consumer-tab-li',
-                intro: 'Here you can filter by chemical parks and polyol plants.',
-                position: 'left'
+                intro: 'Here you can filter by chemical parks and polyol plants.'
             },
             {
                 element: '#settings-tab-li',
-                intro: "And if you like another map layout or restart the tour, click here.",
-                position: 'bottom'
+                intro: "And if you like another map layout or restart the tour, click here."
             },
             {
                 intro: "Click on any bubble to see more information about it.<br>That's it, now play with it."
