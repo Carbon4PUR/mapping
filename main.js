@@ -46,7 +46,8 @@ map.on('blur', () => {
 /* Definitions of colors, NACE categories etc. */
 
 // show all numbers with 1,000.00 format
-var formatSI = d3.format(',.2f')
+var format2Dec = d3.format(',.2f')
+var formatSI = d3.format(',.3f')
 
 let emissionColors = {
     "CO2, AIR": 'rgb(241, 177, 48)',
@@ -657,7 +658,7 @@ let createScale = () => {
         .append("text")
         .attr('x', function (d) { return xLabel + (d>=10 ? 1 : 7) })
         .attr('y', function (d) { return yCircle - size(d) })
-        .text(function (d) { return formatSI(d) }) // to display in Mt
+        .text(function (d) { return format2Dec(d) }) // to display in Mt
         .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 }
@@ -743,6 +744,10 @@ function startIntro(){
             {
                 element: '#consumer-tab-li',
                 intro: 'Here you can filter by chemical parks and polyol plants.'
+            },
+            {
+                element: '#legal-tab-li',
+                intro: 'All the background info and data as well as legal information about licenses and data.'
             },
             {
                 element: '#settings-tab-li',
