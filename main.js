@@ -751,7 +751,8 @@ function startIntro(){
             {
                 intro: "Click on any bubble to see more information about it.<br>That's it, now play with it."
             }
-            ]
+            ],
+            doneLabel: '<div title="This is the only cookie used on this site. If you don\'t want to use cookies, the tour will be shown on each reload. Click anywhere outside the tour to make it disappear."><span>Done</span><span style="color: #746427;"> &#9432;</span><div>'
         })
         introJs.fn.oncomplete(setCookieNoTour)
         sidebar.open('info-content')

@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
-	<link href="vendor/leaflet.css" rel="stylesheet" />	
+	<link href="vendor/leaflet.css" rel="stylesheet" />
 	<link rel="stylesheet" href="vendor/leaflet-sidebar2.min.css" />
 	<!-- A CSS framework for easy styling -->
 	<link href="vendor/bulma.min.css" rel="stylesheet" />
@@ -38,7 +38,8 @@
 				<path fill="#fff" d="M6 4l20 12-20 12z" transform="rotate(180 16 16)"></path>
 			</symbol>
 			<symbol id="icon-settings" viewBox="0 0 932.179 932.179">
-				<path fill="currentColor" d="M61.2,341.538c4.9,16.8,11.7,33,20.3,48.2l-24.5,30.9c-8,10.1-7.1,24.5,1.9,33.6l42.2,42.2c9.1,9.1,23.5,9.899,33.6,1.899
+				<path fill="currentColor"
+					d="M61.2,341.538c4.9,16.8,11.7,33,20.3,48.2l-24.5,30.9c-8,10.1-7.1,24.5,1.9,33.6l42.2,42.2c9.1,9.1,23.5,9.899,33.6,1.899
 	    		l30.7-24.3c15.8,9.101,32.6,16.2,50.1,21.2l4.6,39.5c1.5,12.8,12.3,22.4,25.1,22.4h59.7c12.8,0,23.6-9.601,25.1-22.4l4.4-38.1
 	    		c18.8-4.9,36.8-12.2,53.7-21.7l29.7,23.5c10.1,8,24.5,7.1,33.6-1.9l42.2-42.2c9.1-9.1,9.9-23.5,1.9-33.6l-23.1-29.3
 	    		c9.6-16.601,17.1-34.3,22.1-52.8l35.6-4.1c12.801-1.5,22.4-12.3,22.4-25.1v-59.7c0-12.8-9.6-23.6-22.4-25.1l-35.1-4.1
@@ -99,7 +100,16 @@
 					d="M 12,12.1 V 10 L 8,12.1 V 10 c -8,0 0,0 -8,0 v 6 H 16 V 10 Z M 6,14 H 2 v -2 h 4 z"></path>
 				<path fill="currentColor" d="M 10.5,5 V 7 H 9 l 2,2 2,-2 H 11.5 V 5 Z"></path>
 			</symbol>
-
+			<symbol id="icon-paragraph" xmlns:dc="http://purl.org/dc/elements/1.1/"
+				xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+				xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
+				preserveAspectRatio="xMidYMid meet" viewBox="0 0 57 89" version="1.0">
+				<metadata id="metadata4637">
+					Created by potrace 1.14, written by Peter Selinger 2001-2017
+				</metadata>
+				<path fill="currentColor"
+					d="m 18.4003,8.5 c -6.200004,4.2 -7.028998,12.826832 -1.70069,18.399903 l 2.2002,2.301269 -3.7002,3.599121 c -3.789836,3.686309 -4.964058,6.336612 -4.699065,10.850458 0.264994,4.513847 4.051439,9.317775 11.777215,14.917609 11.822406,8.569173 12.521169,9.301772 12.60059,12.200683 0.06667,2.433345 -1.869571,5.028278 -3.7002,6.09961 -4.036074,2.362018 -9.660714,0.1086 -8.60009,-4.899902 0.739456,-3.491875 -1.0001,-6 -4.1001,-6 -4.2,0 -6.010204,4.604751 -3.60059,9.099609 2.790395,5.205162 15.9001,6.800098 22.1001,2.600098 6.2,-4.2 7.030785,-12.828549 1.70068,-18.399902 l -2.20022,-2.299805 3.7002,-3.600586 c 3.430172,-3.337827 4.6235,-5.909766 4.82994,-10.28093 C 45.21451,38.71607 41.396522,33.61222 33.09996,27.600098 21.276585,19.032262 20.555124,18.300343 20.49937,15.400879 c -0.04714,-2.451483 1.537448,-4.869284 3.7002,-6.099609 3.90557,-2.2217612 9.660724,-0.1085985 8.6001,4.899902 -0.739456,3.491877 1.0001,6 4.1001,6 4.2,0 6.006644,-4.605095 3.59912,-9.101073 C 38.756406,7.8460614 32.97594,6.006836 28.497835,6.086521 24.01973,6.166206 20.7253,6.925 18.4003,8.5 Z M 21.1,31 l 6.39991,4.800293 c 3.487943,2.616154 7.252322,5.654577 8.20019,6.799805 2.550418,3.081454 2.76712,7.448218 0.3779,10.368165 l -1.80029,2.200195 -6.3999,-4.800293 C 24.38987,47.752009 20.62848,44.711097 19.67761,43.56836 16.73798,40.035566 17.109552,35.876782 19.29968,33.200196 Z" />
+			</symbol>
 		</defs>
 	</svg>
 
@@ -136,9 +146,17 @@
 						</svg>
 					</a>
 				</li>
+				<li id="legal-tab-li">
+					<a href="#legal-content" role="tab">
+						<svg class="svgicon" viewbox="0 0 32 32">
+							<use xlink:href="#icon-paragraph"></use>
+						</svg>
+					</a>
+				</li>
 			</ul>
 			<ul role="tablist">
-				<li id="settings-tab-li"><a href="#settings-content" role="tab"><svg class="svgicon" viewbox="0 0 32 32">
+				<li id="settings-tab-li"><a href="#settings-content" role="tab"><svg class="svgicon"
+							viewbox="0 0 32 32">
 							<use xlink:href="#icon-settings"></use>
 						</svg></a></li>
 			</ul>
@@ -166,19 +184,130 @@
 					CO<sub>2</sub> emissions with an
 					<span style="border: 1px solid rgb(234,110,57); border-radius: 4px;">orange</span> border. The fill
 					color depends on the type of plant (see colors in the second tab on the left or click on any circle
-					on the map).<br>
-					Chemical plants are <span style="background: rgba(0,168,189,0.6); border-radius: 4px;">blue</span> and
+					on the map). The size indicates the amount of CO or CO<sub>2</sub> available.<br>
+					Chemical plants are <span style="background: rgba(0,168,189,0.6); border-radius: 4px;">blue</span>
+					and
 					polyol plants <span style="background: rgba(12,168,118,0.6); border-radius: 4px;">green</span>.
+					Those are potential sites for the Carbon4PUR technology. CO and CO<sub>2</sub> have to be available
+					nearby, and the size of the circle symbolizes the radius (defined by the user) in which transporting
+					those gases might be economical.
 					<h2>Usage</h2>
 					You can add filters to narrow down the emissions:<ul class="is-bullet">
 						<li>to those compatible with the Carbon4PUR process or by emission type and source <a
-								onclick="sidebar.open('emitter-content')">(first tab on the left)</a>,</li>
+								onclick="sidebar.open('emitter-content')">(<svg class="svgicon-small">
+									<use xlink:href="#icon-emitter"></use>
+								</svg> tab on the left)</a>,</li>
 						<li>and to those near an existing chemical plant <a
-								onclick="sidebar.open('consumer-content')">(second tab on the left)</a>.</li>
+								onclick="sidebar.open('consumer-content')">(<svg class="svgicon-small">
+									<use xlink:href="#icon-consumer"></use>
+								</svg> tab)</a>.</li>
 					</ul>
 					You can always click on the button to reset the map to this initial state:<br>
-					<a class="button is-info" id="reset-filters-button">Reset all filters</a>
-					<h2>Data</h2>
+					<a class="button is-info" id="reset-filters-button">Reset all filters</a>					
+				</div>
+			</div>
+			<div class="sidebar-pane" id="emitter-content">
+				<h1 class="sidebar-header">
+					Filter the emitters
+					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
+							<use xlink:href="#icon-play3"></use>
+						</svg></span>
+				</h1>
+				<h2>Filter by compatibility with Carbon4PUR cleaning step</h2>
+				<div class="filterGroup">
+					<div class="buttons has-addons">
+						<a id="compat-filter-loop-button" class="button is-info is-small">chemical looping</a>
+						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>
+						<a id="compat-filter-manual-button" class="button is-small">Manual</a>
+					</div>
+					<div class="is-size-7">&#9432; The emissions shown are filtered by <a
+							href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
+							target="_blank">NACE category</a>. Within this categories, especially within "electricity",
+						not all emissions are compatible with the Carbon4PUR cleaning steps. Please find more
+						information <a href="#nace-description" onclick="sidebar.open('legal-content')">here.</a></div>
+				</div>
+				<h2>Or manually filter</h2>
+				<div class="filterGroup">
+					Emission type:
+					<div class="buttons">
+						<a id="pollutant-filter-CO2-button"
+							class="button is-activated is-small"><span>CO<sub>2</sub></span></a>
+						<a id="pollutant-filter-CO-button" class="button is-activated is-small">CO</a>
+					</div>
+				</div>
+				<div class="filterGroup">
+					<div>
+						<span class="is-pulled-left">Only selected plant types: </span>
+						<span class="is-pulled-right" style="margin-top:-5px; margin-bottom:10px;"><a
+								class="button is-small" id="nace-deselect-all">Deselect all</a></span>
+						<span class=" is-clearfix"></span>
+					</div>
+					<div class="buttons" id="naceCategories"></div>
+					<h2>Statistics</h2>
+					<div class="sumsEmissions">Total emissions in Europe for selected filters:
+						<table>
+							<tr>
+								<td>CO<sub>2</sub>: </td>
+								<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO2"></output></td>
+							</tr>
+							<tr>
+								<td>CO: </td>
+								<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO"></output></td>
+							</tr>
+						</table>
+					</div>
+					<div class="sumsCombinedEmissions">Total emissions in Europe for selected filters where both CO and
+						CO<sub>2</sub> are available at the same site:
+						<table>
+							<tr>
+								<td>CO<sub>2</sub>: </td>
+								<td style="text-align: right; padding-left: 0.75rem;"><output
+										id="sumCO2combined"></output></td>
+							</tr>
+							<tr>
+								<td>CO: </td>
+								<td style="text-align: right; padding-left: 0.75rem;"><output
+										id="sumCOcombined"></output></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="sidebar-pane" id="consumer-content">
+				<h1 class="sidebar-header">
+					Filter by chemical plants
+					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
+							<use xlink:href="#icon-play3"></use>
+						</svg></span>
+				</h1>
+				<h2>Type of plant</h2>
+				<a class="button is-small" id="polyol-filter-button">Only show polyol plants</a>
+				<h2>Filter emissons</h2>
+				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
+					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="100"
+						value="25" step="1" type="range">
+					<output for="distance-chemical-plant-slider" id="distance-chemical-plant-slider-output">25</output>
+					<a class="button is-small" id="radius-filter-button">Only show emitters within radius of chemical
+						plant</a>
+				</div>
+				<h2>Filter by possible Carbon4PUR plant size</h2>
+				<div class="filterGroup">
+					<a class="button is-small" id="size-filter-button">Only clusters with enough sources for x kt
+						polyol:</a><br />
+					<input id="polyol-slider" class="slider has-output is-fullwidth" min="0" max="100" value="5"
+						step="1" type="range">
+					<output for="polyol-slider" id="polyol-slider-output">5</output>
+				</div>
+			</div>
+
+			<div class="sidebar-pane" id="legal-content">
+				<h1 class="sidebar-header">
+					Data, Licences, Privacy
+					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
+							<use xlink:href="#icon-play3"></use>
+						</svg></span>
+				</h1>
+				<h2>Data</h2>
 					All emissions have been obtained from <a href="https://prtr.eea.europa.eu"
 						target="_blank">E-PRTR</a>. The data was queried via the SPARQL-Endpoint <a
 						href="http://semantic.eea.europa.eu/sparql"
@@ -187,8 +316,7 @@
 					coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
 					location in Denmark.<br>
 					All chemical plants and polyol plants have been gathered manually via desk research, publications
-					and interviews. There is manual
-					promise that this data is complete or correct. If you have suggestions,
+					and interviews. There is no promise that this data is complete or correct. If you have suggestions,
 					please <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a>.
 					<a name="nace-description"></a>
 					<h2>NACE categories and plant types</h2>
@@ -205,146 +333,71 @@
 					<table>
 						<tr>
 							<td>Steel: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501854&IntKey=18501884&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">24.10 Manufacture of basic iron and steel and of ferro-alloys</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501854&IntKey=18501884&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">24.10 Manufacture of basic iron and steel and of ferro-alloys</a>
+							</td>
 						</tr>
 						<tr>
 							<td>Acheson: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">20.13 Manufacture of other inorganic basic chemicals</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">20.13 Manufacture of other inorganic basic chemicals</a></td>
 						</tr>
 						<tr>
 							<td>Biogas: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18506894&IntKey=18506924&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">35.11 Production of electricity</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18506894&IntKey=18506924&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">35.11 Production of electricity</a></td>
 						</tr>
 						<tr>
 							<td>Pyrolysis: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18495674&IntKey=18495704&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">06.20 Extraction of natural gas</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18495674&IntKey=18495704&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">06.20 Extraction of natural gas</a></td>
 						</tr>
 						<tr>
 							<td>Refineries and steam crackers: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499664&IntKey=18499694&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">19.20 Manufacture of refined petroleum products</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499664&IntKey=18499694&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">19.20 Manufacture of refined petroleum products</a></td>
 						</tr>
 						<tr>
 							<td>Cement: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">23.51 Manufacture of cement</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">23.51 Manufacture of cement</a></td>
 						</tr>
 						<tr>
 							<td>Lime and Plaster: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501374&IntKey=18501434&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">23.52 Manufacture of lime and plaster</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501374&IntKey=18501434&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">23.52 Manufacture of lime and plaster</a></td>
 						</tr>
 						<tr>
 							<td>Ammonia: </td>
-							<td><a
-								href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499904&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
+							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499904&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+									target="_blank">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
 						</tr>
 					</table>
 					<h2>Funding</h2>
 					<div>
-					<img src="img/eu.png" style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 768919
-				</div>
+						<img src="img/eu.png"
+							style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This project has
+						received funding from the European Union’s Horizon 2020 research and innovation programme under
+						grant agreement No 768919
+					</div>
 					<h2>Disclaimer</h2>
-					The information contained in this document has been prepared solely for the purpose of providing information about the Carbon4PUR consortium and its project. The document reflects only the Carbon4PUR consortium’s view and the European Commission is not responsible for any use that may be made of the information it contains.
-				</div>
-			</div>
-			<div class="sidebar-pane" id="emitter-content">
-				<h1 class="sidebar-header">
-					Filter the emitters
-					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
-							<use xlink:href="#icon-play3"></use>
-						</svg></span>
-				</h1>
-				<div class="filterGroup">Filter by compatibility with Carbon4PUR cleaning step:
-					<div class="buttons has-addons">
-						<a id="compat-filter-loop-button" class="button is-info is-small">chemical looping</a>
-						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>
-						<a id="compat-filter-manual-button" class="button is-small">Manual</a>
-					</div>
-					<div class="is-size-7">&#9432; The emissions shown are filtered by <a
-							href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
-							target="_blank">NACE category</a>. Within this categories, especially within "electricity",
-						not all emissions are compatible with the Carbon4PUR cleaning steps. Please find more
-						information <a href="#nace-description" onclick="sidebar.open('info-content')">here.</a></div>
-				</div>
-				<hr>
-				<div class="filterGroup">Or manually filter:
-					<div class="buttons">
-						<a id="pollutant-filter-CO2-button"
-							class="button is-activated is-small"><span>CO<sub>2</sub></span></a>
-						<a id="pollutant-filter-CO-button" class="button is-activated is-small">CO</a>
-					</div>
-				</div>
-				<div class="filterGroup">
-					<div>
-						<span class="is-pulled-left">Only selected plant types: </span>
-						<span class="is-pulled-right" style="margin-top:-5px; margin-bottom:10px;"><a
-								class="button is-small" id="nace-deselect-all">Deselect all</a></span>
-						<span class=" is-clearfix"></span>
-					</div>
-					<div class="buttons" id="naceCategories"></div>
-					<div class="sumsEmissions">Total emissions in Europe for selected filters:
-						<table>
-							<tr>
-								<td>CO<sub>2</sub>: </td>
-								<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO2"></output></td>
-							</tr>
-							<tr>
-								<td>CO: </td>
-								<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO"></output></td>
-							</tr>
-						</table>
-					</div>
-					<div class="sumsCombinedEmissions">Total emissions in Europe for selected filters where CO and CO<sub>2</sub> are available:
-							<table>
-								<tr>
-									<td>CO<sub>2</sub>: </td>
-									<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCO2combined"></output></td>
-								</tr>
-								<tr>
-									<td>CO: </td>
-									<td style="text-align: right; padding-left: 0.75rem;"><output id="sumCOcombined"></output></td>
-								</tr>
-							</table>
-						</div>
-				</div>
-			</div>
-			<div class="sidebar-pane" id="consumer-content">
-				<h1 class="sidebar-header">
-					Distance and type of chemical plant
-					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
-							<use xlink:href="#icon-play3"></use>
-						</svg></span>
-				</h1>
-				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
-					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="100"
-						value="25" step="1" type="range">
-					<output for="distance-chemical-plant-slider" id="distance-chemical-plant-slider-output">25</output>
-					<a class="button is-small" id="polyol-filter-button">Only show polyol plants</a>
-					<a class="button is-small" id="radius-filter-button">Only show emitters within radius of chemical
-						plant</a>
-				</div>
-
-				<hr>
-				<div class="filterGroup">
-					<a class="button is-small" id="size-filter-button">Only clusters with enough sources for x kt
-						polyol:</a><br />
-					<input id="polyol-slider" class="slider has-output is-fullwidth" min="0" max="100" value="5"
-						step="1" type="range">
-					<output for="polyol-slider" id="polyol-slider-output">5</output>
-				</div>
+					The information contained in this document has been prepared solely for the purpose of providing
+					information about the Carbon4PUR consortium and its project. The document reflects only the
+					Carbon4PUR consortium’s view and the European Commission is not responsible for any use that may be
+					made of the information it contains.
+					<h2>Licence</h2>
+					The content of this site is licensed under the <a href="https://opensource.org/licenses/MIT">MIT license</a>. You are basically free to do anything you want with it as long as you cite the authour (Carbon4PUR consortium) and use a similarly permissive license.
+					<h2>Used software</h2>
+					This website uses several technologies, libraries and artwork, notably:
+					<ul class="is-bullet">
+						<li><a href="https://leafletjs.com/">Leaflet</a> as mapping utility</li>
+						<li>Map data from <a href="https://www.thunderforest.com/">Thunderforest</a>, <a href="https://carto.com/attribution">CARTO</a> and <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a></li>
+						<li><a href="https://github.com/turbo87/sidebar-v2/">Leaflet-Sidebar2</a> for the left tabs</li>
+						<li><a href="https://bulma.io/">Bulma</a> as a styling framework</li>
+						<li><a href="https://introjs.com/">Intro.js</a> for the guided tour</li>
+						<li><a href="https://d3js.org/">d3.js</a> for some DOM manipulation and the legend</li>
+						<li>Icons from Peter Selinger (<a href="https://commons.wikimedia.org/wiki/File:Paragraf_-_symbol.svg">paragraph</a>)</li>
+					</ul>
 			</div>
 
 			<div class="sidebar-pane" id="settings-content">
@@ -354,14 +407,15 @@
 							<use xlink:href="#icon-play3"></use>
 						</svg></span>
 				</h1>
-				<div class="filterGroup">Change the layout of the map:
+				<h2>Map layout</h2>
+				<div class="filterGroup">
 					<div class="buttons has-addons">
 						<a class="button is-info is-small" id="map-layout-green">Blue-Green</a>
 						<a class="button is-small" id="map-layout-light">Light Grey</a>
 					</div>
 				</div>
-				<hr>
-				<a class="button is-warning is-small" id="show-intro">Show intro again</a>
+				<h2>Intro setting</h2>
+				<a class="button is-small" id="show-intro">Show intro again</a>
 			</div>
 		</div>
 	</div>
