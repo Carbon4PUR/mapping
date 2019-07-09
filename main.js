@@ -429,22 +429,22 @@ polyolSlider.addEventListener('input', function (event) {
 /***********************/
 /* Settings tab */
 let mapLayoutGreen = document.getElementById('map-layout-green'),
-    mapLayoutLight = document.getElementById('map-layout-light');
+    mapLayoutLight = document.getElementById('map-layout-light')
 
 let toggleMapLayout = () => {
-    mapLayoutGreen.classList.toggle('is-info');
-    mapLayoutLight.classList.toggle('is-info');
+    mapLayoutGreen.classList.toggle('is-info')
+    mapLayoutLight.classList.toggle('is-info')
     if (mapLayoutGreen.classList.contains('is-info')) {
-        map.removeLayer(light);
+        map.removeLayer(light)
         map.addLayer(green);
     }
     else {
-        map.removeLayer(green);
-        map.addLayer(light);
+        map.removeLayer(green)
+        map.addLayer(light)
     }
 };
-mapLayoutGreen.addEventListener('click', toggleMapLayout);
-mapLayoutLight.addEventListener('click', toggleMapLayout);
+mapLayoutGreen.addEventListener('click', toggleMapLayout)
+mapLayoutLight.addEventListener('click', toggleMapLayout)
 
 
 
@@ -453,8 +453,8 @@ mapLayoutLight.addEventListener('click', toggleMapLayout);
 /***********************/
 
 // keep reference to the markers for filtering
-var markers = {};
-var chemicalParkMarkers = {};
+var markers = {}
+var chemicalParkMarkers = {}
 
 /** 
 * convert json to map layer with circlemarkers
@@ -475,10 +475,10 @@ function loadPRTRlayers(data) {
                         fillOpacity: 0.4
                     }).bindPopup(addEmitterPopupHandler(feature, emission))
                 }
-            }).addTo(map);
+            }).addTo(map)
         }
     }
-    globalEmissionData = data;
+    globalEmissionData = data
 }
 
 /**
@@ -490,7 +490,7 @@ function loadPRTRlayers(data) {
  */
 function addEmitterPopupHandler(feature, type) {
     if (feature.properties) {
-        let otherEmission = '';
+        let otherEmission = ''
         if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Mt CO<sub>2</sub>';
         if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Mt CO';
         let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
@@ -664,10 +664,16 @@ let createScale = () => {
 }
 
 
+/*************************************/
+/* Change layout with get parameters */
+/*************************************/
+var url = new URL(window.location.href)
+var c = url.searchParams.get("style")
+if(!mapLayoutLight.classList.contains('is-info') && c == "light") toggleMapLayout()
+
 /*************************************************/
 /* And finally load all json data and display it */
 /*************************************************/
-
 document.addEventListener('DOMContentLoaded', (event) => {
     fetch('emissions.json')
         .then((response) => { return response.json() },
