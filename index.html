@@ -281,7 +281,7 @@
 						</svg></span>
 				</h1>
 				<h2>Type of plant</h2>
-				<a class="button is-small" id="polyol-filter-button">Only show polyol plants</a>
+				<button class="button is-small" id="polyol-filter-button">Only show polyol plants</button>
 				<h2>Filter emissons</h2>
 				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
 					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="100"
@@ -420,11 +420,46 @@
 					</div>					
 				</div>
 				<div class="is-size-7">&#9432; If you want to link to the map with light style, use this url: <a href="https://carbon4pur.github.io/mapping/?style=light">https://carbon4pur.github.io/mapping/?style=light</a></div>
+				<h2>Consumers</h2>
+				<div class="filterGroup">
+					<div class="buttons">
+						<button class="button is-info is-small" id="map-show-consumers">Show consumers</button>
+					</div>					
+				</div>
+				<div class="filterGroup">
+						<div class="buttons">
+							<button class="button is-small" id="modify-consumers">Load your own consumers</button>
+						</div>					
+					</div>
 				<h2>Intro setting</h2>
 				<a class="button is-small" id="show-intro">Show intro again</a>
 			</div>
 		</div>
 	</div>
+	<!-- Modal for input/output of chemical data -->
+	<div class="modal" id="modal-modify-consumers" style="z-index: 9000">
+			<div class="modal-background"></div>
+			<div class="modal-card">
+			  <header class="modal-card-head">
+				<p class="modal-card-title">Load your own data</p>
+				<button class="delete close-modal" aria-label="close"></button>
+			  </header>
+			  <section class="modal-card-body">
+				<!-- Content ... -->
+				<p>You can edit the data in csv format directly here, or you can download it as csv and edit it for example in Excel. You can then copy it in here again.</p>
+				<p>If you want to share your own data, click on "create link" below and copy the displayed link.</p>
+				<h2>Chemical parks <span class="is-size-7">(<a href="chemicalparks.csv">Download</a>)</span></h2>
+				<textarea class="textarea" rows="7" id="csv-chemical-parks"></textarea>
+				<h2>Polyol plants <span class="is-size-7">(<a href="polyol plants europe v2.csv">Download</a>)</span></h2>
+				<textarea class="textarea" rows="7" id="csv-polyol-plants"></textarea>
+			  </section>
+			  <footer class="modal-card-foot">
+				<button class="button is-link" id="modify-consumers-create-link">Create link</button>
+				<button class="button is-success" id="modify-consumers-load-data">Load this data</button>
+				<button class="button close-modal">Cancel</button>
+			  </footer>
+			</div>
+		  </div>
 
 	<script src="vendor/leaflet.js"></script>
 	<script src="vendor/d3.min.js"></script>

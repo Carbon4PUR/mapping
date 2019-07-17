@@ -1,7 +1,7 @@
 # mapping
 The mapping activities from the Carbon4PUR project.
 
-#Workflow:
+# Workflow:
 ## Emissions
 Open sparql.html and wait for it to complete. The result will be logged in the console. Copy the object and paste it in prtr.json.
 Careful: we corrected the coordinates for one plant (see comment in top of file), please keep those changes in the new version.

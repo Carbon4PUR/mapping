@@ -324,8 +324,8 @@ function decideIfInVisibleCluster(feature) {
     let minCOavailability = polyolOutput.value * 15 / 50000
         // check all distances of the emission if there are any chemical plants within the defined radius
         for (d in feature.properties.distances) {
-            for (c in feature.properties.distances[d]) {
-                let chem = feature.properties.distances[d][c]
+            for (paramStyle in feature.properties.distances[d]) {
+                let chem = feature.properties.distances[d][paramStyle]
                 if (chem < distanceChemicalPlantOutput.value * 1000) {
                     // if so, find the corresponding chemical plant and see if it has enough CO
                     // this should probably be globalChemicalData
@@ -334,7 +334,7 @@ function decideIfInVisibleCluster(feature) {
                         if (!polyolFilterButton.classList.contains('is-info') || marker == 'polyol plants') {
                             for (f in chemicalParkMarkers[marker]._layers) {
                                 let feat = chemicalParkMarkers[marker]._layers[f].feature
-                                if (feat.properties.FacilityName == c) {
+                                if (feat.properties.FacilityName == paramStyle) {
                                     return feat.properties.availability['CO, AIR'] > minCOavailability
                                 }
 
@@ -418,34 +418,170 @@ distanceChemicalPlantSlider.addEventListener('input', function (event) {
     }
 
 
-});
+})
 polyolSlider.addEventListener('input', function (event) {
     // Update output with slider value
     polyolOutput.value = event.target.value
     updatePolyolSizeFilter()
     updateEmissionsFilter()
-});
+})
 
 /***********************/
 /* Settings tab */
 let mapLayoutGreen = document.getElementById('map-layout-green'),
-    mapLayoutLight = document.getElementById('map-layout-light')
+    mapLayoutLight = document.getElementById('map-layout-light'),
+    mapShowConsumers = document.getElementById('map-show-consumers'),
+    modifyConsumers = document.getElementById('modify-consumers'),
+    modalModifyConsumers = document.getElementById('modal-modify-consumers'),
+    csvChemicalParks = document.getElementById('csv-chemical-parks'),
+    csvPolyolPlants = document.getElementById('csv-polyol-plants'),
+    modifyConsumersCreateLink = document.getElementById('modify-consumers-create-link'),
+    modifyConsumersLoadData = document.getElementById('modify-consumers-load-data'),
+    closeModalList = document.getElementsByClassName('close-modal')
 
-let toggleMapLayout = () => {
+function toggleMapLayout() {
     mapLayoutGreen.classList.toggle('is-info')
     mapLayoutLight.classList.toggle('is-info')
     if (mapLayoutGreen.classList.contains('is-info')) {
         map.removeLayer(light)
-        map.addLayer(green);
+        map.addLayer(green)
     }
     else {
         map.removeLayer(green)
         map.addLayer(light)
     }
-};
+}
 mapLayoutGreen.addEventListener('click', toggleMapLayout)
 mapLayoutLight.addEventListener('click', toggleMapLayout)
 
+function toggleShowConsumers() {
+    mapShowConsumers.classList.toggle('is-info')
+    polyolFilterButton.classList.remove('is-info')
+    if (mapShowConsumers.classList.contains('is-info')) {
+        polyolFilterButton.disabled = false
+        for(l in chemicalParkMarkers)
+            map.addLayer(chemicalParkMarkers[l])
+    }
+    else {
+        polyolFilterButton.disabled = true
+        for(l in chemicalParkMarkers)
+            map.removeLayer(chemicalParkMarkers[l])
+    }
+}
+mapShowConsumers.addEventListener('click', toggleShowConsumers)
+
+function putCsvInTextArea(file, textarea) {			
+    fetch(file)
+        .then(response => response.text())
+        .then(myBlob => textarea.value = myBlob)
+}
+
+function toggleModifyConsumers(){    
+    modalModifyConsumers.classList.toggle('is-active')
+    if (!modalModifyConsumers.dataset.isInitialized){
+        putCsvInTextArea('chemicalparks.csv', csvChemicalParks)
+        putCsvInTextArea('polyol plants europe v2.csv', csvPolyolPlants)
+        modalModifyConsumers.dataset.isInitialized = true
+    }
+}
+modifyConsumers.addEventListener('click', toggleModifyConsumers)
+for (let i=0; i < closeModalList.length; i++) {    
+    closeModalList[i].addEventListener('click', toggleModifyConsumers)
+}
+
+function modifyConsumersLink(){
+    var script = document.createElement('script')
+    script.onload = function () {
+        convertCsvsToJSON().then(json => {
+            var compressed = LZString.compressToEncodedURIComponent(JSON.stringify(json))
+            window.prompt("Copy to clipboard: Ctrl+C, Enter", 'https://carbon4pur.github.io/mapping/index.html?c=' +compressed);
+
+        })
+    }
+    script.src = 'vendor/lz-string.min.js'
+    document.head.appendChild(script)
+}
+modifyConsumersCreateLink.addEventListener('click', modifyConsumersLink)
+
+function convertCsvsToJSON() {    
+    return new Promise((resolve) => {
+        // only load csv2geojson if needed
+        var script = document.createElement('script')
+        script.onload = function () {
+            let csvs = {
+                "chemical parks": csvChemicalParks.value,
+                "polyol plants": csvPolyolPlants.value
+            } 
+            let json = {}
+            for(type in csvs){
+                csv2geojson.csv2geojson(csvs[type], {
+                    latfield: 'latitude',
+                    lonfield: 'longitude',
+                    delimiter: ';',
+                }, (err, geojson) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        //console.log(geojson);
+                        json[type] = geojson;
+                    }
+                });
+            }
+            globalChemicalData = json
+            //console.log(globalChemicalData)
+            resolve(json)
+        }
+        script.src = 'https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'
+        document.head.appendChild(script)
+    })
+}
+
+function addDistances(emissions, chemParks) {
+    return new Promise((resolve, reject) => {
+        for(eCat in emissions){
+            if(eCat != "stats"){
+                for(f in emissions[eCat].features){
+                    let feat = emissions[eCat].features[f]
+                    delete feat.properties.distances
+                    for(cat in chemParks){
+                        //console.log(globalChemParks);
+                        for(park in chemParks[cat].features){
+                            let p = chemParks[cat].features[park]
+                            let d = distance(feat.geometry.coordinates[1], feat.geometry.coordinates[0], p.geometry.coordinates[1], p.geometry.coordinates[0])   
+                            if(d<100001){
+                                if(!feat.properties.distances) feat.properties.distances = {}
+                                if(!feat.properties.distances[cat]) feat.properties.distances[cat] = {}
+                                    feat.properties.distances[cat][p.properties.FacilityName] = d
+                                    //console.log(p.properties.FacilityName)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        globalEmissionData = emissions
+        resolve(emissions)
+    })
+}
+
+function distance(lat1, lng1, lat2, lng2) {
+    var rad = Math.PI / 180,
+        lt1 = lat1 * rad,
+        lt2 = lat2 * rad,
+        sinDLat = Math.sin((lat2 - lat1) * rad / 2),
+        sinDLon = Math.sin((lng2 - lng1) * rad / 2),
+        a = sinDLat * sinDLat + Math.cos(lt1) * Math.cos(lt2) * sinDLon * sinDLon,
+        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    return 6371000 * c
+}
+
+function loadConsumersData() {
+    convertCsvsToJSON().then(chemParks => addDistances(globalEmissionData, chemParks))
+        .then(a => loadPRTRlayers())
+        .then(b => loadChemicalParks(globalChemicalData))
+}
+
+modifyConsumersLoadData.addEventListener('click', loadConsumersData)
 
 
 /***********************/
@@ -461,24 +597,26 @@ var chemicalParkMarkers = {}
 * @param {data} an Object loaded from json data containing several geoJSON Objects. Each feature should contain a "properties" with FacilityName, PollutantName, MTonnes and NACEMainEconomicActivityName
 */
 function loadPRTRlayers(data) {
-    //console.log(data);
-    for (emission in data) {
-        if (emission != "stats") {
-            markers[emission] = L.geoJson(data[emission], {
-                pointToLayer: function (feature, latlng) {
-                    return L.circleMarker(latlng, {
-                        radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
-                        color: emissionColors[feature.properties.PollutantName],
-                        fillColor: nace[feature.properties.NACEMainEconomicActivityName].color,
-                        weight: 1,
-                        opacity: 0.7,
-                        fillOpacity: 0.4
-                    }).bindPopup(addEmitterPopupHandler(feature, emission))
-                }
-            }).addTo(map)
+    return new Promise((resolve, reject) => {
+        for (emission in data) {
+            if (emission != "stats") {
+                markers[emission] = L.geoJson(data[emission], {
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
+                            color: emissionColors[feature.properties.PollutantName],
+                            fillColor: nace[feature.properties.NACEMainEconomicActivityName].color,
+                            weight: 1,
+                            opacity: 0.7,
+                            fillOpacity: 0.4
+                        }).bindPopup(addEmitterPopupHandler(feature, emission))
+                    }
+                }).addTo(map)
+            }
         }
-    }
-    globalEmissionData = data
+        globalEmissionData = data
+        resolve(data)
+    })
 }
 
 /**
@@ -486,7 +624,7 @@ function loadPRTRlayers(data) {
  *
  * @param {*} feature A GeoJSON feature with geometry and properties
  * @param {string} type The name of the category, in this case "CO2" or "CO" 
- * @returns
+ * @returns {string} a DOM string containing the popup
  */
 function addEmitterPopupHandler(feature, type) {
     if (feature.properties) {
@@ -511,8 +649,9 @@ function addEmitterPopupHandler(feature, type) {
 * convert json to map layer with circlemarkers
 * @param {Object} data Object loaded from json data containing several geoJSON Objects. Each feature should contain a "properties" with FacilityName 
 */
-let loadChemicalParks = (data) => {
+function loadChemicalParksFromData(data) {
     // copy distance information to markers. This could be done while creating the json arrays to speedup the load time.
+    //console.log(data)    
     for (emission in globalEmissionData) {
         if (emission != "stats") {
             for (f in globalEmissionData[emission].features) {
@@ -520,10 +659,10 @@ let loadChemicalParks = (data) => {
                 if (feat.properties.distances) {
                     for (e in feat.properties.distances) {
                         for (chem in feat.properties.distances[e]) {
-                            for (c in data[e].features) {
-                                if (data[e].features[c].properties.FacilityName == chem) {
-                                    if (!data[e].features[c].properties.distances) data[e].features[c].properties.distances = []
-                                    data[e].features[c].properties.distances.push({
+                            for (paramStyle in data[e].features) {
+                                if (data[e].features[paramStyle].properties.FacilityName == chem) {
+                                    if (!data[e].features[paramStyle].properties.distances) data[e].features[paramStyle].properties.distances = []
+                                    data[e].features[paramStyle].properties.distances.push({
                                         'name': feat.properties.FacilityName,
                                         'distance': feat.properties.distances[e][chem],
                                         'type': emission,
@@ -546,6 +685,55 @@ let loadChemicalParks = (data) => {
     globalChemicalData = data;
 }
 
+function loadChemicalParksFromURI(c) {
+    loadScript('vendor/lz-string.min.js', function(){        
+        console.log(c)
+        let string = LZString.decompressFromEncodedURIComponent(c)
+        console.log(string, JSON.parse(string))
+        loadChemicalParksFromData(JSON.parse(string))
+    })
+}
+
+function loadChemicalParks(data) {
+    return new Promise((resolve, reject) => {
+        for (marker in chemicalParkMarkers) {
+            map.removeLayer(chemicalParkMarkers[marker])
+        }
+        chemicalParkMarkers = {}
+        if(url.searchParams.get("c")) {
+            loadChemicalParksFromURI(url.searchParams.get("c"))
+        }
+        else {
+            loadChemicalParksFromData(data)
+        }
+        resolve(true)
+    })
+}
+
+function loadScript(url, callback)
+{
+    // Adding the script tag to the head as suggested before
+    var head = document.head;
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+
+    // Then bind the event to the callback function.
+    // There are several events for cross browser compatibility.
+    script.onreadystatechange = callback;
+    script.onload = callback;
+
+    // Fire the loading
+    head.appendChild(script);
+}
+
+/**
+ * Convert a geojson to a layer with circles and popups
+ *
+ * @param {*} data an object from json containing an array of geoJSON
+ * @param {string} type the name of the geoJSON inside the data
+ * @returns {layer} a geoJSON layer
+ */
 function convertGeoJSONToChemLayer(data, type) {
     return L.geoJson(data[type], {
         pointToLayer: function (feature, latlng) {
@@ -577,7 +765,13 @@ function addConsumerPopupHandler(feature, type) {
     }
 };
 
-
+/**
+ * Create a box with available emissions around a consumer
+ *
+ * @param {*} feature the consumer
+ * @param {*} type consumer type ("chemical parks" or "polyol plants")
+ * @returns a DOM string containing a div with the availability
+ */
 function consumerPopupAvailability(feature, type) {
     let p = feature.properties
     p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 };
@@ -588,12 +782,18 @@ function consumerPopupAvailability(feature, type) {
             }
         }
     }
-
     return '<div class="popup-em" style="background:'+ translucidColor(chemicalColors[type]) +'">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
         formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT CO<sub>2</sub><br>' +
         formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT CO</div>';
 }
 
+/**
+ * create a translucid color from a color string for the popups
+ *
+ * @param {*} colorString
+ * @param {number} [opacity=0.6]
+ * @returns color
+ */
 function translucidColor(colorString, opacity=0.6){
     let c = d3.color(colorString)
     c.opacity = opacity
@@ -668,8 +868,8 @@ let createScale = () => {
 /* Change layout with get parameters */
 /*************************************/
 var url = new URL(window.location.href)
-var c = url.searchParams.get("style")
-if(!mapLayoutLight.classList.contains('is-info') && c == "light") toggleMapLayout()
+if(!mapLayoutLight.classList.contains('is-info') && url.searchParams.get("style") == "light") toggleMapLayout()
+
 
 /*************************************************/
 /* And finally load all json data and display it */
