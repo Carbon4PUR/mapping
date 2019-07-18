@@ -1,53 +1,64 @@
-/* allows us to create filters within a Leaflet GeoJSON layer */
-L.GeoJSON.include({
-    setFilter: function (originalData, _) {
-        this.options.filter = _
-        this.clearLayers()
-        this.addData(originalData)
-        return this
-    }
-})
+let map, format2Dec, formatSI
 
-/* Set up the map with initial center and zoom level */
-let map = L.map('map', {
-    center: [51.65892, 6.41601], // roughly show Europe
-    zoom: 5, // roughly show Europe (from 1 to 18 -- decrease to zoom out, increase to zoom in)
-    scrollWheelZoom: false,
-    zoomControl: false // to put the zoom butons on the right
-})
-L.control.zoom({
-    position: 'topright'
-}).addTo(map)
-/* Carto light-gray basemap tiles with labels */
-let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
-})
-/* Current default map. Switch by puting the .addTo above */
-/* Thunderforest green tiles with more information */
-let green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
-    attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
-})
-    .addTo(map)
+function showMap(){
+    /* allows us to create filters within a Leaflet GeoJSON layer */
+    L.GeoJSON.include({
+        setFilter: function (originalData, _) {
+            this.options.filter = _
+            this.clearLayers()
+            this.addData(originalData)
+            return this
+        }
+    })
 
-/* Add the zoom buttons */
-var sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
+    /* Set up the map with initial center and zoom level */
+    map = L.map('map', {
+        center: [51.65892, 6.41601], // roughly show Europe
+        zoom: 5, // roughly show Europe (from 1 to 18 -- decrease to zoom out, increase to zoom in)
+        scrollWheelZoom: false,
+        zoomControl: false // to put the zoom butons on the right
+    })
+ 
+    L.control.zoom({
+        position: 'topright'
+    }).addTo(map)
+    /* Carto light-gray basemap tiles with labels */
+    let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
+    })
+    /* Current default map. Switch by puting the .addTo above */
+    /* Thunderforest green tiles with more information */
+    let green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
+        attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
+    })
+        .addTo(map)
+
+    /* Add the zoom buttons */
+    var sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
 
 
-/* On the map, scrolling should zoom */
-map.on('focus', () => {
-    map.scrollWheelZoom.enable();
-})
-/* Outside of the map, scrolling should not zoom */
-map.on('blur', () => {
-    map.scrollWheelZoom.disable();
-})
+    /* On the map, scrolling should zoom */
+    map.on('focus', () => {
+        map.scrollWheelZoom.enable();
+    })
+    /* Outside of the map, scrolling should not zoom */
+    map.on('blur', () => {
+        map.scrollWheelZoom.disable();
+    })
+}
 
 /*********************************************************/
 /* Definitions of colors, NACE categories etc. */
 
-// show all numbers with 1,000.00 format
-var format2Dec = d3.format(',.2f')
-var formatSI = d3.format(',.3f')
+/**
+ * Load everything that needs external libraries after deferred loading
+ *
+ */
+function loadGlobalDefs() {
+    // show all numbers with 1,000.00 format
+    format2Dec = d3.format(',.2f')
+    formatSI = d3.format(',.3f')
+}
 
 let emissionColors = {
     "CO2, AIR": 'rgb(241, 177, 48)',
@@ -71,7 +82,7 @@ let emissionColors = {
 
 /*********************************************************/
 /* Keep a copy of the loaded jsons, in case we need them */
-let globalEmissionData, globalChemicalData;
+let globalEmissionData, globalChemicalData
 
 /***********************/
 /* Handle interactions */
@@ -98,8 +109,8 @@ function resetFilters() {
     polyolOutput.value = 5
     // launch update
     if (document.createEvent) {     // all browsers except IE before version 9
-        var changeEvent = document.createEvent("Event");
-        changeEvent.initEvent("input");
+        var changeEvent = document.createEvent("Event")
+        changeEvent.initEvent("input")
         distanceChemicalPlantSlider.dispatchEvent(changeEvent)
     }
 
@@ -262,7 +273,7 @@ function addNACEFilters() {
             .attr('class', 'button is-small is-activated is-fullwidth nace-button ' + nace[name].style)
             .on('click', (a, b, c) => { toggleFilterNACE(c[0].id) })
             .attr('title', emissionSums)
-            .text(name);
+            .text(name)
     }
 }
 
@@ -275,9 +286,9 @@ let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
 let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
     distanceChemicalPlantOutput = document.getElementById('distance-chemical-plant-slider-output'),
     polyolSlider = document.getElementById('polyol-slider'),
-    polyolOutput = document.getElementById('polyol-slider-output');
+    polyolOutput = document.getElementById('polyol-slider-output')
 
-let sizeFilterButton = document.getElementById('size-filter-button');
+let sizeFilterButton = document.getElementById('size-filter-button')
 
 /**
  * Toggle if only polyol plants are shown or all chemical plants
@@ -285,14 +296,14 @@ let sizeFilterButton = document.getElementById('size-filter-button');
 let togglePolyolFilter = () => {
     polyolFilterButton.classList.toggle('is-info')
     if (map.hasLayer(chemicalParkMarkers['chemical parks'])) {
-        map.removeLayer(chemicalParkMarkers['chemical parks']);
+        map.removeLayer(chemicalParkMarkers['chemical parks'])
     }
     else {
-        map.addLayer(chemicalParkMarkers['chemical parks']);
+        map.addLayer(chemicalParkMarkers['chemical parks'])
     }
     updateEmissionsFilter()
-};
-polyolFilterButton.addEventListener('click', togglePolyolFilter);
+}
+polyolFilterButton.addEventListener('click', togglePolyolFilter)
 
 /**
  * Decide for each emission if it should be displayed depending on all active filters
@@ -316,7 +327,7 @@ function updateEmissionsFilter() {
                 }
             }
             return isVisible
-        });
+        })
     }
     getFilteredTotals()
 }
@@ -376,8 +387,8 @@ function decideIfInDistance(feature, typeOfChemicalPlant) {
 let toggleRadiusFilter = () => {
     radiusFilterButton.classList.toggle('is-info')
     updateEmissionsFilter()
-};
-radiusFilterButton.addEventListener('click', toggleRadiusFilter);
+}
+radiusFilterButton.addEventListener('click', toggleRadiusFilter)
 
 
 
@@ -390,10 +401,10 @@ let toggleSizeFilter = () => {
     updatePolyolSizeFilter()
     updateEmissionsFilter()
 }
-sizeFilterButton.addEventListener('click', toggleSizeFilter);
+sizeFilterButton.addEventListener('click', toggleSizeFilter)
 
 let updatePolyolSizeFilter = () => {
-    let isActive = sizeFilterButton.classList.contains('is-info');
+    let isActive = sizeFilterButton.classList.contains('is-info')
     // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 15 / 50000
     for (marker in chemicalParkMarkers) {
@@ -405,12 +416,12 @@ let updatePolyolSizeFilter = () => {
 }
 
 /* Glitch in the slider, reset the value to put button in middle of slider */
-distanceChemicalPlantSlider.value = distanceChemicalPlantSlider.getAttribute("value");
-polyolSlider.value = polyolSlider.getAttribute("value");
+distanceChemicalPlantSlider.value = distanceChemicalPlantSlider.getAttribute("value")
+polyolSlider.value = polyolSlider.getAttribute("value")
 
 distanceChemicalPlantSlider.addEventListener('input', function (event) {
     // Update output with slider value
-    distanceChemicalPlantOutput.value = event.target.value;
+    distanceChemicalPlantOutput.value = event.target.value
     // Update size of circle
     for (layer in chemicalParkMarkers) {
         chemicalParkMarkers[layer].eachLayer((layer) => {
@@ -502,7 +513,7 @@ function modifyConsumersLink(){
     script.onload = function () {
         convertCsvsToJSON().then(json => {
             var compressed = LZString.compressToEncodedURIComponent(JSON.stringify(json))
-            window.prompt("Copy to clipboard: Ctrl+C, Enter", 'https://carbon4pur.github.io/mapping/index.html?c=' +compressed);
+            window.prompt("Copy to clipboard: Ctrl+C, Enter", 'https://carbon4pur.github.io/mapping/index.html?c=' +compressed)
 
         })
     }
@@ -528,12 +539,12 @@ function convertCsvsToJSON() {
                     delimiter: ';',
                 }, (err, geojson) => {
                     if (err) {
-                        console.error(err);
+                        console.error(err)
                     } else {
-                        //console.log(geojson);
-                        json[type] = geojson;
+                        //console.log(geojson)
+                        json[type] = geojson
                     }
-                });
+                })
             }
             globalChemicalData = json
             //console.log(globalChemicalData)
@@ -552,7 +563,7 @@ function addDistances(emissions, chemParks) {
                     let feat = emissions[eCat].features[f]
                     delete feat.properties.distances
                     for(cat in chemParks){
-                        //console.log(globalChemParks);
+                        //console.log(globalChemParks)
                         for(park in chemParks[cat].features){
                             let p = chemParks[cat].features[park]
                             let d = distance(feat.geometry.coordinates[1], feat.geometry.coordinates[0], p.geometry.coordinates[1], p.geometry.coordinates[0])   
@@ -649,8 +660,8 @@ function loadPRTRlayers(data) {
 function addEmitterPopupHandler(feature, type) {
     if (feature.properties) {
         let otherEmission = ''
-        if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Mt CO<sub>2</sub>';
-        if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Mt CO';
+        if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Mt CO<sub>2</sub>'
+        if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Mt CO'
         let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
         return `<h2>${feature.properties.FacilityName}</h2>                       
                         <i>${feature.properties.NACEMainEconomicActivityName}</i>
@@ -661,7 +672,7 @@ function addEmitterPopupHandler(feature, type) {
 
     }
     else {
-        console.log(feature);
+        console.log(feature)
     }
 }
 
@@ -702,7 +713,7 @@ function loadChemicalParksFromData(data) {
         }
     }
     // keep global reference
-    globalChemicalData = data;
+    globalChemicalData = data
 }
 
 function loadChemicalParksFromURI(c) {
@@ -738,21 +749,18 @@ function loadChemicalParksFromJSON() {
 }
 
 
-function loadScript(url, callback)
-{
+function loadScript(url, callback) {
     // Adding the script tag to the head as suggested before
-    var head = document.head;
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = url;
-
+    var head = document.head
+    var script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = url
     // Then bind the event to the callback function.
     // There are several events for cross browser compatibility.
-    script.onreadystatechange = callback;
-    script.onload = callback;
-
+    script.onreadystatechange = callback
+    script.onload = callback
     // Fire the loading
-    head.appendChild(script);
+    head.appendChild(script)
 }
 
 /**
@@ -786,12 +794,12 @@ function addConsumerPopupHandler(feature, type) {
     if (feature.properties) {
         return `<h2>${feature.properties.FacilityName}</h2>
                 <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>
-                <br>` + consumerPopupAvailability(feature, type);
+                <br>` + consumerPopupAvailability(feature, type)
     }
     else {
-        console.log(feature);
+        console.log(feature)
     }
-};
+}
 
 /**
  * Create a box with available emissions around a consumer
@@ -802,7 +810,7 @@ function addConsumerPopupHandler(feature, type) {
  */
 function consumerPopupAvailability(feature, type) {
     let p = feature.properties
-    p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 };
+    p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 }
     if (p.distances != undefined) {
         for (e in p.distances) {
             if (p.distances[e].distance < distanceChemicalPlantOutput.value * 1000) {
@@ -812,7 +820,7 @@ function consumerPopupAvailability(feature, type) {
     }
     return '<div class="popup-em" style="background:'+ translucidColor(chemicalColors[type]) +'">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
         formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT CO<sub>2</sub><br>' +
-        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT CO</div>';
+        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT CO</div>'
 }
 
 /**
@@ -903,6 +911,8 @@ if(!mapLayoutLight.classList.contains('is-info') && url.searchParams.get("style"
 /* And finally load all json data and display it */
 /*************************************************/
 document.addEventListener('DOMContentLoaded', (event) => {
+    showMap()
+    loadGlobalDefs()
     fetch('emissions.json')
         .then((response) => { return response.json() },
             (reject) => { console.error(reject) })
@@ -991,6 +1001,6 @@ function startIntro(){
         })
         introJs.fn.oncomplete(setCookieNoTour)
         sidebar.open('info-content')
-        intro.start();
+        intro.start()
         document.getElementById('set-cookie-no-tour').addEventListener('click', setCookieNoTour)
   }
