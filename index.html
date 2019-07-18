@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-EN">
 
 <head>
 	<title>Carbon4PUR CO2/CO sources and consumer map</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
+	<meta name="Description" content="An interactive map to show CO/CO2 emissions from different processes and a non-exhaustive number of chemical parks and polyol plants.
+	Allows the user to interactively filter the data to conclude on possible replication sites for the Carbon4PUR technology to transform CO and CO2 streams to polyurethanes.">
 	<!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
 	<link href="vendor/leaflet.css" rel="stylesheet" />
 	<link rel="stylesheet" href="vendor/leaflet-sidebar2.min.css" />
@@ -292,7 +294,7 @@
 				</div>
 				<h2>Filter by possible Carbon4PUR plant size</h2>
 				<div class="filterGroup">
-					<a class="button is-small" id="size-filter-button">Only clusters with enough sources for x kt
+					<a class="button is-small" id="size-filter-button">Only clusters with enough CO for x kt
 						polyol:</a><br />
 					<input id="polyol-slider" class="slider has-output is-fullwidth" min="0" max="100" value="5"
 						step="1" type="range">
@@ -308,15 +310,15 @@
 						</svg></span>
 				</h1>
 				<h2>Data</h2>
-				All emissions have been obtained from <a href="https://prtr.eea.europa.eu" target="_blank">E-PRTR</a>.
+				All emissions have been obtained from <a href="https://prtr.eea.europa.eu" target="_blank" rel="noopener">E-PRTR</a>.
 				The data was queried via the SPARQL-Endpoint <a href="http://semantic.eea.europa.eu/sparql"
-					target="_blank">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
-					href="sparql.txt" target="_blank">here</a>. Some errors have been corrected manually, e.g. the
+					target="_blank" rel="noopener">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
+					href="sparql.txt" target="_blank" rel="noopener">here</a>. Some errors have been corrected manually, e.g. the
 				coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
 				location in Denmark.<br>
 				All chemical plants and polyol plants have been gathered manually via desk research, publications
 				and interviews. There is no promise that this data is complete or correct. If you have suggestions,
-				please <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a>.
+				please <a href="https://www.carbon4pur.eu/contact/" target="_blank" rel="noopener">contact us</a>.
 				<a name="nace-description"></a>
 				<h2>NACE categories and plant types</h2>
 				Carbon4PUR is investigating two cleaning technologies: <b>chemical looping</b> and <b>catalytic
@@ -329,48 +331,48 @@
 				CH<sub>4</sub> containing streams .<br>
 				To get an idea of where those emissions are available, the <a
 					href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
-					target="_blank">NACE category</a> for each of those processes have been obtained:
+					target="_blank" rel="noopener">NACE category</a> for each of those processes have been obtained:
 				<table>
 					<tr>
 						<td>Steel: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501854&IntKey=18501884&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">24.10 Manufacture of basic iron and steel and of ferro-alloys</a>
+								target="_blank" rel="noopener">24.10 Manufacture of basic iron and steel and of ferro-alloys</a>
 						</td>
 					</tr>
 					<tr>
 						<td>Acheson: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">20.13 Manufacture of other inorganic basic chemicals</a></td>
+								target="_blank" rel="noopener">20.13 Manufacture of other inorganic basic chemicals</a></td>
 					</tr>
 					<tr>
 						<td>Biogas: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18506894&IntKey=18506924&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">35.11 Production of electricity</a></td>
+								target="_blank" rel="noopener">35.11 Production of electricity</a></td>
 					</tr>
 					<tr>
 						<td>Pyrolysis: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18495674&IntKey=18495704&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">06.20 Extraction of natural gas</a></td>
+								target="_blank" rel="noopener">06.20 Extraction of natural gas</a></td>
 					</tr>
 					<tr>
 						<td>Refineries and steam crackers: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499664&IntKey=18499694&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">19.20 Manufacture of refined petroleum products</a></td>
+								target="_blank" rel="noopener">19.20 Manufacture of refined petroleum products</a></td>
 					</tr>
 					<tr>
 						<td>Cement: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">23.51 Manufacture of cement</a></td>
+								target="_blank" rel="noopener">23.51 Manufacture of cement</a></td>
 					</tr>
 					<tr>
 						<td>Lime and Plaster: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501374&IntKey=18501434&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">23.52 Manufacture of lime and plaster</a></td>
+								target="_blank" rel="noopener">23.52 Manufacture of lime and plaster</a></td>
 					</tr>
 					<tr>
 						<td>Ammonia: </td>
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499904&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-								target="_blank">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
+								target="_blank" rel="noopener">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
 					</tr>
 				</table>
 				<h2>Funding</h2>
@@ -391,7 +393,7 @@
 				(Carbon4PUR consortium) and use a similarly permissive license.<br>
 				The source code <a href="https://github.com/Carbon4PUR/mapping">is available on github</a>, please feel
 				free to clone and modify the code. It would be nice to <a href="https://www.carbon4pur.eu/contact/"
-					target="_blank">contact us</a> to let us know what you are doing with the tool.
+					target="_blank" rel="noopener">contact us</a> to let us know what you are doing with the tool.
 				<h2>Used software</h2>
 				This website uses several technologies, libraries and artwork, notably:
 				<ul class="is-bullet">
@@ -412,7 +414,7 @@
 				It is intended as a tool to visualize publicly available data to help with the decision making of
 				Carbon4PUR replication activities.<br>
 				You can contact the Carbon4PUR consortium via our website: <a href="https://www.carbon4pur.eu/contact/"
-					target="_blank">Carbon4PUR contact form</a>
+					target="_blank" rel="noopener">Carbon4PUR contact form</a>
 			</div>
 
 			<div class="sidebar-pane" id="settings-content">
