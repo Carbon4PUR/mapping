@@ -141,7 +141,7 @@ body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
   background-color: white;
   border-radius: 5px;
   border: 1.5px solid rgba(0,0,0,.2);
-  z-index: 8000;
+  z-index: 1000;
   right: 10px;
   bottom: 20px;
   padding: 3px;
