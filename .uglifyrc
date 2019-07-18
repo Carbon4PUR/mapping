@@ -1,0 +1,4 @@
+{
+    "compress":{"passes": 3,"unsafe": true,"pure_getters": true},
+    "mangle":{"toplevel": true}
+}
