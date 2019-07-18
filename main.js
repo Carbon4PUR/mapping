@@ -1,4 +1,5 @@
-let map, format2Dec, formatSI
+// define global variables
+let map, format2Dec, formatSI, light, green, sidebar
 
 function showMap(){
     /* allows us to create filters within a Leaflet GeoJSON layer */
@@ -23,18 +24,18 @@ function showMap(){
         position: 'topright'
     }).addTo(map)
     /* Carto light-gray basemap tiles with labels */
-    let light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+    light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
     })
     /* Current default map. Switch by puting the .addTo above */
     /* Thunderforest green tiles with more information */
-    let green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
+    green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
         attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
     })
         .addTo(map)
 
     /* Add the zoom buttons */
-    var sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
+    sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
 
 
     /* On the map, scrolling should zoom */
