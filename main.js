@@ -108,9 +108,10 @@ resetButton.addEventListener('click', resetFilters)
 
 /*****************/
 /* Emissions tab */
-let compatFilterButtons = [document.getElementById('compat-filter-manual-button'),
-document.getElementById('compat-filter-loop-button'),
-document.getElementById('compat-filter-cat-button')]
+let compatFilterManualButton = document.getElementById('compat-filter-manual-button'),
+    compatFilterLoopButton = document.getElementById('compat-filter-loop-button')
+    compatFilterCatButton = document.getElementById('compat-filter-cat-button')
+    compatFilterButtons = [compatFilterManualButton,compatFilterLoopButton,compatFilterCatButton]
 
 let pollutantFilterCO2Button = document.getElementById('pollutant-filter-CO2-button'),
     pollutantFilterCOButton = document.getElementById('pollutant-filter-CO-button')
@@ -128,17 +129,19 @@ let naceDeselectButton = document.getElementById('nace-deselect-all')
 pollutantFilterCO2Button.style.background = emissionColors["CO2, AIR"]
 pollutantFilterCOButton.style.background = emissionColors["CO, AIR"]
 
-function toggleCompatFilter(event) {
-    for (var i = 0; i < compatFilterButtons.length; i++) {
-        compatFilterButtons[i].classList.remove('is-info')
-    }
-    event.target.classList.add('is-info')
-    if (event.target.id == 'compat-filter-cat-button') {
+/**
+ * when clicking on a compat button, switch mode
+ *
+ * @param {event} event the click event on a compat button
+ */
+function toggleCompatFilter(event) {    
+    activateCompatButton(event.target)
+    if (event.target == compatFilterCatButton) {
         for (name in nace) {
             nace[name].active = nace[name].catalytic
         }
     }
-    else if (event.target.id == 'compat-filter-loop-button') {
+    else if (event.target == compatFilterLoopButton) {
         for (name in nace) {
             nace[name].active = nace[name].looping
         }
@@ -148,6 +151,13 @@ function toggleCompatFilter(event) {
 }
 for (var i = 0; i < compatFilterButtons.length; i++) {
     compatFilterButtons[i].addEventListener('click', toggleCompatFilter)
+}
+
+function activateCompatButton(button) {
+    for (var i = 0; i < compatFilterButtons.length; i++) {
+        compatFilterButtons[i].classList.remove('is-info')
+    }
+    button.classList.add('is-info')
 }
 
 function updateNaceButtons() {
@@ -227,12 +237,10 @@ function deselectAllNaceFilter() {
 }
 naceDeselectButton.addEventListener('click', deselectAllNaceFilter)
 
+
+
 let toggleFilterNACE = (buttonId) => {
-    // put compat button in "manual" mode
-    for (var i = 0; i < compatFilterButtons.length; i++) {
-        compatFilterButtons[i].classList.remove('is-info')
-    }
-    document.getElementById('compat-filter-manual-button').classList.add('is-info')
+    activateCompatButton(compatFilterManualButton)
     // update nace object
     nace[buttonId.replace("-filter-button", "")].active = !nace[buttonId.replace("-filter-button", "")].active
     // color active buttons
@@ -242,8 +250,7 @@ let toggleFilterNACE = (buttonId) => {
 }
 
 /**
- * Dirty hack to display a button for each NACE category.
- * Should probably not come from the color list
+ * Display a button for each NACE category.
  *
  */
 function addNACEFilters() {
@@ -303,10 +310,10 @@ function updateEmissionsFilter() {
                     (!polyolFilterButton.classList.contains('is-info') && decideIfInDistance(feature, 'chemical parks'))
                     // and always check for distance to polyol plants
                     || decideIfInDistance(feature, 'polyol plants')
-            }
-            // if selected, only show clusters with enough CO for x kt polyol
-            if (isVisible && sizeFilterButton.classList.contains('is-info')) {
-                isVisible = decideIfInVisibleCluster(feature)
+                    // if selected, only show clusters with enough CO for x kt polyol
+                if (isVisible && sizeFilterButton.classList.contains('is-info')) {
+                    isVisible = decideIfInVisibleCluster(feature)
+                }
             }
             return isVisible
         });
@@ -426,7 +433,7 @@ polyolSlider.addEventListener('input', function (event) {
     updateEmissionsFilter()
 })
 
-/***********************/
+/****************/
 /* Settings tab */
 let mapLayoutGreen = document.getElementById('map-layout-green'),
     mapLayoutLight = document.getElementById('map-layout-light'),
@@ -437,7 +444,8 @@ let mapLayoutGreen = document.getElementById('map-layout-green'),
     csvPolyolPlants = document.getElementById('csv-polyol-plants'),
     modifyConsumersCreateLink = document.getElementById('modify-consumers-create-link'),
     modifyConsumersLoadData = document.getElementById('modify-consumers-load-data'),
-    closeModalList = document.getElementsByClassName('close-modal')
+    closeModalList = document.getElementsByClassName('close-modal'),
+    resetConsumers = document.getElementById('reset-consumers')
 
 function toggleMapLayout() {
     mapLayoutGreen.classList.toggle('is-info')
@@ -560,6 +568,8 @@ function addDistances(emissions, chemParks) {
             }
         }
         globalEmissionData = emissions
+        console.log(globalEmissionData)
+        
         resolve(emissions)
     })
 }
@@ -576,12 +586,22 @@ function distance(lat1, lng1, lat2, lng2) {
 }
 
 function loadConsumersData() {
+    modifyConsumersLoadData.classList.add('is-loading')
     convertCsvsToJSON().then(chemParks => addDistances(globalEmissionData, chemParks))
         .then(a => loadPRTRlayers())
         .then(b => loadChemicalParks(globalChemicalData))
+        .then(() => {
+            modifyConsumersLoadData.classList.remove('is-loading')
+            modalModifyConsumers.classList.remove('is-active')
+        })
 }
 
 modifyConsumersLoadData.addEventListener('click', loadConsumersData)
+
+resetConsumers.addEventListener('click', () => {    
+    delete modalModifyConsumers.dataset.isInitialized
+    loadChemicalParksFromJSON()
+})
 
 
 /***********************/
@@ -686,8 +706,7 @@ function loadChemicalParksFromData(data) {
 }
 
 function loadChemicalParksFromURI(c) {
-    loadScript('vendor/lz-string.min.js', function(){        
-        console.log(c)
+    loadScript('vendor/lz-string.min.js', () => {
         let string = LZString.decompressFromEncodedURIComponent(c)
         console.log(string, JSON.parse(string))
         loadChemicalParksFromData(JSON.parse(string))
@@ -709,6 +728,15 @@ function loadChemicalParks(data) {
         resolve(true)
     })
 }
+
+
+function loadChemicalParksFromJSON() {
+    fetch('chemicalParks.json')
+        .then((response) => { return response.json() },
+            (reject) => { console.error(reject) })
+        .then(loadChemicalParks)
+}
+
 
 function loadScript(url, callback)
 {
@@ -882,13 +910,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(createScale)
         .then(addNACEFilters)
         .then(getFilteredTotals)
-        .then(() => fetch('chemicalParks.json'))
-        .then((response) => { return response.json() },
-            (reject) => { console.error(reject) })
-        .then(loadChemicalParks)
+        .then(loadChemicalParksFromJSON)
         .then(checkIfIntro)
 })
-
 
 /***********************************/
 /* Helper functions (cookies etc.) */
