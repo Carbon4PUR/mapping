@@ -539,7 +539,7 @@ function convertCsvsToJSON() {
             //console.log(globalChemicalData)
             resolve(json)
         }
-        script.src = 'https://unpkg.com/csv2geojson@5.0.2/csv2geojson.js'
+        script.src = 'vendor/csv2geojson.js'
         document.head.appendChild(script)
     })
 }

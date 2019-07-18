@@ -114,8 +114,8 @@
 	</svg>
 
 	<!-- Map takes whole screen -->
-
 	<div id="map"></div>
+
 	<!-- Size legend -->
 	<div id="scale">
 		<h3>Emissions in <span title="Megatonnes or 1,000,000 tonnes">MT</span>/year</h3>
@@ -203,7 +203,7 @@
 								</svg> tab)</a>.</li>
 					</ul>
 					You can always click on the button to reset the map to this initial state:<br>
-					<a class="button is-info" id="reset-filters-button">Reset all filters</a>					
+					<a class="button is-info" id="reset-filters-button">Reset all filters</a>
 				</div>
 			</div>
 			<div class="sidebar-pane" id="emitter-content">
@@ -308,101 +308,111 @@
 						</svg></span>
 				</h1>
 				<h2>Data</h2>
-					All emissions have been obtained from <a href="https://prtr.eea.europa.eu"
-						target="_blank">E-PRTR</a>. The data was queried via the SPARQL-Endpoint <a
-						href="http://semantic.eea.europa.eu/sparql"
-						target="_blank">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
-						href="sparql.txt" target="_blank">here</a>. Some errors have been corrected manually, e.g. the
-					coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
-					location in Denmark.<br>
-					All chemical plants and polyol plants have been gathered manually via desk research, publications
-					and interviews. There is no promise that this data is complete or correct. If you have suggestions,
-					please <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a>.
-					<a name="nace-description"></a>
-					<h2>NACE categories and plant types</h2>
-					Carbon4PUR is investigating two cleaning technologies: <b>chemical looping</b> and <b>catalytic
-						cleaning</b>. They differ in their compatibility with input gases. We therefore defined a list
-					of compatible processes for each cleaning step.<br>
-					<b>catalytic cleaning</b> is compatible with steel gases and the Acheson process.<br>
-					<b>chemical looping</b> is compatible with steel gases, the Acheson process, biogas before and after
-					combustion, [pyrolysis gas, refineries and steam crackers] all after partial combustion. Cement/lime
-					kiln and ammonia could be used if the off gases were separated and then mixed with CO, H<sub>2</sub> or CH<sub>4</sub> containing streams .<br>
-					To get an idea of where those emissions are available, the <a
-						href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
-						target="_blank">NACE category</a> for each of those processes have been obtained:
-					<table>
-						<tr>
-							<td>Steel: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501854&IntKey=18501884&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">24.10 Manufacture of basic iron and steel and of ferro-alloys</a>
-							</td>
-						</tr>
-						<tr>
-							<td>Acheson: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">20.13 Manufacture of other inorganic basic chemicals</a></td>
-						</tr>
-						<tr>
-							<td>Biogas: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18506894&IntKey=18506924&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">35.11 Production of electricity</a></td>
-						</tr>
-						<tr>
-							<td>Pyrolysis: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18495674&IntKey=18495704&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">06.20 Extraction of natural gas</a></td>
-						</tr>
-						<tr>
-							<td>Refineries and steam crackers: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499664&IntKey=18499694&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">19.20 Manufacture of refined petroleum products</a></td>
-						</tr>
-						<tr>
-							<td>Cement: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">23.51 Manufacture of cement</a></td>
-						</tr>
-						<tr>
-							<td>Lime and Plaster: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501374&IntKey=18501434&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">23.52 Manufacture of lime and plaster</a></td>
-						</tr>
-						<tr>
-							<td>Ammonia: </td>
-							<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499904&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
-									target="_blank">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
-						</tr>
-					</table>
-					<h2>Funding</h2>
-					<div>
-						<img src="img/eu.png"
-							style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This project has
-						received funding from the European Union’s Horizon 2020 research and innovation programme under
-						grant agreement No 768919
-					</div>
-					<h2>Disclaimer</h2>
-					The information contained in this document has been prepared solely for the purpose of providing
-					information about the Carbon4PUR consortium and its project. The document reflects only the
-					Carbon4PUR consortium’s view and the European Commission is not responsible for any use that may be
-					made of the information it contains.
-					<h2>Licence</h2>
-					The content of this site is licensed under the <a href="https://opensource.org/licenses/MIT">MIT license</a>. You are basically free to do anything you want with it as long as you cite the authour (Carbon4PUR consortium) and use a similarly permissive license.<br>
-					The source code <a href="https://github.com/Carbon4PUR/mapping">is available on github</a>, please feel free to clone and modify the code. It would be nice to <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a> to let us know what you are doing with the tool.
-					<h2>Used software</h2>
-					This website uses several technologies, libraries and artwork, notably:
-					<ul class="is-bullet">
-						<li><a href="https://leafletjs.com/">Leaflet</a> as mapping utility</li>
-						<li>Map data from <a href="https://www.thunderforest.com/">Thunderforest</a>, <a href="https://carto.com/attribution">CARTO</a> and <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a></li>
-						<li><a href="https://github.com/turbo87/sidebar-v2/">Leaflet-Sidebar2</a> for the left tabs</li>
-						<li><a href="https://bulma.io/">Bulma</a> as a styling framework</li>
-						<li><a href="https://introjs.com/">Intro.js</a> for the guided tour</li>
-						<li><a href="https://d3js.org/">d3.js</a> for some DOM manipulation and the legend</li>
-						<li>Icons from Peter Selinger (<a href="https://commons.wikimedia.org/wiki/File:Paragraf_-_symbol.svg">paragraph</a>)</li>
-					</ul>
-					<h2>Impressum</h2>
-					This website has been created by Oliver Hurtig with the help and for the Carbon4PUR consortium, based on <a href="https://carbonnext-eu.github.io/">a similar map from the EU funded CarbonNext project</a>.
-					It is intended as a tool to visualize publicly available data to help with the decision making of Carbon4PUR replication activities.<br>
-					You can contact the Carbon4PUR consortium via our website: <a href="https://www.carbon4pur.eu/contact/" target="_blank">Carbon4PUR contact form</a>
+				All emissions have been obtained from <a href="https://prtr.eea.europa.eu" target="_blank">E-PRTR</a>.
+				The data was queried via the SPARQL-Endpoint <a href="http://semantic.eea.europa.eu/sparql"
+					target="_blank">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
+					href="sparql.txt" target="_blank">here</a>. Some errors have been corrected manually, e.g. the
+				coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
+				location in Denmark.<br>
+				All chemical plants and polyol plants have been gathered manually via desk research, publications
+				and interviews. There is no promise that this data is complete or correct. If you have suggestions,
+				please <a href="https://www.carbon4pur.eu/contact/" target="_blank">contact us</a>.
+				<a name="nace-description"></a>
+				<h2>NACE categories and plant types</h2>
+				Carbon4PUR is investigating two cleaning technologies: <b>chemical looping</b> and <b>catalytic
+					cleaning</b>. They differ in their compatibility with input gases. We therefore defined a list
+				of compatible processes for each cleaning step.<br>
+				<b>catalytic cleaning</b> is compatible with steel gases and the Acheson process.<br>
+				<b>chemical looping</b> is compatible with steel gases, the Acheson process, biogas before and after
+				combustion, [pyrolysis gas, refineries and steam crackers] all after partial combustion. Cement/lime
+				kiln and ammonia could be used if the off gases were separated and then mixed with CO, H<sub>2</sub> or
+				CH<sub>4</sub> containing streams .<br>
+				To get an idea of where those emissions are available, the <a
+					href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
+					target="_blank">NACE category</a> for each of those processes have been obtained:
+				<table>
+					<tr>
+						<td>Steel: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501854&IntKey=18501884&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">24.10 Manufacture of basic iron and steel and of ferro-alloys</a>
+						</td>
+					</tr>
+					<tr>
+						<td>Acheson: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">20.13 Manufacture of other inorganic basic chemicals</a></td>
+					</tr>
+					<tr>
+						<td>Biogas: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18506894&IntKey=18506924&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">35.11 Production of electricity</a></td>
+					</tr>
+					<tr>
+						<td>Pyrolysis: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18495674&IntKey=18495704&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">06.20 Extraction of natural gas</a></td>
+					</tr>
+					<tr>
+						<td>Refineries and steam crackers: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499664&IntKey=18499694&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">19.20 Manufacture of refined petroleum products</a></td>
+					</tr>
+					<tr>
+						<td>Cement: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499844&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">23.51 Manufacture of cement</a></td>
+					</tr>
+					<tr>
+						<td>Lime and Plaster: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18501374&IntKey=18501434&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">23.52 Manufacture of lime and plaster</a></td>
+					</tr>
+					<tr>
+						<td>Ammonia: </td>
+						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499904&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
+								target="_blank">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
+					</tr>
+				</table>
+				<h2>Funding</h2>
+				<div>
+					<img src="img/eu.png" style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This
+					project has
+					received funding from the European Union’s Horizon 2020 research and innovation programme under
+					grant agreement No 768919
+				</div>
+				<h2>Disclaimer</h2>
+				The information contained in this document has been prepared solely for the purpose of providing
+				information about the Carbon4PUR consortium and its project. The document reflects only the
+				Carbon4PUR consortium’s view and the European Commission is not responsible for any use that may be
+				made of the information it contains.
+				<h2>Licence</h2>
+				The content of this site is licensed under the <a href="https://opensource.org/licenses/MIT">MIT
+					license</a>. You are basically free to do anything you want with it as long as you cite the authour
+				(Carbon4PUR consortium) and use a similarly permissive license.<br>
+				The source code <a href="https://github.com/Carbon4PUR/mapping">is available on github</a>, please feel
+				free to clone and modify the code. It would be nice to <a href="https://www.carbon4pur.eu/contact/"
+					target="_blank">contact us</a> to let us know what you are doing with the tool.
+				<h2>Used software</h2>
+				This website uses several technologies, libraries and artwork, notably:
+				<ul class="is-bullet">
+					<li><a href="https://leafletjs.com/">Leaflet</a> as mapping utility</li>
+					<li>Map data from <a href="https://www.thunderforest.com/">Thunderforest</a>, <a
+							href="https://carto.com/attribution">CARTO</a> and <a
+							href="http://www.openstreetmap.org/copyright">OpenStreetMap</a></li>
+					<li><a href="https://github.com/turbo87/sidebar-v2/">Leaflet-Sidebar2</a> for the left tabs</li>
+					<li><a href="https://bulma.io/">Bulma</a> as a styling framework</li>
+					<li><a href="https://introjs.com/">Intro.js</a> for the guided tour</li>
+					<li><a href="https://d3js.org/">d3.js</a> for some DOM manipulation and the legend</li>
+					<li>Icons from Peter Selinger (<a
+							href="https://commons.wikimedia.org/wiki/File:Paragraf_-_symbol.svg">paragraph</a>)</li>
+				</ul>
+				<h2>Impressum</h2>
+				This website has been created by Oliver Hurtig with the help and for the Carbon4PUR consortium, based on
+				<a href="https://carbonnext-eu.github.io/">a similar map from the EU funded CarbonNext project</a>.
+				It is intended as a tool to visualize publicly available data to help with the decision making of
+				Carbon4PUR replication activities.<br>
+				You can contact the Carbon4PUR consortium via our website: <a href="https://www.carbon4pur.eu/contact/"
+					target="_blank">Carbon4PUR contact form</a>
 			</div>
 
 			<div class="sidebar-pane" id="settings-content">
@@ -417,50 +427,55 @@
 					<div class="buttons has-addons">
 						<a class="button is-info is-small" id="map-layout-green">Blue-Green</a>
 						<a class="button is-small" id="map-layout-light">Light Grey</a>
-					</div>					
+					</div>
 				</div>
-				<div class="is-size-7">&#9432; If you want to link to the map with light style, use this url: <a href="https://carbon4pur.github.io/mapping/?style=light">https://carbon4pur.github.io/mapping/?style=light</a></div>
+				<div class="is-size-7">&#9432; If you want to link to the map with light style, use this url: <a
+						href="https://carbon4pur.github.io/mapping/?style=light">https://carbon4pur.github.io/mapping/?style=light</a>
+				</div>
 				<h2>Consumers</h2>
 				<div class="filterGroup">
 					<div class="buttons">
 						<button class="button is-info is-small" id="map-show-consumers">Show consumers</button>
-					</div>					
+					</div>
 				</div>
 				<div class="filterGroup">
-						<div class="buttons">
-							<button class="button is-small" id="modify-consumers">Load your own consumers</button>
-							<button class="button is-small is-warning" id="reset-consumers">Reset consumers</button>
-						</div>					
+					<div class="buttons">
+						<button class="button is-small" id="modify-consumers">Load your own consumers</button>
+						<button class="button is-small is-warning" id="reset-consumers">Reset consumers</button>
 					</div>
+				</div>
 				<h2>Intro setting</h2>
 				<a class="button is-small" id="show-intro">Show intro again</a>
 			</div>
 		</div>
 	</div>
+
 	<!-- Modal for input/output of chemical data -->
 	<div class="modal" id="modal-modify-consumers" style="z-index: 9000">
-			<div class="modal-background"></div>
-			<div class="modal-card">
-			  <header class="modal-card-head">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
 				<p class="modal-card-title">Load your own data</p>
 				<button class="delete close-modal" aria-label="close"></button>
-			  </header>
-			  <section class="modal-card-body">
+			</header>
+			<section class="modal-card-body">
 				<!-- Content ... -->
-				<p>You can edit the data in csv format directly here, or you can download it as csv and edit it for example in Excel. You can then copy it in here again.</p>
+				<p>You can edit the data in csv format directly here, or you can download it as csv and edit it for
+					example in Excel. You can then copy it in here again.</p>
 				<p>If you want to share your own data, click on "create link" below and copy the displayed link.</p>
 				<h2>Chemical parks <span class="is-size-7">(<a href="chemicalparks.csv">Download</a>)</span></h2>
 				<textarea class="textarea" rows="7" id="csv-chemical-parks"></textarea>
-				<h2>Polyol plants <span class="is-size-7">(<a href="polyol plants europe v2.csv">Download</a>)</span></h2>
+				<h2>Polyol plants <span class="is-size-7">(<a href="polyol plants europe v2.csv">Download</a>)</span>
+				</h2>
 				<textarea class="textarea" rows="7" id="csv-polyol-plants"></textarea>
-			  </section>
-			  <footer class="modal-card-foot">
+			</section>
+			<footer class="modal-card-foot">
 				<button class="button is-link" id="modify-consumers-create-link">Create link</button>
 				<button class="button is-success" id="modify-consumers-load-data">Load this data</button>
 				<button class="button close-modal">Cancel</button>
-			  </footer>
-			</div>
-		  </div>
+			</footer>
+		</div>
+	</div>
 
 	<script src="vendor/leaflet.js"></script>
 	<script src="vendor/d3.min.js"></script>
@@ -468,8 +483,7 @@
 	<script src="vendor/leaflet-sidebar2.min.js"></script>
 	<script src="vendor/intro.min.js"></script>
 
-	<script src="main.js"></script>
-
+	<script src="main.min.js"></script>
 </body>
 
 </html>
