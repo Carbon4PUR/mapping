@@ -16,7 +16,7 @@
 
 	<link href="vendor/introjs.min.css" rel="stylesheet" />
 	<!-- Boring layer selection <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.css" integrity="sha256-2nki7eLxn91r/RI3QQq+ArnIltknk6gz4wSoQHFrJnA=" crossorigin="anonymous" /> -->
-	<link href="index.css" rel="stylesheet">
+	<link href="index.min.css" rel="stylesheet">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -128,28 +128,28 @@
 		<div class="sidebar-tabs">
 			<ul role="tablist" id="maintablist">
 				<li class="active" id="info-tab-li">
-					<a href="#info-content" role="tab">
+					<a href="#info-content" role="tab" aria-label="Information about the tool">
 						<svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-info"></use>
 						</svg>
 					</a>
 				</li>
 				<li id="emitter-tab-li">
-					<a href="#emitter-content" role="tab">
+					<a href="#emitter-content" role="tab" aria-label="Filter by emitter type">
 						<svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-emitter"></use>
 						</svg>
 					</a>
 				</li>
 				<li id="consumer-tab-li">
-					<a href="#consumer-content" role="tab">
+					<a href="#consumer-content" role="tab" aria-label="Filter by chemical plant">
 						<svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-consumer"></use>
 						</svg>
 					</a>
 				</li>
 				<li id="legal-tab-li">
-					<a href="#legal-content" role="tab">
+					<a href="#legal-content" role="tab" aria-label="Legal information, Copyrights, data">
 						<svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-paragraph"></use>
 						</svg>
@@ -157,10 +157,13 @@
 				</li>
 			</ul>
 			<ul role="tablist">
-				<li id="settings-tab-li"><a href="#settings-content" role="tab"><svg class="svgicon"
-							viewbox="0 0 32 32">
+				<li id="settings-tab-li">
+					<a href="#settings-content" role="tab" aria-label="Advanced settings">
+						<svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-settings"></use>
-						</svg></a></li>
+						</svg>
+					</a>
+				</li>
 			</ul>
 		</div>
 
@@ -175,7 +178,7 @@
 				</h1>
 				<h2>Information on this map</h2>
 				<div class="description">This map shows all emissions of CO and CO<sub>2</sub> in Europe according to
-					the <a href="https://prtr.eea.europa.eu" target="_blank">E-PRTR</a>. For more detail on the E-PRTR
+					the <a href="https://prtr.eea.europa.eu" target="_blank" rel="noopener">E-PRTR</a>. For more detail on the E-PRTR
 					data and how it was obtained, read the section "Data" below.
 					The tabs on the left allow to filter those emissions to obtain possible replication sites for a
 					Carbon4PUR plant. The first tab contains filters based on the type of emissions, the second tab
@@ -224,9 +227,9 @@
 					</div>
 					<div class="is-size-7">&#9432; The emissions shown are filtered by <a
 							href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
-							target="_blank">NACE category</a>. Within this categories, especially within "electricity",
+							target="_blank"  rel="noopener">NACE category</a>. Within this categories, especially within "electricity",
 						not all emissions are compatible with the Carbon4PUR cleaning steps. Please find more
-						information <a href="#nace-description" onclick="sidebar.open('legal-content')">here.</a></div>
+						information <a href="#nace-description" onclick="sidebar.open('legal-content')">in the data section.</a></div>
 				</div>
 				<h2>Or manually filter</h2>
 				<div class="filterGroup">
@@ -313,7 +316,7 @@
 				All emissions have been obtained from <a href="https://prtr.eea.europa.eu" target="_blank" rel="noopener">E-PRTR</a>.
 				The data was queried via the SPARQL-Endpoint <a href="http://semantic.eea.europa.eu/sparql"
 					target="_blank" rel="noopener">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
-					href="sparql.txt" target="_blank" rel="noopener">here</a>. Some errors have been corrected manually, e.g. the
+					href="sparql.txt" target="_blank" rel="noopener">in this text file</a>. Some errors have been corrected manually, e.g. the
 				coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
 				location in Denmark.<br>
 				All chemical plants and polyol plants have been gathered manually via desk research, publications
@@ -485,7 +488,7 @@
 	<script src="vendor/leaflet-sidebar2.min.js"></script>
 	<script src="vendor/intro.min.js"></script>
 
-	<script src="main.js"></script>
+	<script src="main.min.js"></script>
 </body>
 
 </html>
