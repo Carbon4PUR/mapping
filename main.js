@@ -355,23 +355,22 @@ function updateEmissionsFilter() {
  */
 function decideIfInVisibleCluster(feature) {
     let minCOavailability = polyolOutput.value * 15 / 50000
-        // check all distances of the emission if there are any chemical plants within the defined radius
-        for (d in feature.properties.distances) {
-            for (paramStyle in feature.properties.distances[d]) {
-                let chem = feature.properties.distances[d][paramStyle]
-                if (chem < distanceChemicalPlantOutput.value * 1000) {
-                    // if so, find the corresponding chemical plant and see if it has enough CO
-                    // this should probably be globalChemicalData
-                    for (marker in chemicalParkMarkers) {
-                        // if only polyol plants are shown, don't check the chemical parks
-                        if (!polyolFilterButton.classList.contains('is-info') || marker == 'polyol plants') {
-                            for (f in chemicalParkMarkers[marker]._layers) {
-                                let feat = chemicalParkMarkers[marker]._layers[f].feature
-                                if (feat.properties.FacilityName == paramStyle) {
-                                    return feat.properties.availability['CO, AIR'] > minCOavailability
-                                }
-
+    // check all distances of the emission if there are any chemical plants within the defined radius
+    for (d in feature.properties.distances) {
+        for (paramStyle in feature.properties.distances[d]) {
+            let chem = feature.properties.distances[d][paramStyle]
+            if (chem < distanceChemicalPlantOutput.value * 1000) {
+                // if so, find the corresponding chemical plant and see if it has enough CO
+                // this should probably be globalChemicalData
+                for (marker in chemicalParkMarkers) {
+                    // if only polyol plants are shown, don't check the chemical parks
+                    if (!polyolFilterButton.classList.contains('is-info') || marker == 'polyol plants') {
+                        for (f in chemicalParkMarkers[marker]._layers) {
+                            let feat = chemicalParkMarkers[marker]._layers[f].feature
+                            if (feat.properties.FacilityName == paramStyle) {
+                                return feat.properties.availability['CO, AIR'] > minCOavailability
                             }
+                        }
                     }
                 }
             }
