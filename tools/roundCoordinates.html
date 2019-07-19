@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Converter tool from csv list</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta charset="utf-8">
+	</script>
+</head>
+
+<body>
+	<script>
+
+		fetch("../chemicalParks.json")
+			.then((response) => { return response.json() },
+				(reject) => { console.error(reject) })			
+			.then(json => roundTo3Dec(json));
+	
+
+		function roundTo3Dec(json) {
+			return new Promise((resolve, reject) => {				
+				for(cat in json){
+					if(cat != "stats"){
+						for(f in json[cat].features){
+							let feat = json[cat].features[f]							
+							feat.geometry.coordinates[0] = Math.round(feat.geometry.coordinates[0] * 1000) / 1000
+							feat.geometry.coordinates[1] = Math.round(feat.geometry.coordinates[1] * 1000) / 1000
+						}
+					}
+				}
+				console.log(json)
+				resolve()
+
+				
+			});
+		}
+
+	</script>
+</body>
+
+</html>

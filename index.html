@@ -184,17 +184,17 @@
 					Carbon4PUR plant. The first tab contains filters based on the type of emissions, the second tab
 					filters based on possible plants.
 					<h2>Legend</h2>
-					CO emissions are displayed with a <span
-						style="border: 1px solid rgb(241, 177, 48); border-radius: 4px;">yellow</span> border and all
-					CO<sub>2</sub> emissions with an
-					<span style="border: 1px solid rgb(234,110,57); border-radius: 4px;">orange</span> border. The fill
+					<h3>CO/CO<sub>2</sub> emitters</h3>
+					CO emissions are displayed with an <span style="border: 1px solid rgb(234,110,57); border-radius: 4px;">orange</span> border and all
+					CO<sub>2</sub> emissions with a	<span style="border: 1px solid rgb(241, 177, 48); border-radius: 4px;">yellow</span> border. The fill
 					color depends on the type of plant (see colors in the second tab on the left or click on any circle
-					on the map). The size indicates the amount of CO or CO<sub>2</sub> available.<br>
+					on the map). The size indicates the amount of CO or CO<sub>2</sub> available.
+					<h3>CO/CO<sub>2</sub> users (chemical plants)</h3>
 					Chemical plants are <span style="background: rgba(0,168,189,0.6); border-radius: 4px;">blue</span>
 					and
 					polyol plants <span style="background: rgba(12,168,118,0.6); border-radius: 4px;">green</span>.
 					Those are potential sites for the Carbon4PUR technology. CO and CO<sub>2</sub> have to be available
-					nearby, and the size of the circle symbolizes the radius (defined by the user) in which transporting
+					nearby, and the size of the circle corresponds to the radius (defined by the user) in which transporting
 					those gases might be economical.
 					<h2>Usage</h2>
 					You can add filters to narrow down the emissions:<ul class="is-bullet">
@@ -209,6 +209,13 @@
 					</ul>
 					You can always click on the button to reset the map to this initial state:<br>
 					<a class="button is-info" id="reset-filters-button">Reset all filters</a>
+				</div>
+				<h2>Funding</h2>
+				<div>
+					<img src="img/eu.png" style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This
+					project has
+					received funding from the European Union’s Horizon 2020 research and innovation programme under
+					grant agreement No 768919
 				</div>
 			</div>
 			<div class="sidebar-pane" id="emitter-content">
@@ -225,7 +232,8 @@
 						<a id="compat-filter-cat-button" class="button is-small">catalytic cleaning</a>
 						<a id="compat-filter-manual-button" class="button is-small">Manual</a>
 					</div>
-					<div class="is-size-7">&#9432; The emissions shown are filtered by <a
+					<div class="is-size-7">&#9432; Each chemical route tolerates different levels and kinds of impurities  and is therefore
+						suited to treating different industrial processes. Emissions from each process are identified and presented based on their <a
 							href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
 							target="_blank"  rel="noopener">NACE category</a>. Within this categories, especially within "electricity",
 						not all emissions are compatible with the Carbon4PUR cleaning steps. Please find more
@@ -289,9 +297,9 @@
 				<button class="button is-small" id="polyol-filter-button">Only show polyol plants</button>
 				<h2>Filter emissons</h2>
 				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
-					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="100"
-						value="25" step="1" type="range">
-					<output for="distance-chemical-plant-slider" id="distance-chemical-plant-slider-output">25</output>
+					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="50"
+						value="20" step="1" type="range">
+					<output for="distance-chemical-plant-slider" id="distance-chemical-plant-slider-output">20</output>
 					<a class="button is-small" id="radius-filter-button">Only show emitters within radius of chemical
 						plant</a>
 				</div>
@@ -377,14 +385,7 @@
 						<td><a href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=DSP_NOM_DTL_VIEW&StrNom=NACE_REV2&StrLanguageCode=EN&IntPcKey=18499754&IntKey=18499904&StrLayoutCode=HIERARCHIC&IntCurrentPage=1"
 								target="_blank" rel="noopener">20.15 Manufacture of fertilisers and nitrogen compounds</a></td>
 					</tr>
-				</table>
-				<h2>Funding</h2>
-				<div>
-					<img src="img/eu.png" style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This
-					project has
-					received funding from the European Union’s Horizon 2020 research and innovation programme under
-					grant agreement No 768919
-				</div>
+				</table>				
 				<h2>Disclaimer</h2>
 				The information contained in this document has been prepared solely for the purpose of providing
 				information about the Carbon4PUR consortium and its project. The document reflects only the
@@ -392,8 +393,8 @@
 				made of the information it contains.
 				<h2>Licence</h2>
 				The content of this site is licensed under the <a href="https://opensource.org/licenses/MIT">MIT
-					license</a>. You are basically free to do anything you want with it as long as you cite the authour
-				(Carbon4PUR consortium) and use a similarly permissive license.<br>
+					license</a>. You are basically free to do anything you want with it as long as you cite the author
+				(Carbon4PUR consortium) and use a similarly permissive licence.<br>
 				The source code <a href="https://github.com/Carbon4PUR/mapping">is available on github</a>, please feel
 				free to clone and modify the code. It would be nice to <a href="https://www.carbon4pur.eu/contact/"
 					target="_blank" rel="noopener">contact us</a> to let us know what you are doing with the tool.
@@ -488,7 +489,7 @@
 	<script src="vendor/leaflet-sidebar2.min.js" defer></script>
 	<script src="vendor/intro.min.js" defer></script>
 
-	<script src="main.min.js"></script>
+	<script src="main.js"></script>
 </body>
 
 </html>

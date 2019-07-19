@@ -40,11 +40,24 @@ function showMap(){
 
     /* On the map, scrolling should zoom */
     map.on('focus', () => {
-        map.scrollWheelZoom.enable();
+        map.scrollWheelZoom.enable()
     })
     /* Outside of the map, scrolling should not zoom */
     map.on('blur', () => {
-        map.scrollWheelZoom.disable();
+        map.scrollWheelZoom.disable()
+    })
+    /* This is to put the emissions in the foreground on high zoom levels */
+    map.on("zoomend", function (e) {        
+        for(type in chemicalParkMarkers){
+            if(e.target._zoom > 7 && !chemicalParkMarkers.isBack){
+                chemicalParkMarkers[type].bringToBack()                
+                chemicalParkMarkers[type].isBack = true
+            }
+            else {
+                chemicalParkMarkers[type].bringToFront()                
+                chemicalParkMarkers[type].isBack = false
+            }
+        }
     })
 }
 
@@ -99,8 +112,8 @@ function resetFilters() {
     // activate CO and CO2 (the return-function returns a function, so () to execute it)    
     if (!pollutantFilterCOButton.classList.contains('is-activated')) returnTogglePollutantFilter(pollutantFilterCOButton)()
     if (!pollutantFilterCO2Button.classList.contains('is-activated')) returnTogglePollutantFilter(pollutantFilterCO2Button)()
-    // set distance to 25 km
-    distanceChemicalPlantSlider.value = 25
+    // set distance to 20 km
+    distanceChemicalPlantSlider.value = 20
     // deactivate filter buttons
     if (polyolFilterButton.classList.contains('is-info')) togglePolyolFilter()
     if (radiusFilterButton.classList.contains('is-info')) toggleRadiusFilter()
@@ -710,7 +723,7 @@ function loadChemicalParksFromData(data) {
     }
     for (type in data) {
         if (type != "stats") {
-            chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map);
+            chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map)
         }
     }
     // keep global reference
