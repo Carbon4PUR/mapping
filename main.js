@@ -411,7 +411,13 @@ radiusFilterButton.addEventListener('click', toggleRadiusFilter)
  */
 let toggleSizeFilter = () => {
     sizeFilterButton.classList.toggle('is-info')
-    if(sizeFilterButton.classList.contains('is-info')) radiusFilterButton.classList.add('is-info')
+    if(sizeFilterButton.classList.contains('is-info')) {
+        radiusFilterButton.classList.add('is-info')
+        polyolSlider.disabled = false
+    }
+    else {
+        polyolSlider.disabled = true
+    }
     updatePolyolSizeFilter()
     updateEmissionsFilter()
 }
