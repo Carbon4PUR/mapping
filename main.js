@@ -344,6 +344,7 @@ function updateEmissionsFilter() {
         })
     }
     getFilteredTotals()
+    getActiveChemPlants()
 }
 
 /**
@@ -463,6 +464,13 @@ polyolSlider.addEventListener('input', function (event) {
     updatePolyolSizeFilter()
     updateEmissionsFilter()
 })
+
+let numberChemParks = document.getElementById('number-chem-parks'),
+numberPolyolPlants = document.getElementById('number-polyol-plants')
+function getActiveChemPlants(){
+    numberChemParks.value = polyolFilterButton.classList.contains('is-info') ? 0 : chemicalParkMarkers["chemical parks"].getLayers().length
+    numberPolyolPlants.value = chemicalParkMarkers["polyol plants"].getLayers().length
+}
 
 /****************/
 /* Settings tab */
@@ -703,22 +711,24 @@ function addEmitterPopupHandler(feature, type) {
 function loadChemicalParksFromData(data) {
     // copy distance information to markers. This could be done while creating the json arrays to speedup the load time.
     //console.log(data)    
-    for (emission in globalEmissionData) {
-        if (emission != "stats") {
-            for (f in globalEmissionData[emission].features) {
-                let feat = globalEmissionData[emission].features[f]
-                if (feat.properties.distances) {
-                    for (e in feat.properties.distances) {
-                        for (chem in feat.properties.distances[e]) {
-                            for (paramStyle in data[e].features) {
-                                if (data[e].features[paramStyle].properties.FacilityName == chem) {
-                                    if (!data[e].features[paramStyle].properties.distances) data[e].features[paramStyle].properties.distances = []
-                                    data[e].features[paramStyle].properties.distances.push({
-                                        'name': feat.properties.FacilityName,
-                                        'distance': feat.properties.distances[e][chem],
-                                        'type': emission,
-                                        'value': feat.properties.MTonnes
-                                    })
+    return new Promise((resolve, reject) => {
+        for (emission in globalEmissionData) {
+            if (emission != "stats") {
+                for (f in globalEmissionData[emission].features) {
+                    let feat = globalEmissionData[emission].features[f]
+                    if (feat.properties.distances) {
+                        for (e in feat.properties.distances) {
+                            for (chem in feat.properties.distances[e]) {
+                                for (paramStyle in data[e].features) {
+                                    if (data[e].features[paramStyle].properties.FacilityName == chem) {
+                                        if (!data[e].features[paramStyle].properties.distances) data[e].features[paramStyle].properties.distances = []
+                                        data[e].features[paramStyle].properties.distances.push({
+                                            'name': feat.properties.FacilityName,
+                                            'distance': feat.properties.distances[e][chem],
+                                            'type': emission,
+                                            'value': feat.properties.MTonnes
+                                        })
+                                    }
                                 }
                             }
                         }
@@ -726,14 +736,15 @@ function loadChemicalParksFromData(data) {
                 }
             }
         }
-    }
-    for (type in data) {
-        if (type != "stats") {
-            chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map)
+        for (type in data) {
+            if (type != "stats") {
+                chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map)
+            }
         }
-    }
-    // keep global reference
-    globalChemicalData = data
+        // keep global reference
+        globalChemicalData = data
+        resolve()
+    })
 }
 
 function loadChemicalParksFromURI(c) {
@@ -752,20 +763,24 @@ function loadChemicalParks(data) {
         chemicalParkMarkers = {}
         if(url.searchParams.get("c")) {
             loadChemicalParksFromURI(url.searchParams.get("c"))
+            .then(resolve())
         }
         else {
             loadChemicalParksFromData(data)
+            .then(resolve())
         }
-        resolve(true)
     })
 }
 
 
 function loadChemicalParksFromJSON() {
-    fetch('chemicalParks.json')
-        .then((response) => { return response.json() },
-            (reject) => { console.error(reject) })
-        .then(loadChemicalParks)
+    return new Promise((resolve) => {
+        fetch('chemicalParks.json')
+            .then((response) => { return response.json() },
+                (reject) => { console.error(reject) })
+            .then(loadChemicalParks)
+            .then(() => resolve())
+    })
 }
 
 
@@ -942,6 +957,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(getFilteredTotals)
         .then(loadChemicalParksFromJSON)
         .then(checkIfIntro)
+        .then(getActiveChemPlants)
 })
 
 /***********************************/
