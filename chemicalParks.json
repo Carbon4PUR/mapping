@@ -1117,7 +1117,7 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Covestro Tielt N.V.  ",
+          "FacilityName": "Covestro Tielt N.V.",
           "Country": "Belgien",
           "City": "Antwerpen"
         },
@@ -1132,7 +1132,7 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Polyol Belgium N.V.  ",
+          "FacilityName": "Polyol Belgium N.V. (Dow)",
           "Country": "Belgien",
           "City": "Tertre"
         },
@@ -1147,7 +1147,7 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "CovestroFrance SNC   ",
+          "FacilityName": "CovestroFrance SNC",
           "Country": "France",
           "City": "Fos"
         },
