@@ -1,5 +1,5 @@
 // define global variables
-let map, format2Dec, formatSI, light, green, sidebar
+let map, format1Dec, formatSI, light, green, sidebar
 
 function showMap(){
     /* allows us to create filters within a Leaflet GeoJSON layer */
@@ -70,7 +70,7 @@ function showMap(){
  */
 function loadGlobalDefs() {
     // show all numbers with 1,000.00 format
-    format2Dec = d3.format(',.2f')
+    format1Dec = d3.format(',.1f')
     formatSI = d3.format(',.3f')
 }
 
@@ -247,20 +247,32 @@ function getFilteredTotals() {
         co2CombinedFilteredSumOutput.style.background = '#fff'
         coCombinedFilteredSumOutput.style.background = '#fff'
     }, 500)
-    co2FilteredSumOutput.textContent = formatSI(co2sum) + ' MT'
-    coFilteredSumOutput.textContent = formatSI(cosum) + ' MT'
-    co2CombinedFilteredSumOutput.textContent = formatSI(co2sumCombined) + ' MT'
-    coCombinedFilteredSumOutput.textContent = formatSI(cosumCombined) + ' MT'
+    co2FilteredSumOutput.textContent = format1Dec(co2sum) + ' Megatonnes/year'
+    coFilteredSumOutput.textContent = format1Dec(cosum) + ' Megatonnes/year'
+    co2CombinedFilteredSumOutput.textContent = format1Dec(co2sumCombined) + ' Megatonnes/year'
+    coCombinedFilteredSumOutput.textContent = format1Dec(cosumCombined) + ' Megatonnes/year'
 }
 
-function deselectAllNaceFilter() {
-    for (name in nace) {
-        nace[name].active = false
+function toggleAllNaceFilter() {
+    if(naceDeselectButton.text == "Deselect all"){        
+        activateCompatButton(compatFilterManualButton)
+        naceDeselectButton.text = "Select all"
+        for (name in nace) {
+            nace[name].active = false
+        }
+    }
+    else {        
+        activateCompatButton(compatFilterLoopButton)
+        naceDeselectButton.text = "Deselect all"
+        for (name in nace) {
+            nace[name].active = true
+        }
     }
     updateNaceButtons()
     updateEmissionsFilter()
+    
 }
-naceDeselectButton.addEventListener('click', deselectAllNaceFilter)
+naceDeselectButton.addEventListener('click', toggleAllNaceFilter)
 
 
 
@@ -280,7 +292,7 @@ let toggleFilterNACE = (buttonId) => {
  */
 function addNACEFilters() {
     for (var name in nace) {
-        let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + 'Mt CO2, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Mt CO';
+        let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + ' Megatonnes CO2/year, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Megatonnes CO/year';
         let button = d3.select('#naceCategories')
             .append('a')
             .attr('id', name + '-filter-button')
@@ -658,8 +670,11 @@ function loadPRTRlayers(data) {
     return new Promise((resolve, reject) => {
         for (emission in data) {
             if (emission != "stats") {
+                for(f in data[emission].features) {
+                    data[emission].features[f].properties.type = emission
+                }                
                 markers[emission] = L.geoJson(data[emission], {
-                    pointToLayer: function (feature, latlng) {
+                    pointToLayer: function (feature, latlng) {                        
                         return L.circleMarker(latlng, {
                             radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
                             color: emissionColors[feature.properties.PollutantName],
@@ -667,7 +682,7 @@ function loadPRTRlayers(data) {
                             weight: 1,
                             opacity: 0.7,
                             fillOpacity: 0.4
-                        }).bindPopup(addEmitterPopupHandler(feature, emission))
+                        }).bindPopup(addEmitterPopupHandler(feature))
                     }
                 }).addTo(map)
             }
@@ -684,18 +699,21 @@ function loadPRTRlayers(data) {
  * @param {string} type The name of the category, in this case "CO2" or "CO" 
  * @returns {string} a DOM string containing the popup
  */
-function addEmitterPopupHandler(feature, type) {
+function addEmitterPopupHandler(feature) {
     if (feature.properties) {
         let otherEmission = ''
-        if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Mt CO<sub>2</sub>'
-        if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Mt CO'
+        if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Megatonnes CO<sub>2</sub>/year'
+        if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Megatonnes CO/year'
+        let thisEmission = formatSI(feature.properties.MTonnes) + ' Megatonnes '
+        if (feature.properties.type == 'CO, AIR') thisEmission += 'CO/year'
+        else thisEmission += 'CO<sub>2</sub>/year'
         let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
         return `<h2>${feature.properties.FacilityName}</h2>                       
                         <i>${feature.properties.NACEMainEconomicActivityName}</i>
                         <br>
                         <div class='popup-em' style='background: ${color}'>
                         Emissions:
-                        <br />${feature.properties.MTonnes} Mt ${type == 'CO, AIR' ? 'CO' : 'CO<sub>2</sub>'}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + '</div>'
+                        <br />${thisEmission}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + '</div>'
 
     }
     else {
@@ -853,8 +871,8 @@ function consumerPopupAvailability(feature, type) {
         }
     }
     return '<div class="popup-em" style="background:'+ translucidColor(chemicalColors[type]) +'">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
-        formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;MT CO<sub>2</sub><br>' +
-        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;MT CO</div>'
+        formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;Megatonnes CO<sub>2</sub>/year<br>' +
+        formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;Megatonnes CO/year</div>'
 }
 
 /**
@@ -928,7 +946,7 @@ let createScale = () => {
         .append("text")
         .attr('x', function (d) { return xLabel + (d>=10 ? 1 : 7) })
         .attr('y', function (d) { return yCircle - size(d) })
-        .text(function (d) { return format2Dec(d) }) // to display in Mt
+        .text(function (d) { return format1Dec(d) }) // to display in Mt
         .style("font-size", 10)
         .attr('alignment-baseline', 'middle')
 }
