@@ -846,6 +846,7 @@ function addConsumerPopupHandler(feature, type) {
     if (feature.properties) {
         return `<h2>${feature.properties.FacilityName}</h2>
                 <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>
+                <br>${feature.properties.City}, ${feature.properties.Country}
                 <br>` + consumerPopupAvailability(feature, type)
     }
     else {
