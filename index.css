@@ -122,8 +122,7 @@ body .sidebar-tabs>li.active, .sidebar-tabs>ul>li.active {
 /* popup */
 .popup-em {
   display: inline-block;
-  padding: 0.5rem;
-  
+  padding: 0.5rem;  
 }
 
 /* intro tour */

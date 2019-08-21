@@ -708,8 +708,9 @@ function addEmitterPopupHandler(feature) {
         if (feature.properties.type == 'CO, AIR') thisEmission += 'CO/year'
         else thisEmission += 'CO<sub>2</sub>/year'
         let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
-        return `<h2>${feature.properties.FacilityName}</h2>                       
-                        <i>${feature.properties.NACEMainEconomicActivityName}</i>
+        return `<h2>${feature.properties.FacilityName}</h2>
+                        ${feature.properties.CountryName}                    
+                        <br><b><i>${feature.properties.NACEMainEconomicActivityName}</i></b>
                         <br>
                         <div class='popup-em' style='background: ${color}'>
                         Emissions:
@@ -845,8 +846,8 @@ function convertGeoJSONToChemLayer(data, type) {
 function addConsumerPopupHandler(feature, type) {
     if (feature.properties) {
         return `<h2>${feature.properties.FacilityName}</h2>
-                <i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i>
-                <br>${feature.properties.City}, ${feature.properties.Country}
+                ${feature.properties.Country}
+                <br><b><i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i></b>
                 <br>` + consumerPopupAvailability(feature, type)
     }
     else {
