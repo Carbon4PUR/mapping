@@ -1102,15 +1102,15 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "BASF Antwerpen N.V.  ",
+          "FacilityName": "BASF Antwerpen N.V.",
           "Country": "Belgien",
           "City": "Antwerpen"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            4.271,
-            51.365
+            4.2714683,
+            51.3647132
           ]
         }
       },
@@ -1124,8 +1124,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            4.325,
-            51.29
+            4.325161,
+            51.290456
           ]
         }
       },
@@ -1139,8 +1139,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            3.793,
-            50.479
+            3.7933079,
+            50.4794215
           ]
         }
       },
@@ -1154,23 +1154,23 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            4.845,
-            43.424
+            4.8449945,
+            43.4243698
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "BASF/Schwarzheide GmbH   ",
+          "FacilityName": "BASF/Schwarzheide GmbH",
           "Country": "Germany",
           "City": "Schwarzheide"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            13.875,
-            51.478
+            13.8751413,
+            51.4776
           ]
         }
       },
@@ -1184,8 +1184,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            6.842,
-            51.083
+            6.8421757,
+            51.0833678
           ]
         }
       },
@@ -1199,98 +1199,98 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            6.842,
-            51.083
+            6.8421757,
+            51.0833678
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Dow Benelux N.V.  ",
+          "FacilityName": "Dow Benelux N.V.",
           "Country": "Netherlands",
           "City": "Terneuzen"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            3.789,
-            51.335
+            3.78935,
+            51.334712
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Huntsman Holland B.V.  ",
+          "FacilityName": "Huntsman Holland B.V.",
           "Country": "Netherlands",
           "City": "Rotterdam"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            4.255,
-            51.885
+            4.2545041,
+            51.8851504
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Shell Nederland Chemie B.V. ",
+          "FacilityName": "Shell Nederland Chemie B.V.",
           "Country": "Netherlands",
           "City": "Rotterdam"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            4.341,
-            51.88
+            4.3405925,
+            51.8797186
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Dow Chemical Iberica S.A. ",
+          "FacilityName": "Dow Chemical Iberica S.A.",
           "Country": "Spain",
           "City": "Tarragona"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            1.19,
-            41.102
+            1.18972,
+            41.102353
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Repsol Quinica S.A.   ",
+          "FacilityName": "Repsol Quinica S.A.",
           "Country": "Spain",
           "City": "Tarragona"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            1.222,
-            41.187
+            1.222386,
+            41.186848
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Repsol Quinica S.A.   ",
+          "FacilityName": "Repsol Quinica S.A.",
           "Country": "Spain",
           "City": "Puertollano"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            -4.056,
-            38.679
+            -4.055958,
+            38.679333
           ]
         }
       },
@@ -1304,8 +1304,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            17.177,
-            48.125
+            17.1770306,
+            48.1248677
           ]
         }
       },
@@ -1319,38 +1319,38 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            21.027,
-            47.918
+            21.0273509,
+            47.9183931
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "PCC Rokita S.A.  ",
+          "FacilityName": "PCC Rokita S.A.",
           "Country": "Poland",
           "City": "Brzeg Dolny"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            16.734,
-            51.27
+            16.733639,
+            51.270197
           ]
         }
       },
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Oltchim    ",
+          "FacilityName": "Oltchim",
           "Country": "Romania",
           "City": "Ramnicu Valcea"
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
-            24.298,
-            45.041
+            24.298465,
+            45.041323
           ]
         }
       },
@@ -1364,8 +1364,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            18.533,
-            48.706
+            18.533084,
+            48.705841
           ]
         }
       },
@@ -1379,8 +1379,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            20.646,
-            48.249
+            20.6456643,
+            48.248534
           ]
         }
       },
@@ -1394,8 +1394,8 @@
         "geometry": {
           "type": "Point",
           "coordinates": [
-            21.224,
-            55.674
+            21.224234,
+            55.6743751
           ]
         }
       }

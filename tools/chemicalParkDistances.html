@@ -13,11 +13,11 @@
 	
 		let globalChemParks, globalEmissions;
 
-		fetch("chemicalParks.json")
+		fetch("../chemicalParks.json")
 			.then((response) => { return response.json() },
 				(reject) => { console.error(reject) })
 			.then(myBlob => globalChemParks = myBlob)
-			.then(() => fetch('prtr.json'))
+			.then(() => fetch('../prtr.json'))
 			.then((response) => { return response.json() },
 				(reject) => { console.error(reject) })
 			.then(json => addDistances(json));
