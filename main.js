@@ -441,13 +441,9 @@ function updatePolyolSizeFilter() {
     let isActive = sizeFilterButton.classList.contains('is-info')
     // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 15 / 50000
-    for (marker in chemicalParkMarkers) {
-        console.log(chemicalParkMarkers);
-        
+    for (marker in chemicalParkMarkers) {        
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
-            console.log(marker, feature.properties.FacilityName, isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true, feature.properties.availability['CO, AIR']);
-            
             return isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true
         })
     }
