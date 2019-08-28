@@ -368,6 +368,8 @@ function updateEmissionsFilter() {
 function decideIfInVisibleCluster(feature) {
     let minCOavailability = polyolOutput.value * 15 / 50000
     // check all distances of the emission if there are any chemical plants within the defined radius
+    // console.log(feature);
+    
     for (d in feature.properties.distances) {
         for (paramStyle in feature.properties.distances[d]) {
             let chem = feature.properties.distances[d][paramStyle]
@@ -435,13 +437,17 @@ let toggleSizeFilter = () => {
 }
 sizeFilterButton.addEventListener('click', toggleSizeFilter)
 
-let updatePolyolSizeFilter = () => {
+function updatePolyolSizeFilter() {
     let isActive = sizeFilterButton.classList.contains('is-info')
     // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 15 / 50000
     for (marker in chemicalParkMarkers) {
+        console.log(chemicalParkMarkers);
+        
         var m = chemicalParkMarkers[marker]
-        m.setFilter(globalChemicalData[marker], feature => {            
+        m.setFilter(globalChemicalData[marker], feature => {
+            console.log(marker, feature.properties.FacilityName, isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true, feature.properties.availability['CO, AIR']);
+            
             return isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true
         })
     }
@@ -454,11 +460,11 @@ polyolSlider.value = polyolSlider.getAttribute("value")
 distanceChemicalPlantSlider.addEventListener('input', function (event) {
     // Update output with slider value
     distanceChemicalPlantOutput.value = event.target.value
-    // Update size of circle
     for (layer in chemicalParkMarkers) {
         chemicalParkMarkers[layer].eachLayer((layer) => {
             // update the popups for all chemical clusters
-            layer.setPopupContent(addConsumerPopupHandler(layer.feature, type))
+            layer.setPopupContent(addConsumerPopupHandler(layer.feature, type))            
+            // Update size of circle
             return layer.setRadius(event.target.value * 1000)
         })
     }

@@ -17,7 +17,7 @@
 		let globalChemParks, globalEmissions;
 
 		/* Load all csv data files and create menu*/
-		getChemparkData('Chemical parks', 'polyol plants europe v2.csv', "#CC7300");
+		getChemparkData('Chemical parks', '../polyol plants europe v2.csv', "#CC7300");
 
 
 		function getChemparkData(name, file, color) {			
@@ -37,6 +37,7 @@
 						console.error(err);
 						reject(err);
 					} else {
+						geojson
 						console.log(geojson);
 						globalChemParks = geojson;
 						resolve(geojson);
