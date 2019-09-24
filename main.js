@@ -307,6 +307,7 @@ function addNACEFilters() {
 /* Chemical plants tab */
 let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
     polyolFilterButton = document.getElementById('polyol-filter-button'),
+    pipelineFilterButton = document.getElementById('pipeline-filter-button'),
     radiusFilterButton = document.getElementById('radius-filter-button')
 
 let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
@@ -330,6 +331,16 @@ let togglePolyolFilter = () => {
     updateEmissionsFilter()
 }
 polyolFilterButton.addEventListener('click', togglePolyolFilter)
+
+/**
+ * Toggle if only plants with ethylene pipelines are shown or all chemical plants
+ */
+let togglePipelineFilter = () => {
+    pipelineFilterButton.classList.toggle('is-info')
+    updatePlantFilter()
+    updateEmissionsFilter()
+}
+pipelineFilterButton.addEventListener('click', togglePipelineFilter)
 
 /**
  * Decide for each emission if it should be displayed depending on all active filters
@@ -432,19 +443,21 @@ let toggleSizeFilter = () => {
     else {
         polyolSlider.disabled = true
     }
-    updatePolyolSizeFilter()
+    updatePlantFilter()
     updateEmissionsFilter()
 }
 sizeFilterButton.addEventListener('click', toggleSizeFilter)
 
-function updatePolyolSizeFilter() {
-    let isActive = sizeFilterButton.classList.contains('is-info')
+function updatePlantFilter() {
+    let isSizeFilterActive = sizeFilterButton.classList.contains('is-info')
+    let isPipelineFilterActive = pipelineFilterButton.classList.contains('is-info')
     // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 15 / 50000
     for (marker in chemicalParkMarkers) {        
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
-            return isActive ? feature.properties.availability['CO, AIR'] > minCOavailability : true
+            return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
+                   (!isPipelineFilterActive || feature.properties.hasPipeline == 1)
         })
     }
 }
@@ -474,7 +487,7 @@ distanceChemicalPlantSlider.addEventListener('input', function (event) {
 polyolSlider.addEventListener('input', function (event) {
     // Update output with slider value
     polyolOutput.value = event.target.value
-    updatePolyolSizeFilter()
+    updatePlantFilter()
     updateEmissionsFilter()
 })
 

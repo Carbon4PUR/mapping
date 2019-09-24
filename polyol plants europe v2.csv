@@ -1,5 +1,5 @@
-﻿FacilityName;Country;City;latitude;longitude
-BASF Antwerpen N.V.;Belgien;Antwerpen;51.3647132;4.2714683
+﻿FacilityName;Country;City;latitude;longitude;hasPipeline
+BASF Antwerpen N.V.;Belgien;Antwerpen;51.3647132;4.2714683;0
 Covestro N.V.;Belgien;Antwerpen;51.290456;4.325161
 Polyol Belgium N.V. (Dow);Belgien;Tertre;50.4794215;3.7933079
 CovestroFrance SNC;France;Fos;43.4243698;4.8449945

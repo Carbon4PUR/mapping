@@ -294,7 +294,10 @@
 						</svg></span>
 				</h1>
 				<h2>Type of plant</h2>
-				<button class="button is-small" id="polyol-filter-button">Only show polyol plants</button>
+				<div class="buttons">
+					<button class="button is-small is-fullwidth" id="polyol-filter-button">Only show polyol plants</button>
+					<button class="button is-small is-fullwidth" id="pipeline-filter-button">Only show plants with ethylene pipeline</button>
+				</div>
 				<h2>Search radius around plants</h2>
 				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
 					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="50"
@@ -466,6 +469,9 @@
 				</div>
 				<h2>Intro setting</h2>
 				<a class="button is-small" id="show-intro">Show intro again</a>
+				<h2>More tools</h2>
+				You can find some additional tools on github: <a href="https://github.com/Carbon4PUR/mapping/tree/master/tools">https://github.com/Carbon4PUR/mapping/tree/master/tools</a>. These may or may not be useful if you try to export data from E-PRTR, convert tabular data to geojson or compute distances on a map.<br>
+				They were not intended for general use, 
 			</div>
 		</div>
 	</div>

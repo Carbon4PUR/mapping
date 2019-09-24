@@ -1,6 +1,6 @@
-latitude;longitude;FacilityName;Country
-48.2886041;14.3320535;Chemiepark Linz;Austria
-48.1409268;16.4763778;Schwechat ;Austria
+latitude;longitude;FacilityName;Country;hasPipeline
+48.2886041;14.3320535;Chemiepark Linz;Austria;0
+48.1409268;16.4763778;Schwechat;Austria
 51.3249258;4.2856278;INEOS Antwerp site;Belgium
 51.2438582;4.3936194;Port Of Antwerp;Belgium
 51.0642666;5.0881938;Tessenderloo;Belgium
@@ -45,14 +45,14 @@ latitude;longitude;FacilityName;Country
 51.165633;16.6130874;?roda ?l?ska;Poland
 52.0145541;18.5009145;Turek;Poland
 37.9832887;-8.8330698;ZILS - Sines Industrial and Logistics Zone;Portugal
-48.8754835;21.8085434;Strážske Chemko ;Slovakia
+48.8754835;21.8085434;Strážske Chemko;Slovakia
 41.12016;1.246002;AEQT - Tarragona Chemical Cluster;Spain
 37.261421;-6.9447224;Huelva;Spain
 58.0678388;11.8294345;Stenungsund;Sweden
 47.5325241;7.6647135;Infrapark Baselland;Switzerland
 47.5766045;8.3123644;Solvay Ind.park;Switzerland
 50.974183;5.7932988;Chemelot;The Netherlands
-53.3165884;6.9476955;Chemical Cluster Delfzijl ;The Netherlands
+53.3165884;6.9476955;Chemical Cluster Delfzijl;The Netherlands
 52.7749331;6.9069293;EMMTEC Industry & Business Park;The Netherlands
 52.3778637;4.9152054;Port of Amsterdam;The Netherlands
 51.9496008;4.145263;Port of Rotterdam;The Netherlands
@@ -74,6 +74,6 @@ latitude;longitude;FacilityName;Country
 50.12858;8.7672;Allessa GmbH;Germany
 49.828961;9.151943;Industry Centre Obernburg Mainsite GmbH;Germany
 49.61819;8.43899;BASF Lampertheim GmbH;Germany
-48.0201794;7.8441234;SOLVAY Acetow GmbH ;Germany
+48.0201794;7.8441234;SOLVAY Acetow GmbH;Germany
 48.4443975;10.8791169;Industrial Park Gersthofen;Germany
 48.0212315;12.5523216;Chemiepark Trostberg;Germany
