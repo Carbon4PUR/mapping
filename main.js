@@ -457,7 +457,7 @@ function updatePlantFilter() {
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
             return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
-                   (!isPipelineFilterActive || feature.properties.hasPipeline == 1 || feature.properties.hasPipeline == "1")
+                   (!isPipelineFilterActive || feature.properties.ePipeline == 1 || feature.properties.ePipeline == "1")
         })
     }
 }
