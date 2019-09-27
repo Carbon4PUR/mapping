@@ -7,7 +7,13 @@
         "properties": {
           "FacilityName": "Chemiepark Linz",
           "Country": "Austria",
-          "hasPipeline": "1"
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "0",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -21,7 +27,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Schwechat",
-          "Country": "Austria"
+          "Country": "Austria",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": "https://www.borealisgroup.com/schwechat/standort/produktionsanlagen"
         },
         "geometry": {
           "type": "Point",
@@ -35,7 +48,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "INEOS Antwerp site",
-          "Country": "Belgium"
+          "Country": "Belgium",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -49,7 +69,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Port Of Antwerp",
-          "Country": "Belgium"
+          "Country": "Belgium",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -63,7 +90,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Tessenderloo",
-          "Country": "Belgium"
+          "Country": "Belgium",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": "vermutlich"
         },
         "geometry": {
           "type": "Point",
@@ -77,7 +111,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Kohtla-Järve",
-          "Country": "Estonia"
+          "Country": "Estonia",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -91,7 +132,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Kokkola Industrial Park",
-          "Country": "Finland"
+          "Country": "Finland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -105,7 +153,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Porvoo",
-          "Country": "Finland"
+          "Country": "Finland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -119,7 +174,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Chemparc. Aquitaine",
-          "Country": "France"
+          "Country": "France",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -133,7 +195,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Fos-Lavera-Berre",
-          "Country": "France"
+          "Country": "France",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -147,7 +216,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Port Jérôme",
-          "Country": "France"
+          "Country": "France",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -161,7 +237,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Port of Le Havre",
-          "Country": "France"
+          "Country": "France",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -175,7 +258,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Port of Rouen",
-          "Country": "France"
+          "Country": "France",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -189,7 +279,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Agro-Chemie Park Piesteritz",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "n.a."
         },
         "geometry": {
           "type": "Point",
@@ -203,7 +300,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "BASF Schwarzheide GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "0",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "1",
+          "Comments": "keine Gase, aber EO und PO direkt! (lt. Quelle: https://marktuebersichten.chemietechnik.de/mu-industrieparks-chemie-pharma-biotech/2611/basf-schwarzheide-gmbh/detail "
         },
         "geometry": {
           "type": "Point",
@@ -217,7 +321,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "BASF SE. Ludwigshafen",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "1",
+          "Comments": "https://www.basf.com/global/de/who-we-are/organization/locations/europe/german-sites/ludwigshafen/production/the-production-verbund/Steamcracker.html"
         },
         "geometry": {
           "type": "Point",
@@ -231,7 +342,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Castrop-Rauxel",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "0",
+          "Comments": "?"
         },
         "geometry": {
           "type": "Point",
@@ -245,7 +363,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "ChemCoast Park Brunsbüttel",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "0",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -259,7 +384,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "ChemiePark Bitterfeld Wolfen",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "0",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -273,7 +405,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Chemiepark Knapsack",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "0",
+          "Comments": "vermutllich"
         },
         "geometry": {
           "type": "Point",
@@ -287,7 +426,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Chemie- und Industriepark Zeitz",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "0",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -301,7 +447,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Chempark Dormagen",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "1",
+          "Comments": "PO direkt!"
         },
         "geometry": {
           "type": "Point",
@@ -315,7 +468,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Chempark Leverkusen Currenta",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": "?? https://www.chempark.de/de/rohstoffe-und-produkte.html "
         },
         "geometry": {
           "type": "Point",
@@ -329,7 +489,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "GENDORF Chemical Park",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "0",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "1",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -343,7 +510,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industrial Park Dorsten-Marl",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": "vgl. Dorsten-Marl und Marl"
         },
         "geometry": {
           "type": "Point",
@@ -357,7 +531,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industriepark Höchst",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -371,7 +552,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "IndustriePark Lingen",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -385,7 +573,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industriepark Premnitz",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -399,7 +594,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industriepark Schwarze Pumpe",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -413,7 +615,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industriepark Solvay Rheinberg",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -427,7 +636,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "industriepark walsrode",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -441,7 +657,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "InfraLeuna GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -455,7 +678,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Krefeld-Uerdingen Currenta",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": "?? https://www.chempark.de/de/rohstoffe-und-produkte.html "
         },
         "geometry": {
           "type": "Point",
@@ -469,7 +699,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Marl Chemical Park",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -483,7 +720,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "NUON Industriepark Oberbruch",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -497,7 +741,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Schkopau",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -511,7 +762,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Schwedt/Oder PCK Raffinerie GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -525,7 +783,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Stade",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -539,7 +804,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Wolfgang Industrial Park",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -552,330 +824,15 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Pétfürdö",
-          "Country": "Hungary"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            18.121994,
-            47.1707612
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Hellisheiði ON-Power",
-          "Country": "Iceland"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -21.4033842,
-            64.0370884
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Monksland",
-          "Country": "Ireland"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -7.992272,
-            53.419599
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Porto Marghera",
-          "Country": "Italy"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            12.2669663,
-            45.4627674
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "?roda ?l?ska",
-          "Country": "Poland"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            16.6130874,
-            51.165633
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Turek",
-          "Country": "Poland"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            18.5009145,
-            52.0145541
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "ZILS - Sines Industrial and Logistics Zone",
-          "Country": "Portugal"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -8.8330698,
-            37.9832887
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Strážske Chemko",
-          "Country": "Slovakia"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            21.8085434,
-            48.8754835
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "AEQT - Tarragona Chemical Cluster",
-          "Country": "Spain"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            1.246002,
-            41.12016
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Huelva",
-          "Country": "Spain"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -6.9447224,
-            37.261421
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Stenungsund",
-          "Country": "Sweden"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            11.8294345,
-            58.0678388
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Infrapark Baselland",
-          "Country": "Switzerland"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            7.6647135,
-            47.5325241
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Solvay Ind.park",
-          "Country": "Switzerland"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            8.3123644,
-            47.5766045
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Chemelot",
-          "Country": "The Netherlands"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            5.7932988,
-            50.974183
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Chemical Cluster Delfzijl",
-          "Country": "The Netherlands"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            6.9476955,
-            53.3165884
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "EMMTEC Industry & Business Park",
-          "Country": "The Netherlands"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            6.9069293,
-            52.7749331
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Port of Amsterdam",
-          "Country": "The Netherlands"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.9152054,
-            52.3778637
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Port of Rotterdam",
-          "Country": "The Netherlands"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.145263,
-            51.9496008
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Valuepark Terneuzen",
-          "Country": "The Netherlands"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            3.8225052,
-            51.3342613
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "AkzoNobel R&D center Felling UK",
-          "Country": "United Kingdom"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -1.5595312,
-            54.9580038
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Grangemouth",
-          "Country": "United Kingdom"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -3.7227698,
-            56.0097152
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Saltend Chemicals Parks",
-          "Country": "United Kingdom"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -0.2404589,
-            53.7360647
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Wilton International",
-          "Country": "United Kingdom"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -1.0946702,
-            54.5802188
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
           "FacilityName": "Vynova Wilhelmshaven",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "0",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -889,7 +846,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Henkel AG & Co. KGaA",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "1",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -903,7 +867,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "BIZZPARK Oberbruch - Der Standort 3.0",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -916,8 +887,15 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "Chemical Park Knapsack ",
-          "Country": "Germany"
+          "FacilityName": "Chemical Park Knapsack ",
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": "https://www.chemiepark-knapsack.de/standort/aktuelles/news-detailseite/?no_cache=1&L=742&tx_ttnews%5Btt_news%5D=677&cHash=dd92470c1b02793414d0c6aad70ef6e4"
         },
         "geometry": {
           "type": "Point",
@@ -931,7 +909,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Evonik Site Lülsdorf",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -945,7 +930,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industriepark Köln - Merkenich",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -959,7 +951,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Solvay's Industrial Park in Bernburg",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -973,7 +972,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industrial Park Bayer Bitterfeld",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -987,7 +993,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Evonik Site Darmstadt/Weiterstadt",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1001,7 +1014,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Kalle-Albert Industrial Park",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1015,7 +1035,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Allessa GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1029,7 +1056,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industry Centre Obernburg Mainsite GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1043,7 +1077,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "BASF Lampertheim GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1057,7 +1098,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "SOLVAY Acetow GmbH",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1071,7 +1119,14 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Industrial Park Gersthofen",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
@@ -1085,13 +1140,545 @@
         "type": "Feature",
         "properties": {
           "FacilityName": "Chemiepark Trostberg",
-          "Country": "Germany"
+          "Country": "Germany",
+          "ePipeline": "0",
+          "hasEthylene": "0",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
         },
         "geometry": {
           "type": "Point",
           "coordinates": [
             12.5523216,
             48.0212315
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Pétfürdö",
+          "Country": "Hungary",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            18.121994,
+            47.1707612
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Hellisheiði ON-Power",
+          "Country": "Iceland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -21.4033842,
+            64.0370884
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Monksland",
+          "Country": "Ireland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -7.992272,
+            53.419599
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Porto Marghera",
+          "Country": "Italy",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            12.2669663,
+            45.4627674
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "?roda ?l?ska",
+          "Country": "Poland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            16.6130874,
+            51.165633
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Turek",
+          "Country": "Poland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            18.5009145,
+            52.0145541
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "ZILS - Sines Industrial and Logistics Zone",
+          "Country": "Portugal",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -8.8330698,
+            37.9832887
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Strážske Chemko",
+          "Country": "Slovakia",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            21.8085434,
+            48.8754835
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "AEQT - Tarragona Chemical Cluster",
+          "Country": "Spain",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "1",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.246002,
+            41.12016
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Huelva",
+          "Country": "Spain",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -6.9447224,
+            37.261421
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Stenungsund",
+          "Country": "Sweden",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            11.8294345,
+            58.0678388
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Infrapark Baselland",
+          "Country": "Switzerland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            7.6647135,
+            47.5325241
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Solvay Ind.park",
+          "Country": "Switzerland",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            8.3123644,
+            47.5766045
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Chemelot",
+          "Country": "The Netherlands",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "0",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "0",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            5.7932988,
+            50.974183
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Chemical Cluster Delfzijl",
+          "Country": "The Netherlands",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            6.9476955,
+            53.3165884
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "EMMTEC Industry & Business Park",
+          "Country": "The Netherlands",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            6.9069293,
+            52.7749331
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Port of Amsterdam",
+          "Country": "The Netherlands",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.9152054,
+            52.3778637
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Port of Rotterdam",
+          "Country": "The Netherlands",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.145263,
+            51.9496008
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Valuepark Terneuzen",
+          "Country": "The Netherlands",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "1",
+          "hasPropylene": "1",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            3.8225052,
+            51.3342613
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "AkzoNobel R&D center Felling UK",
+          "Country": "United Kingdom",
+          "ePipeline": "",
+          "hasEthylene": "",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": "bei Consett (ca 20 km westlich)"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -1.5595312,
+            54.9580038
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Grangemouth",
+          "Country": "United Kingdom",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -3.7227698,
+            56.0097152
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Saltend Chemicals Parks",
+          "Country": "United Kingdom",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "0",
+          "hasPropylene": "0",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -0.2404589,
+            53.7360647
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Wilton International",
+          "Country": "United Kingdom",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "1",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -1.0946702,
+            54.5802188
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "DOW Olefinverbund Böhlen",
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            12.359936,
+            51.188426
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Basell Polyolefine",
+          "Country": "Germany",
+          "ePipeline": "1",
+          "hasEthylene": "1",
+          "hasEthyleneOxide": "",
+          "pPipeline": "",
+          "hasPropylene": "",
+          "hasPropyleneOxide": "",
+          "Comments": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            11.708812,
+            48.758381
           ]
         }
       }
@@ -1105,7 +1692,10 @@
         "properties": {
           "FacilityName": "BASF Antwerpen N.V.",
           "Country": "Belgien",
-          "City": "Antwerpen"
+          "City": "Antwerpen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
         },
         "geometry": {
           "type": "Point",
@@ -1120,7 +1710,10 @@
         "properties": {
           "FacilityName": "Covestro N.V.",
           "Country": "Belgien",
-          "City": "Antwerpen"
+          "City": "Antwerpen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
         },
         "geometry": {
           "type": "Point",
@@ -1135,7 +1728,10 @@
         "properties": {
           "FacilityName": "Polyol Belgium N.V. (Dow)",
           "Country": "Belgien",
-          "City": "Tertre"
+          "City": "Tertre",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": "check N.M.P. @ Feluy?!"
         },
         "geometry": {
           "type": "Point",
@@ -1148,9 +1744,12 @@
       {
         "type": "Feature",
         "properties": {
-          "FacilityName": "CovestroFrance SNC",
+          "FacilityName": "Covestro France SNC",
           "Country": "France",
-          "City": "Fos"
+          "City": "Fos",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1165,7 +1764,10 @@
         "properties": {
           "FacilityName": "BASF/Schwarzheide GmbH",
           "Country": "Germany",
-          "City": "Schwarzheide"
+          "City": "Schwarzheide",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1180,22 +1782,10 @@
         "properties": {
           "FacilityName": "Covestro Deutschland AG",
           "Country": "Germany",
-          "City": "Dormagen"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            6.8421757,
-            51.0833678
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Covestro Deutschland AG",
-          "Country": "Germany",
-          "City": "Dormagen"
+          "City": "Dormagen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "propylene on site"
         },
         "geometry": {
           "type": "Point",
@@ -1210,7 +1800,10 @@
         "properties": {
           "FacilityName": "Dow Benelux N.V.",
           "Country": "Netherlands",
-          "City": "Terneuzen"
+          "City": "Terneuzen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
         },
         "geometry": {
           "type": "Point",
@@ -1225,7 +1818,10 @@
         "properties": {
           "FacilityName": "Huntsman Holland B.V.",
           "Country": "Netherlands",
-          "City": "Rotterdam"
+          "City": "Rotterdam",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
         },
         "geometry": {
           "type": "Point",
@@ -1240,7 +1836,10 @@
         "properties": {
           "FacilityName": "Shell Nederland Chemie B.V.",
           "Country": "Netherlands",
-          "City": "Rotterdam"
+          "City": "Rotterdam",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
         },
         "geometry": {
           "type": "Point",
@@ -1255,7 +1854,10 @@
         "properties": {
           "FacilityName": "Dow Chemical Iberica S.A.",
           "Country": "Spain",
-          "City": "Tarragona"
+          "City": "Tarragona",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1270,7 +1872,10 @@
         "properties": {
           "FacilityName": "Repsol Quinica S.A.",
           "Country": "Spain",
-          "City": "Tarragona"
+          "City": "Tarragona",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1285,7 +1890,10 @@
         "properties": {
           "FacilityName": "Repsol Quinica S.A.",
           "Country": "Spain",
-          "City": "Puertollano"
+          "City": "Puertollano",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1300,7 +1908,10 @@
         "properties": {
           "FacilityName": "MOL Petrochemicals Plc.",
           "Country": "Slowakia",
-          "City": "Bratislava"
+          "City": "Bratislava",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1315,7 +1926,10 @@
         "properties": {
           "FacilityName": "MOL Petrochemicals Plc.",
           "Country": "Hungary",
-          "City": "Tisaujvaros"
+          "City": "Tisaujvaros",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1330,7 +1944,10 @@
         "properties": {
           "FacilityName": "PCC Rokita S.A.",
           "Country": "Poland",
-          "City": "Brzeg Dolny"
+          "City": "Brzeg Dolny",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1345,7 +1962,10 @@
         "properties": {
           "FacilityName": "Oltchim",
           "Country": "Romania",
-          "City": "Ramnicu Valcea"
+          "City": "Ramnicu Valcea",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1360,7 +1980,10 @@
         "properties": {
           "FacilityName": "Fortischem",
           "Country": "Slovakia",
-          "City": "Novaky"
+          "City": "Novaky",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1375,7 +1998,10 @@
         "properties": {
           "FacilityName": "BorsodChem",
           "Country": "Hungary",
-          "City": "Kazincbarcika"
+          "City": "Kazincbarcika",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
@@ -1390,7 +2016,10 @@
         "properties": {
           "FacilityName": "NEO Group",
           "Country": "Lithuania",
-          "City": "Klaipeda"
+          "City": "Klaipeda",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
         },
         "geometry": {
           "type": "Point",
