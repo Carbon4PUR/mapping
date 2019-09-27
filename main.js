@@ -75,22 +75,24 @@ function loadGlobalDefs() {
 }
 
 let emissionColors = {
-    "CO2, AIR": 'rgb(241, 177, 48)',
-    "CO, AIR": 'rgb(234,110,57)'
+    "Germany": 'rgb(241, 177, 48)',
+    "Belgium": 'rgb(234,110,57)',
+    "Netherlands": 'rgb(0,110,57)'
 },
     chemicalColors = {
         "chemical parks": "rgb(0,168,189)",
         "polyol plants": "rgb(12,168,118)"
     },
     nace = {
-        "Manufacture of basic iron and steel and of ferro-alloys": { style: 'nace-iron', color: '#ff0000', looping: true, catalytic: true, active: true },
-        "Manufacture of other inorganic basic chemicals": { style: 'nace-inorganic', color: 'rgb(214,70,111)', looping: true, catalytic: true, active: true },
-        "Production of electricity": { style: 'nace-electricity', color: 'rgb(190,85,153)', looping: true, catalytic: false, active: true },
-        "Extraction of natural gas": { style: 'nace-ng', color: 'rgb(151,133,176)', looping: true, catalytic: false, active: true }, // find color
-        "Manufacture of refined petroleum products": { style: 'nace-petroleum', color: 'rgb(103,155,186)', looping: true, catalytic: false, active: true },
-        "Manufacture of cement": { style: 'nace-cement', color: '#5a6067', looping: true, catalytic: false, active: true },
-        "Manufacture of lime and plaster": { style: 'nace-lime', color: '#000000', looping: true, catalytic: false, active: true },
-        "Manufacture of fertilisers and nitrogen compounds": { style: 'nace-fertilisers', color: '#938e99', looping: true, catalytic: false, active: true }
+            "Energy sector": { style: 'nace-iron', color: '#ff0000', looping: true, catalytic: true, active: true },
+            "Productiona and processing of metals": { style: 'nace-inorganic', color: 'rgb(214,70,111)', looping: true, catalytic: true, active: true },
+            "Chemical industry": { style: 'nace-electricity', color: 'rgb(190,85,153)', looping: true, catalytic: false, active: true },
+            "Paper and wood production processing": { style: 'nace-ng', color: 'rgb(151,133,176)', looping: true, catalytic: false, active: true },
+            "Mineral industry": { style: 'nace-petroleum', color: 'rgb(103,155,186)', looping: true, catalytic: false, active: true },
+            "Waste and waste water management": { style: 'nace-cement', color: '#5a6067', looping: true, catalytic: false, active: true },
+            "Other activities": { style: 'nace-lime', color: '#000000', looping: true, catalytic: false, active: true },
+            "Animal and vegetable products from the food and beverage sector": { style: 'nace-fertilisers', color: '#938e99', looping: true, catalytic: false, active: true }
+
     }
 
 
@@ -218,7 +220,7 @@ pollutantFilterCO2Button.addEventListener('click', returnTogglePollutantFilter(p
 pollutantFilterCOButton.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCOButton))
 
 
-function getFilteredTotals() {
+function getFilteredTotals() { /*
     let co2sum = 0, cosum = 0, co2sumCombined = 0, cosumCombined = 0
     for (name in nace) {
         if(nace[name].active){
@@ -250,7 +252,7 @@ function getFilteredTotals() {
     co2FilteredSumOutput.textContent = format1Dec(co2sum) + ' Megatonnes/year'
     coFilteredSumOutput.textContent = format1Dec(cosum) + ' Megatonnes/year'
     co2CombinedFilteredSumOutput.textContent = format1Dec(co2sumCombined) + ' Megatonnes/year'
-    coCombinedFilteredSumOutput.textContent = format1Dec(cosumCombined) + ' Megatonnes/year'
+    coCombinedFilteredSumOutput.textContent = format1Dec(cosumCombined) + ' Megatonnes/year'*/
 }
 
 function toggleAllNaceFilter() {
@@ -292,13 +294,13 @@ let toggleFilterNACE = (buttonId) => {
  */
 function addNACEFilters() {
     for (var name in nace) {
-        let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + ' Megatonnes CO2/year, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Megatonnes CO/year';
+        //let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + ' Megatonnes CO2/year, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Megatonnes CO/year';
         let button = d3.select('#naceCategories')
             .append('a')
             .attr('id', name + '-filter-button')
             .attr('class', 'button is-small is-activated is-fullwidth nace-button ' + nace[name].style)
             .on('click', (a, b, c) => { toggleFilterNACE(c[0].id) })
-            .attr('title', emissionSums)
+            //.attr('title', emissionSums)
             .text(name)
     }
 }
@@ -350,7 +352,7 @@ function updateEmissionsFilter() {
         var m = markers[marker]
         m.setFilter(globalEmissionData[marker], function (feature) {
             let isVisible = true
-            isVisible = (nace[feature.properties.NACEMainEconomicActivityName].active)
+            isVisible = (nace[feature.properties.MainIASectorName].active)
             // if selected, only show those next to chemParks
             if (isVisible && radiusFilterButton.classList.contains('is-info')) {
                 isVisible =
@@ -457,7 +459,7 @@ function updatePlantFilter() {
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
             return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
-                   (!isPipelineFilterActive || feature.properties.hasPipeline == 1)
+                   (!isPipelineFilterActive || feature.properties.ePipeline == 1)
         })
     }
 }
@@ -494,8 +496,6 @@ polyolSlider.addEventListener('input', function (event) {
 let numberChemParks = document.getElementById('number-chem-parks'),
 numberPolyolPlants = document.getElementById('number-polyol-plants')
 function getActiveChemPlants(){
-    numberChemParks.value = polyolFilterButton.classList.contains('is-info') ? 0 : chemicalParkMarkers["chemical parks"].getLayers().length
-    numberPolyolPlants.value = chemicalParkMarkers["polyol plants"].getLayers().length
 }
 
 /****************/
@@ -683,6 +683,21 @@ var chemicalParkMarkers = {}
 */
 function loadPRTRlayers(data) {
     return new Promise((resolve, reject) => {
+        console.log(data)
+        var lookup = {};
+        var items = data['CO2, AIR'].features;
+        var result = [];
+        for (var item, i = 0; item = items[i++];) {
+            var name = item.properties.MainIASectorName;
+
+            if (!(name in lookup)) {
+                lookup[name] = 1;
+                result.push(name);
+            }
+        }
+        console.log(result);
+        
+        
         for (emission in data) {
             if (emission != "stats") {
                 for(f in data[emission].features) {
@@ -691,10 +706,10 @@ function loadPRTRlayers(data) {
                 markers[emission] = L.geoJson(data[emission], {
                     pointToLayer: function (feature, latlng) {                        
                         return L.circleMarker(latlng, {
-                            radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
-                            color: emissionColors[feature.properties.PollutantName],
-                            fillColor: nace[feature.properties.NACEMainEconomicActivityName].color,
-                            weight: 1,
+                            radius: Math.sqrt(feature.properties["TotalQuantity [kg/year]"] / data.stats.totalMax / 1000000000) * 50,
+                            color: emissionColors[feature.properties.CountryName],
+                            fillColor: nace[feature.properties.MainIASectorName].color,
+                            weight: 2,
                             opacity: 0.7,
                             fillOpacity: 0.4
                         }).bindPopup(addEmitterPopupHandler(feature))
@@ -716,20 +731,15 @@ function loadPRTRlayers(data) {
  */
 function addEmitterPopupHandler(feature) {
     if (feature.properties) {
-        let otherEmission = ''
-        if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Megatonnes CO<sub>2</sub>/year'
-        if (feature.properties.coAmount) otherEmission += formatSI(feature.properties.coAmount) + ' Megatonnes CO/year'
-        let thisEmission = formatSI(feature.properties.MTonnes) + ' Megatonnes '
-        if (feature.properties.type == 'CO, AIR') thisEmission += 'CO/year'
-        else thisEmission += 'CO<sub>2</sub>/year'
-        let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
+        let thisEmission = formatSI(feature.properties["TotalQuantity [kg/year]"]) + ' Megatonnes CO<sub>2</sub>/year'
+        let color = translucidColor('blue' ) //nace[feature.properties.NACEMainEconomicActivityName].color)
         return `<h2>${feature.properties.FacilityName}</h2>
                         ${feature.properties.CountryName}                    
                         <br><b><i>${feature.properties.NACEMainEconomicActivityName}</i></b>
                         <br>
                         <div class='popup-em' style='background: ${color}'>
                         Emissions:
-                        <br />${thisEmission}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + '</div>'
+                        <br />${thisEmission}</div>`
 
     }
     else {
@@ -990,8 +1000,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(addNACEFilters)
         .then(getFilteredTotals)
         .then(loadChemicalParksFromJSON)
-        .then(checkIfIntro)
-        .then(getActiveChemPlants)
+        //.then(checkIfIntro)
+        //.then(getActiveChemPlants)
 })
 
 /***********************************/

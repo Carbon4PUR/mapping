@@ -1,0 +1,20 @@
+﻿FacilityName;Country;City;latitude;longitude;ePipeline;pPipeline;source
+BASF Antwerpen N.V.;Belgien;Antwerpen;51.3647132;4.2714683;1;1;lt. SKELLEY-pdf
+Covestro N.V.;Belgien;Antwerpen;51.290456;4.325161;1;1;lt. SKELLEY-pdf
+Polyol Belgium N.V. (Dow);Belgien;Tertre;50.4794215;3.7933079;;;check N.M.P. @ Feluy?!
+Covestro France SNC;France;Fos;43.4243698;4.8449945;;;
+BASF/Schwarzheide GmbH;Germany;Schwarzheide;51.4776;13.8751413;;;
+Covestro Deutschland AG;Germany;Dormagen;51.0833678;6.8421757;1;1;propylene on site
+Dow Benelux N.V.;Netherlands;Terneuzen;51.334712;3.789350;1;1;lt. SKELLEY-pdf
+Huntsman Holland B.V.;Netherlands;Rotterdam;51.8851504;4.2545041;1;1;lt. SKELLEY-pdf
+Shell Nederland Chemie B.V.;Netherlands;Rotterdam;51.8797186;4.3405925;1;1;lt. SKELLEY-pdf
+Dow Chemical Iberica S.A.;Spain;Tarragona;41.102353;1.189720;;;
+Repsol Quinica S.A.;Spain;Tarragona;41.186848;1.222386;;;
+Repsol Quinica S.A.;Spain;Puertollano;38.679333;-4.055958;;;
+MOL Petrochemicals Plc.;Slowakia;Bratislava;48.1248677;17.1770306;;;
+MOL Petrochemicals Plc.;Hungary;Tisaujvaros;47.9183931;21.0273509;;;
+PCC Rokita S.A.;Poland;Brzeg Dolny;51.270197;16.733639;;;
+Oltchim;Romania;Ramnicu Valcea;45.041323;24.298465;;;
+Fortischem;Slovakia;Novaky;48.705841;18.533084;;;
+BorsodChem;Hungary;Kazincbarcika;48.248534;20.6456643;;;
+NEO Group;Lithuania;Klaipeda;55.6743751;21.224234;;;

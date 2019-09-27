@@ -8,7 +8,7 @@ Careful: we corrected the coordinates for one plant (see comment in top of file)
 Attention: Don't forget to run chemicalParkDistances.html (see chapter "distances" below)
 
 ## Chemical parks and polyol plants
-The list of all chemical plants known to us is in chemicalparks.csv, all polyol plants are in "polyol plants europe v2.csv".
+The list of all chemical plants known to us is in chemicalparks.csv, all polyol plants are in "polyol plants europe v3.csv".
 
 Both can be converted by opening chemParksConverter.html. The last result object in the console can be copied to "chemicalParks.json.
 
