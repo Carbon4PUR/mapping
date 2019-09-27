@@ -1,4 +1,351 @@
 {
+  "polyol plants": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "BASF Antwerpen N.V.",
+          "Country": "Belgien",
+          "City": "Antwerpen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.2714683,
+            51.3647132
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Covestro N.V.",
+          "Country": "Belgien",
+          "City": "Antwerpen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.325161,
+            51.290456
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Polyol Belgium N.V. (Dow)",
+          "Country": "Belgien",
+          "City": "Tertre",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": "check N.M.P. @ Feluy?!"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            3.7933079,
+            50.4794215
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Covestro France SNC",
+          "Country": "France",
+          "City": "Fos",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.8449945,
+            43.4243698
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "BASF/Schwarzheide GmbH",
+          "Country": "Germany",
+          "City": "Schwarzheide",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            13.8751413,
+            51.4776
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Covestro Deutschland AG",
+          "Country": "Germany",
+          "City": "Dormagen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "propylene on site"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            6.8421757,
+            51.0833678
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Dow Benelux N.V.",
+          "Country": "Netherlands",
+          "City": "Terneuzen",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            3.78935,
+            51.334712
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Huntsman Holland B.V.",
+          "Country": "Netherlands",
+          "City": "Rotterdam",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.2545041,
+            51.8851504
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Shell Nederland Chemie B.V.",
+          "Country": "Netherlands",
+          "City": "Rotterdam",
+          "ePipeline": "1",
+          "pPipeline": "1",
+          "source": "lt. SKELLEY-pdf"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            4.3405925,
+            51.8797186
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Dow Chemical Iberica S.A.",
+          "Country": "Spain",
+          "City": "Tarragona",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.18972,
+            41.102353
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Repsol Quinica S.A.",
+          "Country": "Spain",
+          "City": "Tarragona",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.222386,
+            41.186848
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Repsol Quinica S.A.",
+          "Country": "Spain",
+          "City": "Puertollano",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -4.055958,
+            38.679333
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "MOL Petrochemicals Plc.",
+          "Country": "Slowakia",
+          "City": "Bratislava",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            17.1770306,
+            48.1248677
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "MOL Petrochemicals Plc.",
+          "Country": "Hungary",
+          "City": "Tisaujvaros",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            21.0273509,
+            47.9183931
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "PCC Rokita S.A.",
+          "Country": "Poland",
+          "City": "Brzeg Dolny",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            16.733639,
+            51.270197
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Oltchim",
+          "Country": "Romania",
+          "City": "Ramnicu Valcea",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            24.298465,
+            45.041323
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "Fortischem",
+          "Country": "Slovakia",
+          "City": "Novaky",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            18.533084,
+            48.705841
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "BorsodChem",
+          "Country": "Hungary",
+          "City": "Kazincbarcika",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            20.6456643,
+            48.248534
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "FacilityName": "NEO Group",
+          "Country": "Lithuania",
+          "City": "Klaipeda",
+          "ePipeline": "",
+          "pPipeline": "",
+          "source": ""
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            21.224234,
+            55.6743751
+          ]
+        }
+      }
+    ]
+  },
   "chemical parks": {
     "type": "FeatureCollection",
     "features": [
@@ -7,7 +354,7 @@
         "properties": {
           "FacilityName": "Chemiepark Linz",
           "Country": "Austria",
-          "hasPipeline": "1"
+          "hasPipeline": "0"
         },
         "geometry": {
           "type": "Point",
@@ -1092,311 +1439,6 @@
           "coordinates": [
             12.5523216,
             48.0212315
-          ]
-        }
-      }
-    ]
-  },
-  "polyol plants": {
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "BASF Antwerpen N.V.",
-          "Country": "Belgien",
-          "City": "Antwerpen"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.2714683,
-            51.3647132
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Covestro N.V.",
-          "Country": "Belgien",
-          "City": "Antwerpen"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.325161,
-            51.290456
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Polyol Belgium N.V. (Dow)",
-          "Country": "Belgien",
-          "City": "Tertre"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            3.7933079,
-            50.4794215
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "CovestroFrance SNC",
-          "Country": "France",
-          "City": "Fos"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.8449945,
-            43.4243698
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "BASF/Schwarzheide GmbH",
-          "Country": "Germany",
-          "City": "Schwarzheide"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            13.8751413,
-            51.4776
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Covestro Deutschland AG",
-          "Country": "Germany",
-          "City": "Dormagen"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            6.8421757,
-            51.0833678
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Covestro Deutschland AG",
-          "Country": "Germany",
-          "City": "Dormagen"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            6.8421757,
-            51.0833678
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Dow Benelux N.V.",
-          "Country": "Netherlands",
-          "City": "Terneuzen"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            3.78935,
-            51.334712
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Huntsman Holland B.V.",
-          "Country": "Netherlands",
-          "City": "Rotterdam"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.2545041,
-            51.8851504
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Shell Nederland Chemie B.V.",
-          "Country": "Netherlands",
-          "City": "Rotterdam"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            4.3405925,
-            51.8797186
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Dow Chemical Iberica S.A.",
-          "Country": "Spain",
-          "City": "Tarragona"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            1.18972,
-            41.102353
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Repsol Quinica S.A.",
-          "Country": "Spain",
-          "City": "Tarragona"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            1.222386,
-            41.186848
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Repsol Quinica S.A.",
-          "Country": "Spain",
-          "City": "Puertollano"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            -4.055958,
-            38.679333
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "MOL Petrochemicals Plc.",
-          "Country": "Slowakia",
-          "City": "Bratislava"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            17.1770306,
-            48.1248677
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "MOL Petrochemicals Plc.",
-          "Country": "Hungary",
-          "City": "Tisaujvaros"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            21.0273509,
-            47.9183931
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "PCC Rokita S.A.",
-          "Country": "Poland",
-          "City": "Brzeg Dolny"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            16.733639,
-            51.270197
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Oltchim",
-          "Country": "Romania",
-          "City": "Ramnicu Valcea"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            24.298465,
-            45.041323
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "Fortischem",
-          "Country": "Slovakia",
-          "City": "Novaky"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            18.533084,
-            48.705841
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "BorsodChem",
-          "Country": "Hungary",
-          "City": "Kazincbarcika"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            20.6456643,
-            48.248534
-          ]
-        }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "FacilityName": "NEO Group",
-          "Country": "Lithuania",
-          "City": "Klaipeda"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            21.224234,
-            55.6743751
           ]
         }
       }
