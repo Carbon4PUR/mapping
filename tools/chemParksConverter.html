@@ -17,7 +17,7 @@
 		var globalChemParks = {}
 		/* Load all csv data files and create menu*/
 		getChemparkData('../chemicalParks.csv', 'chemical parks')
-			.then(getChemparkData('../polyol plants europe v3.csv', 'polyol plants'))
+			.then(getChemparkData('../polyol plants europe v2.csv', 'polyol plants'))
 			.then(roundTo3Dec(globalChemParks))
 
 
