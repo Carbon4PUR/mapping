@@ -307,7 +307,8 @@ function addNACEFilters() {
 /* Chemical plants tab */
 let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
     polyolFilterButton = document.getElementById('polyol-filter-button'),
-    pipelineFilterButton = document.getElementById('pipeline-filter-button'),
+    ethyleneFilterButton = document.getElementById('ethylene-filter-button'),
+    propyleneFilterButton = document.getElementById('propylene-filter-button'),
     radiusFilterButton = document.getElementById('radius-filter-button')
 
 let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
@@ -333,14 +334,23 @@ let togglePolyolFilter = () => {
 polyolFilterButton.addEventListener('click', togglePolyolFilter)
 
 /**
- * Toggle if only plants with ethylene pipelines are shown or all chemical plants
+ * Toggle if only plants with ethylene are shown or all chemical plants
  */
-let togglePipelineFilter = () => {
-    pipelineFilterButton.classList.toggle('is-info')
+let toggleEthyleneFilter = () => {
+    ethyleneFilterButton.classList.toggle('is-info')
     updatePlantFilter()
     updateEmissionsFilter()
 }
-pipelineFilterButton.addEventListener('click', togglePipelineFilter)
+ethyleneFilterButton.addEventListener('click', toggleEthyleneFilter)
+/**
+ * Toggle if only plants with propylene are shown or all chemical plants
+ */
+let togglePropyleneFilter = () => {
+    propyleneFilterButton.classList.toggle('is-info')
+    updatePlantFilter()
+    updateEmissionsFilter()
+}
+propyleneFilterButton.addEventListener('click', togglePropyleneFilter)
 
 /**
  * Decide for each emission if it should be displayed depending on all active filters
@@ -450,14 +460,16 @@ sizeFilterButton.addEventListener('click', toggleSizeFilter)
 
 function updatePlantFilter() {
     let isSizeFilterActive = sizeFilterButton.classList.contains('is-info')
-    let isPipelineFilterActive = pipelineFilterButton.classList.contains('is-info')
+    let isEthyleneFilterActive = ethyleneFilterButton.classList.contains('is-info')
+    let isPropyleneFilterActive = propyleneFilterButton.classList.contains('is-info')
     // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 15 / 50000
     for (marker in chemicalParkMarkers) {        
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
             return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
-                   (!isPipelineFilterActive || feature.properties.ePipeline == 1 || feature.properties.ePipeline == "1")
+                   (!isEthyleneFilterActive || feature.properties.hasEthylene == 1 || feature.properties.hasEthylene == "1") &&
+                   (!isPropyleneFilterActive || feature.properties.hasPropylene == 1 || feature.properties.hasPropylene == "1")
         })
     }
 }
@@ -729,7 +741,8 @@ function addEmitterPopupHandler(feature) {
                         <br>
                         <div class='popup-em' style='background: ${color}'>
                         Emissions:
-                        <br />${thisEmission}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + '</div>'
+                        <br>${thisEmission}` + (otherEmission != '' ? `<br />${otherEmission}` : '') + `</div>
+                        <br><br><a href="${feature.properties.FacilityDetails}" target="_blank">More Facility details on E-PRTR page</a>`
 
     }
     else {
