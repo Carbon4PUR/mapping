@@ -1,0 +1,783 @@
+{
+  "features": [
+    {
+      "properties": {
+        "id": 1678428,
+        "name": "Stade-Schkopau-Pipeline-Ethylene",
+        "ort": "Stade",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            9.486706,
+            53.635588
+          ],
+          [
+            11.974442,
+            51.394352
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1679194,
+        "name": "Münchsmünster-Gendorf-Pipeline-Ethylene",
+        "ort": "Münchmünster",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            11.7037456,
+            48.7555011
+          ],
+          [
+            12.719985,
+            48.177848
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1679186,
+        "name": "Schkopau-Leuna-Pipeline-Ethylene",
+        "ort": "Schkopau",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            11.974442,
+            51.394352
+          ],
+          [
+            12.010769,
+            51.324573
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1679188,
+        "name": "Böhlen-Litvinov-Pipeline-Ethylene",
+        "ort": "Böhlen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            12.3546491,
+            51.1879756
+          ],
+          [
+            13.6020742,
+            50.56165350000001
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1679080,
+        "name": "Leuna-Böhlen-Pipeline-Ethylene",
+        "ort": "Leuna",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            12.010769,
+            51.324573
+          ],
+          [
+            12.3546491,
+            51.1879756
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1679770,
+        "name": "Burghausen-Gendorf-Pipeline-Ethylene",
+        "ort": "Burghausen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            12.8460153,
+            48.1899715
+          ],
+          [
+            12.719985,
+            48.177848
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680166,
+        "name": "Dormagen-Köln-Nord-Pipeline-Ethylene",
+        "ort": "Dormagen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            6.856687,
+            51.072253
+          ],
+          [
+            6.9309734,
+            51.0068616
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680164,
+        "name": "Frechen-Wesseling-Pipeline-Ethylene",
+        "ort": "Frechen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            6.766109999999999,
+            50.90397
+          ],
+          [
+            7.007482899999999,
+            50.8170527
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680128,
+        "name": "Heide-Brunsbüttel-Pipeline-Ethylene",
+        "ort": "Hemmingstedt",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            9.0756101,
+            54.1529343
+          ],
+          [
+            9.1827626,
+            53.901848
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680168,
+        "name": "Bottrop-Dormagen-Pipeline-Ethylene",
+        "ort": "Bottrop",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            6.96041,
+            51.5106
+          ],
+          [
+            6.856687,
+            51.072253
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680172,
+        "name": "Marl-Gelsenkirchen-Pipeline-Ethylene",
+        "ort": "Marl",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            7.100303,
+            51.681714
+          ],
+          [
+            7.0284381,
+            51.59696839999999
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680170,
+        "name": "Oberhausen-Bottrop-Pipeline-Ethylene",
+        "ort": "Oberhausen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            6.796449399999999,
+            51.5267932
+          ],
+          [
+            6.96041,
+            51.5106
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680180,
+        "name": "Geleen-Frechen-Pipeline-Ethylene",
+        "ort": "Geleen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            5.8049235,
+            50.95963949999999
+          ],
+          [
+            6.766109999999999,
+            50.90397
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680178,
+        "name": "Antwerpen-Geleen-Pipeline-Ethylene",
+        "ort": "Antwerpen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            4.345783,
+            51.2549551
+          ],
+          [
+            5.8049,
+            50.9596
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680178,
+        "name": "Antwerpen-Feluy-Pipeline-Ethylene",
+        "ort": "Antwerpen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            4.345783,
+            51.2549551
+          ],
+          [
+            4.2148,
+            50.5555
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680178,
+        "name": "Antwerpen-Jemeppe-Pipeline-Ethylene",
+        "ort": "Antwerpen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            4.345783,
+            51.2549551
+          ],
+          [
+            4.66,
+            50.447
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680178,
+        "name": "Antwerpen-Terneuzen-Pipeline-Ethylene",
+        "ort": "Antwerpen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            4.345783,
+            51.2549551
+          ],
+          [
+            3.8225052,
+            51.3342613
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680174,
+        "name": "Rheinberg-Oberhausen-Pipeline-Ethylene",
+        "ort": "Rheinberg",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            6.5778,
+            51.56477
+          ],
+          [
+            6.796449399999999,
+            51.5267932
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680194,
+        "name": "Ludwigshafen-Karlsruhe-Pipeline-Ethylene",
+        "ort": "Ludwigshafen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            8.432187,
+            49.495614
+          ],
+          [
+            8.336459999999999,
+            49.05311
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680190,
+        "name": "Karlsruhe-Münchsmünster-Pipeline-Ethylene",
+        "ort": "Karlsruhe",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            8.336459999999999,
+            49.05311
+          ],
+          [
+            11.7037456,
+            48.7555011
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680186,
+        "name": "Wesseling-Frankfurt-Pipeline-Ethylene",
+        "ort": "Wesseling",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            7.007482899999999,
+            50.8170527
+          ],
+          [
+            8.543887,
+            50.082808
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1680188,
+        "name": "Frankfurt Höchst-Ludwigshafen-Pipeline-Ethylene",
+        "ort": "Frankfurt (Main)",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            8.543887,
+            50.082808
+          ],
+          [
+            8.432187,
+            49.495614
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1733952,
+        "name": "Brunsbüttel-Stade-Pipeline-Ethylene",
+        "ort": "Stade",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            9.486706,
+            53.635588
+          ],
+          [
+            9.1827626,
+            53.901848
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737102,
+        "name": "Rotterdam-Moerdijk-Pipeline-Ethylene",
+        "ort": "Rotterdam",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            4.11276,
+            51.9393798
+          ],
+          [
+            4.5836,
+            51.6831
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737102,
+        "name": "Moerdijk-Antwerpen-Pipeline-Ethylene",
+        "ort": "Moerdijk",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            4.5836,
+            51.6831
+          ],
+          [
+            4.345783,
+            51.2549551
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737106,
+        "name": "Köln-Nord-Frechen-Pipeline-Ethylene",
+        "ort": "Köln",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            6.9309734,
+            51.0068616
+          ],
+          [
+            6.766109999999999,
+            50.90397
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737110,
+        "name": "Gelsenkirchen-Bottrop-Pipeline-Ethylene",
+        "ort": "Gelsenkirchen",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            7.0284381,
+            51.59696839999999
+          ],
+          [
+            6.96041,
+            51.5106
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737110,
+        "name": "Runcorn-Preston-Pipeline-Ethylene",
+        "ort": "Runcorn",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            -2.7667,
+            53.3233
+          ],
+          [
+            -2.7298,
+            53.7604
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737110,
+        "name": "Preston-Wilton-Pipeline-Ethylene",
+        "ort": "Middlesbrough",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            -2.7298,
+            53.7604
+          ],
+          [
+            -1.2298,
+            54.586
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737110,
+        "name": "Wilton-CarterBar-Pipeline-Ethylene",
+        "ort": "Wilton",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            -1.2298,
+            54.586
+          ],
+          [
+            -2.4801,
+            55.354
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    },
+    {
+      "properties": {
+        "id": 1737110,
+        "name": "CarterBar-Grangemouth-Pipeline-Ethylene",
+        "ort": "Grangemouth",
+        "type": [
+          7,
+          52
+        ]
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            -2.4801,
+            55.354
+          ],
+          [
+            -3.69857,
+            56.0111
+          ]
+        ],
+        "type": "LineString"
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection",
+  "limit": 100,
+  "page": 0,
+  "sort": null
+}

@@ -80,7 +80,8 @@ let emissionColors = {
 },
     chemicalColors = {
         "chemical parks": "rgb(0,168,189)",
-        "polyol plants": "rgb(12,168,118)"
+        "polyol plants": "rgb(12,168,118)",
+        "steel mills": "yellow"
     },
     nace = {
         "Manufacture of basic iron and steel and of ferro-alloys": { style: 'nace-iron', color: '#ff0000', looping: true, catalytic: true, active: true },
@@ -106,7 +107,7 @@ let globalEmissionData, globalChemicalData
 /* Info tab */
 let resetButton = document.getElementById('reset-filters-button')
 
-function resetFilters() {
+function resetFilters() {/* 
     // reset to "chemical looping"
     compatFilterButtons[1].click()
     // activate CO and CO2 (the return-function returns a function, so () to execute it)    
@@ -126,8 +127,9 @@ function resetFilters() {
         var changeEvent = document.createEvent("Event")
         changeEvent.initEvent("input")
         distanceChemicalPlantSlider.dispatchEvent(changeEvent)
-    }
-
+    } */
+    window.location.reload()
+    return false
 }
 resetButton.addEventListener('click', resetFilters)
 
@@ -309,7 +311,10 @@ let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
     polyolFilterButton = document.getElementById('polyol-filter-button'),
     ethyleneFilterButton = document.getElementById('ethylene-filter-button'),
     propyleneFilterButton = document.getElementById('propylene-filter-button'),
-    radiusFilterButton = document.getElementById('radius-filter-button')
+    steelMillButton = document.getElementById('steel-mill-button'),
+    radiusFilterButton = document.getElementById('radius-filter-button'),
+    ethylenePipelineButton = document.getElementById('ethylene-pipeline-button'),
+    propylenePipelineButton = document.getElementById('propylene-pipeline-button')
 
 let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
     distanceChemicalPlantOutput = document.getElementById('distance-chemical-plant-slider-output'),
@@ -351,6 +356,48 @@ let togglePropyleneFilter = () => {
     updateEmissionsFilter()
 }
 propyleneFilterButton.addEventListener('click', togglePropyleneFilter)
+/**
+ * Toggle if steel mills are shown as consumers
+ */
+let toggleSteelMills = () => {
+    steelMillButton.classList.toggle('is-info')
+    if(steelMillButton.classList.contains('is-info')) {
+        loadSteelMillsAsChemicalParks()
+            .then(() => {loadChemicalParks(globalChemicalData)}).then(updatePlantFilter).then(updateEmissionsFilter)
+    }
+    else {
+        const {"steel mills": sm, ...partialObject} = globalChemicalData
+        loadChemicalParks(partialObject)
+        updatePlantFilter()
+        updateEmissionsFilter()
+        console.log(globalChemicalData)
+    }
+}
+steelMillButton.addEventListener('click', toggleSteelMills)
+
+function polystyle(feature) {
+    return {        
+        color: feature.properties.type[1] == 54 ? "green" : "red",  //Outline color
+    };
+}
+function togglePipeline(event, type){
+    event.target.classList.toggle('is-info')
+    if(event.target.classList.contains('is-info')){
+        fetch('pipeline-'+type+'.json')
+            .then((response) => { return response.json() },
+                (reject) => { console.error(reject) })
+            .then((geojson) => {
+                globalPipelines[type] = L.geoJson(geojson, {style: polystyle})
+                globalPipelines[type].addTo(map)
+            })
+    }
+    else {
+        map.removeLayer(globalPipelines[type])
+    }
+
+}
+ethylenePipelineButton.addEventListener('click', (event) => {togglePipeline(event, 'ethylene')})
+propylenePipelineButton.addEventListener('click', event => {togglePipeline(event, 'propylene')})
 
 /**
  * Decide for each emission if it should be displayed depending on all active filters
@@ -462,14 +509,16 @@ function updatePlantFilter() {
     let isSizeFilterActive = sizeFilterButton.classList.contains('is-info')
     let isEthyleneFilterActive = ethyleneFilterButton.classList.contains('is-info')
     let isPropyleneFilterActive = propyleneFilterButton.classList.contains('is-info')
-    // This was defined by the consortium. A 50 kt polyol plant needs 15 kt of CO (or an equivalent amount of CH4 or H2)
-    let minCOavailability = polyolOutput.value * 15 / 50000
-    for (marker in chemicalParkMarkers) {        
+    // This was defined by the consortium. A 50 kt polyol plant needs 13,5 kt of CO (or an equivalent amount of CH4 or H2)
+    let minCOavailability = polyolOutput.value * 13.5 / 50000
+    for (marker in chemicalParkMarkers) {
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
             return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
-                   (!isEthyleneFilterActive || feature.properties.hasEthylene == 1 || feature.properties.hasEthylene == "1") &&
-                   (!isPropyleneFilterActive || feature.properties.hasPropylene == 1 || feature.properties.hasPropylene == "1")
+                    // polyol plants are considered to have propylene and ethylene availability. This is just a first approximation.
+                   ((marker == "polyol plants") || 
+                   ((!isEthyleneFilterActive || feature.properties.hasEthyleneOxide == 1 || feature.properties.hasEthyleneOxide == "1") &&
+                   (!isPropyleneFilterActive || feature.properties.hasPropyleneOxide == 1 || feature.properties.hasPropyleneOxide == "1")))
         })
     }
 }
@@ -484,7 +533,7 @@ distanceChemicalPlantSlider.addEventListener('input', function (event) {
     for (layer in chemicalParkMarkers) {
         chemicalParkMarkers[layer].eachLayer((layer) => {
             // update the popups for all chemical clusters
-            layer.setPopupContent(addConsumerPopupHandler(layer.feature, type))            
+            layer.setPopupContent(addConsumerPopupHandler(layer.feature))
             // Update size of circle
             return layer.setRadius(event.target.value * 1000)
         })
@@ -519,7 +568,9 @@ let mapLayoutGreen = document.getElementById('map-layout-green'),
     modalModifyConsumers = document.getElementById('modal-modify-consumers'),
     csvChemicalParks = document.getElementById('csv-chemical-parks'),
     csvPolyolPlants = document.getElementById('csv-polyol-plants'),
+    renewEmissions = document.getElementById('renew-emissions'),
     modifyConsumersCreateLink = document.getElementById('modify-consumers-create-link'),
+    modifyConsumersCreateJSON = document.getElementById('modify-consumers-create-json'),
     modifyConsumersLoadData = document.getElementById('modify-consumers-load-data'),
     closeModalList = document.getElementsByClassName('close-modal'),
     resetConsumers = document.getElementById('reset-consumers')
@@ -555,16 +606,16 @@ function toggleShowConsumers() {
 }
 mapShowConsumers.addEventListener('click', toggleShowConsumers)
 
-function putCsvInTextArea(file, textarea) {			
+function putCsvInTextArea(file, textarea) {
     fetch(file)
         .then(response => response.text())
         .then(myBlob => textarea.value = myBlob)
 }
 
-function toggleModifyConsumers(){    
+function toggleModifyConsumers(){
     modalModifyConsumers.classList.toggle('is-active')
     if (!modalModifyConsumers.dataset.isInitialized){
-        putCsvInTextArea('chemicalparks.csv', csvChemicalParks)
+        putCsvInTextArea('chemicalparks v2.csv', csvChemicalParks)
         putCsvInTextArea('polyol plants europe v2.csv', csvPolyolPlants)
         modalModifyConsumers.dataset.isInitialized = true
     }
@@ -588,6 +639,23 @@ function modifyConsumersLink(){
 }
 modifyConsumersCreateLink.addEventListener('click', modifyConsumersLink)
 
+function downloadObjectAsJson(exportObj, exportName){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+function modifyConsumersJSON(){
+    convertCsvsToJSON().then(json => addDistances(globalEmissionData, json))
+        .then(obj => {
+            downloadObjectAsJson(obj.chemParks, "chemicalParks")
+        })
+}
+modifyConsumersCreateJSON.addEventListener('click', modifyConsumersJSON)
+
 function convertCsvsToJSON() {    
     return new Promise((resolve) => {
         // only load csv2geojson if needed
@@ -607,12 +675,11 @@ function convertCsvsToJSON() {
                     if (err) {
                         console.error(err)
                     } else {
-                        //console.log(geojson)
+                        //console.log(csvs, geojson)
                         json[type] = geojson
                     }
                 })
             }
-            globalChemicalData = json
             //console.log(globalChemicalData)
             resolve(json)
         }
@@ -623,32 +690,47 @@ function convertCsvsToJSON() {
 
 function addDistances(emissions, chemParks) {
     return new Promise((resolve, reject) => {
-        for(eCat in emissions){
-            if(eCat != "stats"){
-                for(f in emissions[eCat].features){
-                    let feat = emissions[eCat].features[f]
-                    delete feat.properties.distances
-                    for(cat in chemParks){
-                        //console.log(globalChemParks)
-                        for(park in chemParks[cat].features){
-                            let p = chemParks[cat].features[park]
-                            let d = distance(feat.geometry.coordinates[1], feat.geometry.coordinates[0], p.geometry.coordinates[1], p.geometry.coordinates[0])   
-                            if(d<100001){
-                                if(!feat.properties.distances) feat.properties.distances = {}
-                                if(!feat.properties.distances[cat]) feat.properties.distances[cat] = {}
-                                    feat.properties.distances[cat][p.properties.FacilityName] = d
-                                    //console.log(p.properties.FacilityName)
-                            }
-                        }
+        for(c in chemParks){
+            deleteOldDistances(chemParks[c].features)
+        }
+        for(e in emissions){
+            deleteOldDistances(emissions[e].features)
+            if(e != "stats"){
+                for(c in chemParks){
+                    if(c != "stats"){
+                        distancesBetweenFeatureLists(emissions[e].features, chemParks[c].features, groupByType1 = true)
                     }
                 }
             }
         }
-        globalEmissionData = emissions
-        console.log(globalEmissionData)
-        
-        resolve(emissions)
+        resolve({emissions: emissions, chemParks: chemParks})
     })
+}
+
+function deleteOldDistances(list){
+    for(let f1 in list) delete list[f1].properties.distances
+}
+
+function distancesBetweenFeatureLists(list1, list2){
+    for(let f1 in list1) {
+        for(let f2 in list2) {
+            let feat1 = list1[f1], feat2 = list2[f2]
+            let d = distance(feat1.geometry.coordinates[1], feat1.geometry.coordinates[0], feat2.geometry.coordinates[1], feat2.geometry.coordinates[0])   
+            if(d<100001){
+                if(!feat1.properties.distances) feat1.properties.distances = {}
+                feat1.properties.distances[feat2.properties.FacilityName] = {
+                    distance: d
+                }
+                if(!feat2.properties.distances) feat2.properties.distances = {}
+                feat2.properties.distances[feat1.properties.FacilityName] = {
+                    distance: d,
+                    type: feat1.properties.type,
+                    amount: feat1.properties.MTonnes
+                }
+            }
+        }
+    }
+    
 }
 
 function distance(lat1, lng1, lat2, lng2) {
@@ -665,8 +747,11 @@ function distance(lat1, lng1, lat2, lng2) {
 function loadConsumersData() {
     modifyConsumersLoadData.classList.add('is-loading')
     convertCsvsToJSON().then(chemParks => addDistances(globalEmissionData, chemParks))
-        .then(a => loadPRTRlayers())
-        .then(b => loadChemicalParks(globalChemicalData))
+        .then(obj => {
+            globalEmissionData = obj.emissions
+            globalChemicalData = obj.chemParks
+        })
+        .then(loadChemicalParks(globalChemicalData))
         .then(() => {
             modifyConsumersLoadData.classList.remove('is-loading')
             modalModifyConsumers.classList.remove('is-active')
@@ -681,6 +766,155 @@ resetConsumers.addEventListener('click', () => {
 })
 
 
+function createNewEmissionsJSON(){
+    renewEmissions.classList.add('is-loading')
+    window.sortedFeatures = {'stats': {'totalMax' : 0, max:{}, totals:{"CO2, AIR":{}, "CO, AIR":{}}, "Description": "BEFORE CHANGING: PLEASE NOTE: the location for 'FJERNVARME FYN FYNSVÆRKET A/S' has to be changed from (9.80973039123284°, 5.33467590910096°) to 10.404647, 55.428245"}};
+    var actions = ["CO2, AIR", "CO, AIR"].map(asyncGetData);
+    var results = Promise.all(actions);
+    results.then(data => {// or just .then(console.log)
+        // iterate over all CO2 plants
+        for(let i=0; i<sortedFeatures['CO2, AIR'].features.length; i++){
+            let f = sortedFeatures['CO2, AIR'].features[i];
+            // iterate over all CO plants
+            for(let j=0; j<sortedFeatures['CO, AIR'].features.length; j++){
+                let e = sortedFeatures['CO, AIR'].features[j];
+                // check if plants are equal except amount
+                if(checkEquality(e,f,false)){
+                    e.properties.co2Amount = f.properties.MTonnes;
+                    f.properties.coAmount = e.properties.MTonnes;
+                }
+            }
+        }
+        addDistances(sortedFeatures, globalChemicalData)
+        console.log(sortedFeatures)
+        downloadObjectAsJson(sortedFeatures, "emissions")
+        renewEmissions.classList.remove('is-loading')
+    });
+}
+renewEmissions.addEventListener('click', createNewEmissionsJSON)
+
+var asyncGetData = function asyncGetDataFromSparql(emissionName){
+    return new Promise(resolve => {
+        sortedFeatures[emissionName] = {
+                type: "FeatureCollection",
+                features: []
+            };
+        /* query e-prtr with variables */
+        var query = makeQueryEPRTR(emissionName);
+        fetch(query)
+            .then(function(response) {
+                //console.log(response);
+                return response.json();
+            }, function(reject){
+                console.log(reject);
+            })
+            .then(myBlob => showEm(myBlob))
+            .then(col => {
+                sortedFeatures[emissionName].features = col;
+                let m = col.reduce((a,b)=>a.properties.MTonnes>b.properties.MTonnes?a:b).properties.MTonnes; 
+                sortedFeatures.stats.max[emissionName] = m;
+                if(sortedFeatures.stats.totalMax<m) sortedFeatures.stats.totalMax=m;
+                for(let i=0;i<col.length;i++){
+                    let cur = col[i];
+                    if(isNaN(sortedFeatures.stats.totals[emissionName][cur.properties.NACEMainEconomicActivityName])) sortedFeatures.stats.totals[emissionName][cur.properties.NACEMainEconomicActivityName] = 0;
+                    sortedFeatures.stats.totals[emissionName][cur.properties.NACEMainEconomicActivityName] += cur.properties.MTonnes;
+                }
+                resolve(sortedFeatures)
+            });
+    })
+};
+
+/* use http://semantic.eea.europa.eu/sparql online query tool to generate query */
+function makeQueryEPRTR(emissionName = "CO2, AIR"){
+	/* CORS headers not set by europa.eu, so we use a sparql proxy */
+	var proxy = "https://cors-anywhere.herokuapp.com/";
+	/* easiest sparql endpoint we could find */
+	var url = "http://semantic.eea.europa.eu/sparql";
+	var query = `PREFIX eprtr: <http://prtr.ec.europa.eu/rdf/schema.rdf#>
+PREFIX facility: <http://prtr.ec.europa.eu/rdf/facility/>
+PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?FacilityName ?FacilityDetails ?CountryName ?Lat ?Long ?ReportingYear ?NACEMainEconomicActivityName ?PollutantName ?Quantity {
+  ?facility eprtr:facilityName ?FacilityName .
+  ?facility eprtr:inCountry ?country . ?country eprtr:name ?CountryName .
+  ?facility eprtr:latestReport ?latestReport . 
+  ?facility wgs84:lat ?Lat . 
+  ?facility wgs84:long ?Long .
+  ?facility foaf:isPrimaryTopicOf ?FacilityDetails .
+  ?latestReport eprtr:reportingYear ?ReportingYear .
+  ?latestReport eprtr:nACEActivity ?nACEActivity . ?nACEActivity eprtr:name ?NACEMainEconomicActivityName
+  values ?nACEActivity {
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/20.13>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/23.52>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/35.11>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/06.20>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/23.51>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/20.15>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/19.20>
+    <http://prtr.ec.europa.eu/rdf/nACEActivity/24.10>
+    
+  }
+  ?pollutantRelease eprtr:facilityReport ?latestReport .   
+  ?pollutantRelease rdfs:label ?PollutantName . 
+  values ?PollutantName {"`+emissionName+`"}  
+  ?pollutantRelease eprtr:totalQuantity ?Quantity . 
+} 
+ORDER BY ?nACEActivity ?FacilityName ?ReportingYear
+LIMIT 10000
+	`;
+	/* Warning: europa.eu is normally limiting results to 512, add nrOfHits to increase */
+	return proxy + url + "?query="+ encodeURIComponent(query) +'&format=application%2Fsparql-results%2Bjson&nrOfHits=10000';
+}
+
+
+function showEm(data){
+    var r = createFeatureCollection(data.results.bindings);
+    return r;
+}
+	
+function createGeometry(long, lat){
+	return {
+		type: "Point",
+		coordinates: [parseFloat(long), parseFloat(lat)]
+	};	
+}
+function createProperties(obj){
+	return {
+		CountryName: obj.CountryName.value,
+        FacilityName: obj.FacilityName.value,
+        FacilityDetails: obj.FacilityDetails.value,
+        ReportingYear: obj.ReportingYear.value,
+		MTonnes: obj.Quantity.value / 1E9,
+		NACEMainEconomicActivityName: obj.NACEMainEconomicActivityName.value,
+		PollutantName: obj.PollutantName.value
+	};
+}
+function createFeatureFromObj(obj){
+	return {
+		geometry: createGeometry(obj.Long.value, obj.Lat.value),
+		properties: createProperties(obj),
+		type: "Feature"
+	};	
+}
+function checkEquality(el, ft, checkAmount = true){
+    var checks =  (el.properties.FacilityDetails == ft.properties.FacilityDetails ? 1 : 0) + 
+            (el.properties.FacilityName == ft.properties.FacilityName ? 1 : 0) + 
+            (el.properties.ReportingYear == ft.properties.ReportingYear ? 1 : 0) +
+            (el.properties.MTonnes == ft.properties.MTonnes ? 1 : 0)
+    return checks > (checkAmount ? 3 : 2);
+}
+function createFeatureCollection(array){
+    var col = [];
+    for (var i = 0; i < array.length; i++) {
+        var ft = createFeatureFromObj(array[i]);
+        const found = col.some(el => checkEquality(el, ft));
+        if(!found) col.push(ft);
+    }
+    return col;
+}
+
+
 /***********************/
 /* Load data functions */
 /***********************/
@@ -688,6 +922,7 @@ resetConsumers.addEventListener('click', () => {
 // keep reference to the markers for filtering
 var markers = {}
 var chemicalParkMarkers = {}
+var globalPipelines = {}
 
 /** 
 * convert json to map layer with circlemarkers
@@ -758,30 +993,6 @@ function loadChemicalParksFromData(data) {
     // copy distance information to markers. This could be done while creating the json arrays to speedup the load time.
     //console.log(data)    
     return new Promise((resolve, reject) => {
-        for (emission in globalEmissionData) {
-            if (emission != "stats") {
-                for (f in globalEmissionData[emission].features) {
-                    let feat = globalEmissionData[emission].features[f]
-                    if (feat.properties.distances) {
-                        for (e in feat.properties.distances) {
-                            for (chem in feat.properties.distances[e]) {
-                                for (paramStyle in data[e].features) {
-                                    if (data[e].features[paramStyle].properties.FacilityName == chem) {
-                                        if (!data[e].features[paramStyle].properties.distances) data[e].features[paramStyle].properties.distances = []
-                                        data[e].features[paramStyle].properties.distances.push({
-                                            'name': feat.properties.FacilityName,
-                                            'distance': feat.properties.distances[e][chem],
-                                            'type': emission,
-                                            'value': feat.properties.MTonnes
-                                        })
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
         for (type in data) {
             if (type != "stats") {
                 chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map)
@@ -829,6 +1040,34 @@ function loadChemicalParksFromJSON() {
     })
 }
 
+function loadSteelMillsAsChemicalParks(){
+    return new Promise((resolve) => {        
+        if(!globalChemicalData['steel mills']) {
+            fetch('steelMills.json')
+                .then((response) => { return response.json() },
+                    (reject) => { console.error(reject) })
+                .then((json) => {
+                    globalChemicalData["steel mills"] = {type: "FeatureCollection", features: []}
+                    new_feats = globalChemicalData["steel mills"].features
+                    for(e in globalEmissionData["CO, AIR"].features){
+                        let emitter = globalEmissionData["CO, AIR"].features[e]
+                        for(s in json.bof){
+                            let steelMill = json.bof[s]
+                            if(emitter.properties.FacilityName == steelMill){
+                                new_feats.push(emitter)
+                            }
+                        }
+                    }
+                    for(e in globalEmissionData){
+                        distancesBetweenFeatureLists(globalEmissionData[e].features, new_feats)
+                    }
+                    resolve()
+                })
+            }
+            else resolve()
+        })
+}
+
 
 function loadScript(url, callback) {
     // Adding the script tag to the head as suggested before
@@ -871,12 +1110,12 @@ function convertGeoJSONToChemLayer(data, type) {
  * @param {string} type The name of the category, in this case "chemical parks" or "polyol plant" 
  * @returns
  */
-function addConsumerPopupHandler(feature, type) {
+function addConsumerPopupHandler(feature) {
     if (feature.properties) {
         return `<h2>${feature.properties.FacilityName}</h2>
-                ${feature.properties.Country}
-                <br><b><i class="${type.replace(" ", "-") + "-popup"}">${type === 'chemical parks' ? "Chemical park" : "Polyol plant"}</i></b>
-                <br>` + consumerPopupAvailability(feature, type)
+                ${feature.properties.CountryName}
+                <br><b><i class="${feature.properties.type.replace(" ", "-") + "-popup"}">${feature.properties.type}</i></b>
+                <br>` + consumerPopupAvailability(feature)
     }
     else {
         console.log(feature)
@@ -887,20 +1126,19 @@ function addConsumerPopupHandler(feature, type) {
  * Create a box with available emissions around a consumer
  *
  * @param {*} feature the consumer
- * @param {*} type consumer type ("chemical parks" or "polyol plants")
  * @returns a DOM string containing a div with the availability
  */
-function consumerPopupAvailability(feature, type) {
+function consumerPopupAvailability(feature) {
     let p = feature.properties
     p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 }
     if (p.distances != undefined) {
-        for (e in p.distances) {
-            if (p.distances[e].distance < distanceChemicalPlantOutput.value * 1000) {
-                p.availability[p.distances[e].type] += p.distances[e].value
+        for (n in p.distances) {
+            if (p.distances[n].distance < distanceChemicalPlantOutput.value * 1000) {
+                p.availability[p.distances[n].type] += p.distances[n].amount
             }
         }
     }
-    return '<div class="popup-em" style="background:'+ translucidColor(chemicalColors[type]) +'">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
+    return '<div class="popup-em" style="background:'+ translucidColor(chemicalColors[feature.properties.type]) +'">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
         formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;Megatonnes CO<sub>2</sub>/year<br>' +
         formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;Megatonnes CO/year</div>'
 }

@@ -1,14 +1,14 @@
-﻿Lat;Long;FacilityName;Country;ePipeline;hasEthylene;hasEthyleneOxide;pPipeline;hasPropylene;hasPropyleneOxide;Comments
+﻿latitude;longitude;FacilityName;CountryName;ePipeline;hasEthylene;hasEthyleneOxide;pPipeline;hasPropylene;hasPropyleneOxide;Comments
 48.2886041;14.3320535;Chemiepark Linz;Austria;0;0;0;0;0;0;
 48.1409268;16.4763778;Schwechat;Austria;1;1;;1;1;;https://www.borealisgroup.com/schwechat/standort/produktionsanlagen
-51.3249258;4.2856278;INEOS Antwerp site;Belgium;1;1;;1;1;;
-51.2438582;4.3936194;Port Of Antwerp;Belgium;1;1;;1;1;;
+51.3249258;4.2856278;INEOS Antwerp site;Belgium;1;1;1;1;1;1;
+51.2438582;4.3936194;Port Of Antwerp;Belgium;1;1;1;1;1;1;
 51.0642666;5.0881938;Tessenderloo;Belgium;1;1;;;1;;vermutlich
 59.3894802;27.2241924;Kohtla-Järve;Estonia;;;;;;;?
 63.1114049;21.6718522;Kokkola Industrial Park;Finland;;;;;;;?
 60.3931919;25.6652739;Porvoo;Finland;;;;;;;?
 43.4172697;-0.6367076;Chemparc. Aquitaine;France;;;;;;;?
-43.4448356;4.8625546;Fos-Lavera-Berre;France;;;;;;;?
+43.4448356;4.8625546;Fos-Lavera-Berre;France;;1;1;;;1;?
 49.4815578;0.5335092;Port Jérôme;France;;;;;;;?
 49.4719317;0.1474997;Port of Le Havre;France;1;1;;1;1;;?
 49.4445326;1.0734142;Port of Rouen;France;;;;;;;?
@@ -36,7 +36,7 @@
 51.058747;6.141278;NUON Industriepark Oberbruch;Germany;0;0;;0;0;;
 51.3900745;11.9851505;Schkopau;Germany;1;1;;1;1;;
 53.0932724;14.2312786;Schwedt/Oder PCK Raffinerie GmbH;Germany;0;0;;1;1;;
-53.5928618;9.4709494;Stade;Germany;1;1;;;;;
+53.5928618;9.4709494;Stade;Germany;1;1;;0;;1;
 50.1187875;8.9653663;Wolfgang Industrial Park;Germany;0;0;;0;0;;
 53.62261;8.05866;Vynova Wilhelmshaven;Germany;0;1;0;0;0;0;
 51.180708;6.8383343;Henkel AG & Co. KGaA;Germany;;1;1;;1;1;
@@ -71,7 +71,7 @@
 53.3165884;6.9476955;Chemical Cluster Delfzijl;The Netherlands;;;;;;;
 52.7749331;6.9069293;EMMTEC Industry & Business Park;The Netherlands;;;;;;;
 52.3778637;4.9152054;Port of Amsterdam;The Netherlands;1;1;;1;1;;
-51.9496008;4.145263;Port of Rotterdam;The Netherlands;1;1;;;;;
+51.9496008;4.145263;Port of Rotterdam;The Netherlands;1;1;1;1;1;1;
 51.3342613;3.8225052;Valuepark Terneuzen;The Netherlands;1;1;;1;1;;
 54.9580038;-1.5595312;AkzoNobel R&D center Felling UK;United Kingdom;;;;;;;bei Consett (ca 20 km westlich)
 56.0097152;-3.7227698;Grangemouth;United Kingdom;1;1;;;;;

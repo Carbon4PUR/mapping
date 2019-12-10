@@ -1,0 +1,234 @@
+{
+    "features": [
+        {
+            "properties": {
+                "id": 1678848,
+                "color": "#FF8800",
+                "name": "Ludwigshafen-Karlsruhe-Pipeline-Propylene",
+                "ort": "Ludwigshafen",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        8.432187,
+                        49.495614
+                    ],
+                    [
+                        8.336459999999999,
+                        49.05311
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1680110,
+                "color": "#FF8800",
+                "name": "Marl-Gelsenkirchen-Pipeline-Propylene",
+                "ort": "Marl",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        7.100303,
+                        51.681714
+                    ],
+                    [
+                        7.0284381,
+                        51.59696839999999
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1680122,
+                "color": "#FF8800",
+                "name": "Oberhausen-Duisburg-Pipeline-Propylene",
+                "ort": "Oberhausen",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        6.796449399999999,
+                        51.5267932
+                    ],
+                    [
+                        6.73572,
+                        51.43892
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1680120,
+                "color": "#FF8800",
+                "name": "Gelsenkirchen-Oberhausen-Pipeline-Propylene",
+                "ort": "Gelsenkirchen",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        7.0284381,
+                        51.59696839999999
+                    ],
+                    [
+                        6.796449399999999,
+                        51.5267932
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1680124,
+                "color": "#FF8800",
+                "name": "Moers-Duisburg-Pipeline-Propylene",
+                "ort": "Moers",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        6.646913,
+                        51.4702002
+                    ],
+                    [
+                        6.73572,
+                        51.43892
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1737102,
+                "name": "Rotterdam-Moerdijk-Pipeline-Ethylene",
+                "ort": "Rotterdam",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        4.11276,
+                        51.9393798
+                    ],
+                    [
+                        4.5836,
+                        51.6831
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1737102,
+                "name": "Moerdijk-Antwerpen-Pipeline-Ethylene",
+                "ort": "Moerdijk",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        4.5836,
+                        51.6831
+                    ],
+                    [
+                        4.345783,
+                        51.2549551
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1680178,
+                "name": "Antwerpen-Feluy-Pipeline-Ethylene",
+                "ort": "Antwerpen",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        4.345783,
+                        51.2549551
+                    ],
+                    [
+                        4.2148,
+                        50.5555
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        },
+        {
+            "properties": {
+                "id": 1680178,
+                "name": "Antwerpen-Beringen-Pipeline-Ethylene",
+                "ort": "Antwerpen",
+                "type": [
+                    7,
+                    54
+                ]
+            },
+            "geometry": {
+                "coordinates": [
+                    [
+                        4.345783,
+                        51.2549551
+                    ],
+                    [
+                        5.15,
+                        51.076
+                    ]
+                ],
+                "type": "LineString"
+            },
+            "type": "Feature"
+        }
+    ]
+}
