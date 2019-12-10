@@ -1112,8 +1112,6 @@ function convertGeoJSONToChemLayer(data, type) {
  */
 function addConsumerPopupHandler(feature) {
     if (feature.properties) {
-        console.log(feature.properties.CountryName);
-        
         return `<h2>${feature.properties.FacilityName}</h2>
                 ${feature.properties.CountryName}
                 <br><b><i class="${feature.properties.type.replace(" ", "-") + "-popup"}">${feature.properties.type}</i></b>
