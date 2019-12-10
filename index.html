@@ -296,14 +296,8 @@
 				<h2>Type of plant</h2>
 				<div class="buttons">
 					<button class="button is-small is-fullwidth" id="polyol-filter-button">Only show polyol plants</button>
-					<button class="button is-small is-fullwidth" id="steel-mill-button">Also show steel mills as consumers</button>
-				</div>
-				<h2>Resources</h2>
-				<div class="buttons">
-					<button class="button is-small is-fullwidth" id="ethylene-filter-button">Only show plants with ethylene oxide availability</button>
-					<button class="button is-small is-fullwidth" id="propylene-filter-button">Only show plants with propylene oxide availability</button>
-					<button class="button is-small is-fullwidth" id="ethylene-pipeline-button">Show ethylene pipelines</button>
-					<button class="button is-small is-fullwidth" id="propylene-pipeline-button">Show propylene pipelines</button>
+					<button class="button is-small is-fullwidth" id="ethylene-filter-button">Only show plants with ethylene availability</button>
+					<button class="button is-small is-fullwidth" id="propylene-filter-button">Only show plants with propylene availability</button>
 				</div>
 				<h2>Search radius around plants</h2>
 				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
@@ -354,8 +348,6 @@
 				All chemical plants and polyol plants have been gathered manually via desk research, publications
 				and interviews. There is no promise that this data is complete or correct. If you have suggestions,
 				please <a href="https://www.carbon4pur.eu/contact/" target="_blank" rel="noopener">contact us</a>.
-				Ethylene and propylene availability was also gathered via desk research. Data is sparse and sometimes contradictory,
-				so please only use this as a first indicator. It is (wrongly) considered that all polyol plants have ethylene and propylene available.
 				<a name="nace-description"></a>
 				<h2>NACE categories and plant types</h2>
 				Carbon4PUR is investigating two cleaning technologies: <b>chemical looping</b> and <b>catalytic
@@ -464,12 +456,6 @@
 				<div class="is-size-7">&#9432; If you want to link to the map with light style, use this url: <a
 						href="https://carbon4pur.github.io/mapping/?style=light">https://carbon4pur.github.io/mapping/?style=light</a>
 				</div>
-				<h2>Emissions</h2>
-				<div class="filterGroup">
-					<div class="buttons">
-						<button class="button is-small" id="renew-emissions">Get emissions from E-PRTR</button>
-					</div>
-				</div>
 				<h2>Consumers</h2>
 				<div class="filterGroup">
 					<div class="buttons">
@@ -504,15 +490,14 @@
 				<p>You can edit the data in csv format directly here, or you can download it as csv and edit it for
 					example in Excel. You can then copy it in here again.</p>
 				<p>If you want to share your own data, click on "create link" below and copy the displayed link.</p>
-				<h2>Chemical parks <span class="is-size-7">(<a href="chemicalparks v2.csv">Download</a>)</span></h2>
+				<h2>Chemical parks <span class="is-size-7">(<a href="chemicalparks.csv">Download</a>)</span></h2>
 				<textarea class="textarea" rows="7" id="csv-chemical-parks"></textarea>
 				<h2>Polyol plants <span class="is-size-7">(<a href="polyol plants europe v2.csv">Download</a>)</span>
 				</h2>
 				<textarea class="textarea" rows="7" id="csv-polyol-plants"></textarea>
 			</section>
 			<footer class="modal-card-foot">
-				<button class="button is-link" id="modify-consumers-create-link">Create link</button>				
-				<button class="button is-link" id="modify-consumers-create-json">Create JSON</button>
+				<button class="button is-link" id="modify-consumers-create-link">Create link</button>
 				<button class="button is-success" id="modify-consumers-load-data">Load this data</button>
 				<button class="button close-modal">Cancel</button>
 			</footer>
