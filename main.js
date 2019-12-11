@@ -1110,8 +1110,6 @@ function addConsumerPopupHandler(feature) {
  */
 function consumerPopupAvailability(feature) {
     let p = feature.properties
-    console.log(p);
-    
     p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 }
     if (p.distances != undefined) {
         for (n in p.distances) {
