@@ -1,5 +1,5 @@
 // define global variables
-let map, format1Dec, formatSI, light, green, sidebar
+let map, format1Dec, formatSI
 
 function showMap(){
     /* allows us to create filters within a Leaflet GeoJSON layer */
@@ -24,19 +24,17 @@ function showMap(){
         position: 'topright'
     }).addTo(map)
     /* Carto light-gray basemap tiles with labels */
-    light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+    map.light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap<\/a>, &copy; <a href="https://carto.com/attribution">CARTO<\/a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
     })
     /* Current default map. Switch by puting the .addTo above */
     /* Thunderforest green tiles with more information */
-    green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
+    map.green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
         attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
-    })
-        .addTo(map)
+    }).addTo(map)
 
     /* Add the zoom buttons */
-    sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
-
+    map.sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
 
     /* On the map, scrolling should zoom */
     map.on('focus', () => {
@@ -47,14 +45,14 @@ function showMap(){
         map.scrollWheelZoom.disable()
     })
     /* This is to put the emissions in the foreground on high zoom levels */
-    map.on("zoomend", function (e) {        
+    map.on("zoomend", function (e) {
         for(type in chemicalParkMarkers){
             if(e.target._zoom > 7 && !chemicalParkMarkers.isBack){
-                chemicalParkMarkers[type].bringToBack()                
+                chemicalParkMarkers[type].bringToBack()
                 chemicalParkMarkers[type].isBack = true
             }
             else {
-                chemicalParkMarkers[type].bringToFront()                
+                chemicalParkMarkers[type].bringToFront()
                 chemicalParkMarkers[type].isBack = false
             }
         }
@@ -528,12 +526,12 @@ function toggleMapLayout() {
     mapLayoutGreen.classList.toggle('is-info')
     mapLayoutLight.classList.toggle('is-info')
     if (mapLayoutGreen.classList.contains('is-info')) {
-        map.removeLayer(light)
-        map.addLayer(green)
+        map.removeLayer(map.light)
+        map.addLayer(map.green)
     }
     else {
-        map.removeLayer(green)
-        map.addLayer(light)
+        map.removeLayer(map.green)
+        map.addLayer(map.light)
     }
 }
 mapLayoutGreen.addEventListener('click', toggleMapLayout)
@@ -1083,7 +1081,7 @@ function startIntro(){
             doneLabel: '<div title="This is the only cookie used on this site. If you don\'t want to use cookies, the tour will be shown on each reload. Click anywhere outside the tour to make it disappear."><span>Done</span><span style="color: #746427;"> &#9432;</span><div>'
         })
         introJs.fn.oncomplete(setCookieNoTour)
-        sidebar.open('info-content')
+        map.sidebar.open('info-content')
         intro.start()
         document.getElementById('set-cookie-no-tour').addEventListener('click', setCookieNoTour)
   }
