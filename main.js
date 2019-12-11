@@ -31,10 +31,12 @@ function showMap(){
     /* Thunderforest green tiles with more information */
     map.green = L.tileLayer('https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=9a85f60a13be4bf7bed59b5ffc0f4d86', {
         attribution: 'Maps &copy; <a href="https://www.thunderforest.com">Thunderforest</a>, Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="http://prtr.ec.europa.eu">E-PRTR</a>'
-    }).addTo(map)
+    })
+        .addTo(map)
 
     /* Add the zoom buttons */
     map.sidebar = L.control.sidebar('sidebar', { position: 'left' }).addTo(map)
+
 
     /* On the map, scrolling should zoom */
     map.on('focus', () => {
@@ -45,14 +47,14 @@ function showMap(){
         map.scrollWheelZoom.disable()
     })
     /* This is to put the emissions in the foreground on high zoom levels */
-    map.on("zoomend", function (e) {
+    map.on("zoomend", function (e) {        
         for(type in chemicalParkMarkers){
             if(e.target._zoom > 7 && !chemicalParkMarkers.isBack){
-                chemicalParkMarkers[type].bringToBack()
+                chemicalParkMarkers[type].bringToBack()                
                 chemicalParkMarkers[type].isBack = true
             }
             else {
-                chemicalParkMarkers[type].bringToFront()
+                chemicalParkMarkers[type].bringToFront()                
                 chemicalParkMarkers[type].isBack = false
             }
         }
@@ -76,21 +78,21 @@ let emissionColors = {
     "CO2, AIR": 'rgb(241, 177, 48)',
     "CO, AIR": 'rgb(234,110,57)'
 },
-    chemicalColors = {
-        "chemical parks": "rgb(0,168,189)",
-        "polyol plants": "rgb(12,168,118)",
-        "steel mills": "yellow"
-    },
-    nace = {
-        "Manufacture of basic iron and steel and of ferro-alloys": { style: 'nace-iron', color: '#ff0000', looping: true, catalytic: true, active: true },
-        "Manufacture of other inorganic basic chemicals": { style: 'nace-inorganic', color: 'rgb(214,70,111)', looping: true, catalytic: true, active: true },
-        "Production of electricity": { style: 'nace-electricity', color: 'rgb(190,85,153)', looping: true, catalytic: false, active: true },
-        "Extraction of natural gas": { style: 'nace-ng', color: 'rgb(151,133,176)', looping: true, catalytic: false, active: true }, // find color
-        "Manufacture of refined petroleum products": { style: 'nace-petroleum', color: 'rgb(103,155,186)', looping: true, catalytic: false, active: true },
-        "Manufacture of cement": { style: 'nace-cement', color: '#5a6067', looping: true, catalytic: false, active: true },
-        "Manufacture of lime and plaster": { style: 'nace-lime', color: '#000000', looping: true, catalytic: false, active: true },
-        "Manufacture of fertilisers and nitrogen compounds": { style: 'nace-fertilisers', color: '#938e99', looping: true, catalytic: false, active: true }
-    }
+chemicalColors = {
+    "chemical parks": "rgb(0,168,189)",
+    "polyol plants": "rgb(12,168,118)",
+    "steel mills": "yellow"
+},
+nace = {
+    "Manufacture of basic iron and steel and of ferro-alloys": { style: 'nace-iron', color: '#ff0000', looping: true, catalytic: true, active: true },
+    "Manufacture of other inorganic basic chemicals": { style: 'nace-inorganic', color: 'rgb(214,70,111)', looping: true, catalytic: true, active: true },
+    "Production of electricity": { style: 'nace-electricity', color: 'rgb(190,85,153)', looping: true, catalytic: false, active: true },
+    "Extraction of natural gas": { style: 'nace-ng', color: 'rgb(151,133,176)', looping: true, catalytic: false, active: true }, // find color
+    "Manufacture of refined petroleum products": { style: 'nace-petroleum', color: 'rgb(103,155,186)', looping: true, catalytic: false, active: true },
+    "Manufacture of cement": { style: 'nace-cement', color: '#5a6067', looping: true, catalytic: false, active: true },
+    "Manufacture of lime and plaster": { style: 'nace-lime', color: '#000000', looping: true, catalytic: false, active: true },
+    "Manufacture of fertilisers and nitrogen compounds": { style: 'nace-fertilisers', color: '#938e99', looping: true, catalytic: false, active: true }
+}
 
 
 /*********************************************************/
@@ -105,27 +107,7 @@ let globalEmissionData, globalChemicalData
 /* Info tab */
 let resetButton = document.getElementById('reset-filters-button')
 
-function resetFilters() {/* 
-    // reset to "chemical looping"
-    compatFilterButtons[1].click()
-    // activate CO and CO2 (the return-function returns a function, so () to execute it)    
-    if (!pollutantFilterCOButton.classList.contains('is-activated')) returnTogglePollutantFilter(pollutantFilterCOButton)()
-    if (!pollutantFilterCO2Button.classList.contains('is-activated')) returnTogglePollutantFilter(pollutantFilterCO2Button)()
-    // set distance to 20 km
-    distanceChemicalPlantSlider.value = 20
-    // deactivate filter buttons
-    if (polyolFilterButton.classList.contains('is-info')) togglePolyolFilter()
-    if (radiusFilterButton.classList.contains('is-info')) toggleRadiusFilter()
-    if (sizeFilterButton.classList.contains('is-info')) toggleSizeFilter()
-    // set min size to 5 kt
-    polyolSlider.value = 5
-    polyolOutput.value = 5
-    // launch update
-    if (document.createEvent) {     // all browsers except IE before version 9
-        var changeEvent = document.createEvent("Event")
-        changeEvent.initEvent("input")
-        distanceChemicalPlantSlider.dispatchEvent(changeEvent)
-    } */
+function resetFilters() {
     window.location.reload()
     return false
 }
@@ -434,7 +416,6 @@ function updateEmissionsFilter() {
 function decideIfInVisibleCluster(feature) {
     let minCOavailability = polyolOutput.value * 15 / 50000
     // check all distances of the emission if there are any chemical plants within the defined radius
-    // console.log(feature);
     
     for (d in feature.properties.distances) {
         for (paramStyle in feature.properties.distances[d]) {
@@ -989,6 +970,7 @@ function addEmitterPopupHandler(feature) {
 */
 function loadChemicalParksFromData(data) {
     // copy distance information to markers. This could be done while creating the json arrays to speedup the load time.
+    addDistances(globalEmissionData, data)
     //console.log(data)    
     return new Promise((resolve, reject) => {
         for (type in data) {
@@ -1128,6 +1110,8 @@ function addConsumerPopupHandler(feature) {
  */
 function consumerPopupAvailability(feature) {
     let p = feature.properties
+    console.log(p);
+    
     p.availability = { ['CO2, AIR']: 0, ['CO, AIR']: 0 }
     if (p.distances != undefined) {
         for (n in p.distances) {
