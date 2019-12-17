@@ -289,9 +289,11 @@ function addNACEFilters() {
 /* Chemical plants tab */
 let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
     polyolFilterButton = document.getElementById('polyol-filter-button'),
+    chemParkFilterButton = document.getElementById('chem-plant-filter-button'),
     ethyleneFilterButton = document.getElementById('ethylene-filter-button'),
     propyleneFilterButton = document.getElementById('propylene-filter-button'),
     steelMillButton = document.getElementById('steel-mill-button'),
+    steelMillFilterButton = document.getElementById('steel-mill-filter-button'),
     radiusFilterButton = document.getElementById('radius-filter-button'),
     ethylenePipelineButton = document.getElementById('ethylene-pipeline-button'),
     propylenePipelineButton = document.getElementById('propylene-pipeline-button')
@@ -304,10 +306,25 @@ let distanceChemicalPlantSlider = document.getElementById('distance-chemical-pla
 let sizeFilterButton = document.getElementById('size-filter-button')
 
 /**
- * Toggle if only polyol plants are shown or all chemical plants
+ * Toggle if polyol plants are shown
  */
 let togglePolyolFilter = () => {
     polyolFilterButton.classList.toggle('is-info')
+    if (map.hasLayer(chemicalParkMarkers['polyol plants'])) {
+        map.removeLayer(chemicalParkMarkers['polyol plants'])
+    }
+    else {
+        map.addLayer(chemicalParkMarkers['polyol plants'])
+    }
+    updateEmissionsFilter()
+}
+polyolFilterButton.addEventListener('click', togglePolyolFilter)
+
+/**
+ * Toggle if chemical plants are shown
+ */
+let toggleChemPlantFilter = () => {
+    chemParkFilterButton.classList.toggle('is-info')
     if (map.hasLayer(chemicalParkMarkers['chemical parks'])) {
         map.removeLayer(chemicalParkMarkers['chemical parks'])
     }
@@ -316,7 +333,7 @@ let togglePolyolFilter = () => {
     }
     updateEmissionsFilter()
 }
-polyolFilterButton.addEventListener('click', togglePolyolFilter)
+chemParkFilterButton.addEventListener('click', toggleChemPlantFilter)
 
 /**
  * Toggle if only plants with ethylene are shown or all chemical plants
@@ -336,26 +353,38 @@ let togglePropyleneFilter = () => {
     updateEmissionsFilter()
 }
 propyleneFilterButton.addEventListener('click', togglePropyleneFilter)
+
 /**
  * Toggle if steel mills are shown as consumers
  */
 let toggleSteelMills = () => {
     steelMillButton.classList.toggle('is-info')
     if(steelMillButton.classList.contains('is-info')) {
+        steelMillFilterButton.disabled = false
         loadSteelMillsAsChemicalParks()
             .then(() => {loadChemicalParks(globalChemicalData)}).then(updatePlantFilter).then(updateEmissionsFilter)
     }
     else {
+        steelMillFilterButton.disabled = true
         const {"steel mills": sm, ...partialObject} = globalChemicalData
         loadChemicalParks(partialObject)
         updatePlantFilter()
         updateEmissionsFilter()
-        console.log(globalChemicalData)
     }
 }
 steelMillButton.addEventListener('click', toggleSteelMills)
 
-function polystyle(feature) {
+/**
+ * Toggle if steel mills are filtered
+ */
+let toggleSteelMillFilter = () => {
+    steelMillFilterButton.classList.toggle('is-info')
+    updatePlantFilter()
+    updateEmissionsFilter()
+}
+steelMillFilterButton.addEventListener('click', toggleSteelMillFilter)
+
+function pipelineStyle(feature) {
     return {        
         color: feature.properties.type[1] == 54 ? "green" : "red",  //Outline color
     };
@@ -367,7 +396,7 @@ function togglePipeline(event, type){
             .then((response) => { return response.json() },
                 (reject) => { console.error(reject) })
             .then((geojson) => {
-                globalPipelines[type] = L.geoJson(geojson, {style: polystyle})
+                globalPipelines[type] = L.geoJson(geojson, {style: pipelineStyle})
                 globalPipelines[type].addTo(map)
             })
     }
@@ -383,6 +412,8 @@ propylenePipelineButton.addEventListener('click', event => {togglePipeline(event
  * Decide for each emission if it should be displayed depending on all active filters
  */
 function updateEmissionsFilter() {
+    let chemParkFilterOn = chemParkFilterButton.classList.contains('is-info')
+    let polyolPlantFilterOn = polyolFilterButton.classList.contains('is-info')
     for (marker in markers) {
         var m = markers[marker]
         m.setFilter(globalEmissionData[marker], function (feature) {
@@ -392,9 +423,9 @@ function updateEmissionsFilter() {
             if (isVisible && radiusFilterButton.classList.contains('is-info')) {
                 isVisible =
                     // if the chemical parks are not limited to polyol plants, check for distance to chemParks
-                    (!polyolFilterButton.classList.contains('is-info') && decideIfInDistance(feature, 'chemical parks'))
+                    (chemParkFilterOn && decideIfInDistance(feature, 'chemical parks'))
                     // and always check for distance to polyol plants
-                    || decideIfInDistance(feature, 'polyol plants')
+                    || (polyolPlantFilterOn && decideIfInDistance(feature, 'polyol plants'))
                     // if selected, only show clusters with enough CO for x kt polyol
                 if (isVisible && sizeFilterButton.classList.contains('is-info')) {
                     isVisible = decideIfInVisibleCluster(feature)
@@ -415,22 +446,23 @@ function updateEmissionsFilter() {
  */
 function decideIfInVisibleCluster(feature) {
     let minCOavailability = polyolOutput.value * 15 / 50000
-    // check all distances of the emission if there are any chemical plants within the defined radius
-    
-    for (d in feature.properties.distances) {
-        for (paramStyle in feature.properties.distances[d]) {
-            let chem = feature.properties.distances[d][paramStyle]
-            if (chem < distanceChemicalPlantOutput.value * 1000) {
+    let activePlantTypes = []
+    if (chemParkFilterButton.classList.contains('is-info')) activePlantTypes.push('chemical parks')
+    if (polyolFilterButton.classList.contains('is-info')) activePlantTypes.push('polyol plants')
+    if (steelMillFilterButton.classList.contains('is-info')) activePlantTypes.push('steel mills')
+    // check all distances of the emission if there are any chemical plants within the defined radius    
+    for (d in feature.properties.distances) {        
+        for (d in feature.properties.distances) {
+            let chem = feature.properties.distances[d]            
+            if (chem.distance < distanceChemicalPlantOutput.value * 1000) {
                 // if so, find the corresponding chemical plant and see if it has enough CO
                 // this should probably be globalChemicalData
                 for (marker in chemicalParkMarkers) {
-                    // if only polyol plants are shown, don't check the chemical parks
-                    if (!polyolFilterButton.classList.contains('is-info') || marker == 'polyol plants') {
-                        for (f in chemicalParkMarkers[marker]._layers) {
-                            let feat = chemicalParkMarkers[marker]._layers[f].feature
-                            if (feat.properties.FacilityName == paramStyle) {
-                                return feat.properties.availability['CO, AIR'] > minCOavailability
-                            }
+                    for (f in chemicalParkMarkers[marker]._layers) {
+                        let feat = chemicalParkMarkers[marker]._layers[f].feature
+                        if (feat.properties.FacilityName == d) {
+                            if (activePlantTypes.includes(feat.properties.type))
+                                if (feat.properties.availability['CO, AIR'] > minCOavailability) return true
                         }
                     }
                 }
@@ -449,11 +481,13 @@ function decideIfInVisibleCluster(feature) {
 function decideIfInDistance(feature, typeOfChemicalPlant) {
     let minDistance = 99999999 // in meter, must be bigger than the max filter
     if (feature.properties.distances) {
-        if (feature.properties.distances[typeOfChemicalPlant]) {
-            minDistance = Math.min(minDistance, Object.entries(feature.properties.distances[typeOfChemicalPlant]).reduce((old, [, value]) => Math.min(value, old), minDistance))
+        for (d in feature.properties.distances){
+            let dist = feature.properties.distances[d]
+            if (dist.type == typeOfChemicalPlant && dist.distance < distanceChemicalPlantOutput.value * 1000)
+                return true
         }
     }
-    return minDistance < distanceChemicalPlantOutput.value * 1000
+    return false
 }
 
 /**
@@ -488,6 +522,7 @@ function updatePlantFilter() {
     let isSizeFilterActive = sizeFilterButton.classList.contains('is-info')
     let isEthyleneFilterActive = ethyleneFilterButton.classList.contains('is-info')
     let isPropyleneFilterActive = propyleneFilterButton.classList.contains('is-info')
+    let isSteelMillFilterInActive = steelMillFilterButton.classList.contains('is-info')
     // This was defined by the consortium. A 50 kt polyol plant needs 13,5 kt of CO (or an equivalent amount of CH4 or H2)
     let minCOavailability = polyolOutput.value * 13.5 / 50000
     for (marker in chemicalParkMarkers) {
@@ -495,7 +530,9 @@ function updatePlantFilter() {
         m.setFilter(globalChemicalData[marker], feature => {
             return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
                     // polyol plants are considered to have propylene and ethylene availability. This is just a first approximation.
-                   ((marker == "polyol plants") || 
+                   ((marker == "polyol plants") ||
+                   // if steel mill filter is deactivated, always show them
+                   ((isSteelMillFilterInActive && marker == "steel mills")) ||
                    ((!isEthyleneFilterActive || feature.properties.hasEthyleneOxide == 1 || feature.properties.hasEthyleneOxide == "1") &&
                    (!isPropyleneFilterActive || feature.properties.hasPropyleneOxide == 1 || feature.properties.hasPropyleneOxide == "1")))
         })
@@ -677,7 +714,7 @@ function addDistances(emissions, chemParks) {
             if(e != "stats"){
                 for(c in chemParks){
                     if(c != "stats"){
-                        distancesBetweenFeatureLists(emissions[e].features, chemParks[c].features, groupByType1 = true)
+                        distancesBetweenFeatureLists(emissions[e].features, e, chemParks[c].features, c, groupByType1 = true)
                     }
                 }
             }
@@ -690,7 +727,7 @@ function deleteOldDistances(list){
     for(let f1 in list) delete list[f1].properties.distances
 }
 
-function distancesBetweenFeatureLists(list1, list2){
+function distancesBetweenFeatureLists(list1, e, list2, c){
     for(let f1 in list1) {
         for(let f2 in list2) {
             let feat1 = list1[f1], feat2 = list2[f2]
@@ -698,7 +735,8 @@ function distancesBetweenFeatureLists(list1, list2){
             if(d<100001){
                 if(!feat1.properties.distances) feat1.properties.distances = {}
                 feat1.properties.distances[feat2.properties.FacilityName] = {
-                    distance: d
+                    distance: d,
+                    type: c
                 }
                 if(!feat2.properties.distances) feat2.properties.distances = {}
                 feat2.properties.distances[feat1.properties.FacilityName] = {
@@ -929,6 +967,8 @@ function loadPRTRlayers(data) {
             }
         }
         globalEmissionData = data
+        console.log(globalEmissionData);
+        
         resolve(data)
     })
 }
@@ -1034,10 +1074,11 @@ function loadSteelMillsAsChemicalParks(){
                         for(s in json.bof){
                             let steelMill = json.bof[s]
                             if(emitter.properties.FacilityName == steelMill){
-                                new_feats.push(emitter)
+                                new_feats.push(clone(emitter))
                             }
                         }
                     }
+                    console.log(new_feats)
                     for(e in globalEmissionData){
                         distancesBetweenFeatureLists(globalEmissionData[e].features, new_feats)
                     }
@@ -1242,6 +1283,35 @@ const getCookie = (name) => {
 
 const deleteCookie = (name, path = "/") => {
     setCookie(name, '', -1, path)
+}
+
+function clone(obj) {
+    var copy;
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {};
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+        }
+        return copy;
+    }
+    throw new Error("Unable to copy obj! Its type isn't supported.");
 }
 
 /***********************************/

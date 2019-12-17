@@ -220,7 +220,7 @@
 			</div>
 			<div class="sidebar-pane" id="emitter-content">
 				<h1 class="sidebar-header">
-					Filter the emitters
+					CO/CO<sub>2</sub> emitters
 					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-play3"></use>
 						</svg></span>
@@ -288,28 +288,38 @@
 			</div>
 			<div class="sidebar-pane" id="consumer-content">
 				<h1 class="sidebar-header">
-					Filter by chemical plants
+					Possible replication locations
 					<span class="sidebar-close"><svg class="svgicon" viewbox="0 0 32 32">
 							<use xlink:href="#icon-play3"></use>
 						</svg></span>
 				</h1>
-				<h2>Type of plant</h2>
+				<h2>Select types of plant</h2>
 				<div class="buttons">
-					<button class="button is-small is-fullwidth" id="polyol-filter-button">Only show polyol plants</button>
-					<button class="button is-small is-fullwidth" id="steel-mill-button">Also show steel mills as consumers</button>
+					<button class="button is-small is-fullwidth is-info" id="polyol-filter-button">Polyol plants</button>
+					<button class="button is-small is-fullwidth is-info" id="chem-plant-filter-button">Chemical parks</button>
+					<div class="buttons has-addons" style="width: 100%;">
+						<button class="button is-small" style="width: 62%;" id="steel-mill-button">Also show steel mills as consumers</button>
+						<button class="button is-small" style="width: 38%;" id="steel-mill-filter-button" disabled="">Don't filter by resources</button>
+					</div>
 				</div>
-				<h2>Resources</h2>
+				<h2>Select needed resources</h2>
 				<div class="buttons">
-					<button class="button is-small is-fullwidth" id="ethylene-filter-button">Only show plants with ethylene oxide availability</button>
-					<button class="button is-small is-fullwidth" id="propylene-filter-button">Only show plants with propylene oxide availability</button>
-					<button class="button is-small is-fullwidth" id="ethylene-pipeline-button">Show ethylene pipelines</button>
-					<button class="button is-small is-fullwidth" id="propylene-pipeline-button">Show propylene pipelines</button>
+					<div class="buttons has-addons" style="width: 100%;">					
+						<button class="button is-small" style="width: 62%;" id="ethylene-filter-button">Only plants with ethylene oxide availability</button>						
+						<button class="button is-small" style="width: 38%;" id="ethylene-pipeline-button">(Show ethylene pipelines)</button>
+						<button class="button is-small" style="width: 62%;" id="propylene-filter-button">Only plants with propylene oxide availability</button>
+						<button class="button is-small" style="width: 38%;" id="propylene-pipeline-button">(Show propylene pipelines)</button>
+					</div>
+					<div class="buttons has-addons" style="width: 100%;">					
+					</div>
 				</div>
 				<h2>Search radius around plants</h2>
-				<div class="filterGroup" id="distance-chemical-plant">Distance from chemical plant:<br />
+				<div class="filterGroup" id="distance-chemical-plant">Distance in km from chemical plant to look for emissions:<br />
+					<div class="is-size-7">&#9432; All emissions within this radius will be summed up in the popup when clicking on a plant</div>
 					<input id="distance-chemical-plant-slider" class="slider has-output is-success" min="0" max="50"
 						value="20" step="1" type="range">
 					<output for="distance-chemical-plant-slider" id="distance-chemical-plant-slider-output">20</output>
+					
 					<a class="button is-small" id="radius-filter-button">Only show emitters within radius of chemical
 						plant</a>
 				</div>
