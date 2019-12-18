@@ -202,13 +202,17 @@
 								onclick="sidebar.open('emitter-content')">(<svg class="svgicon-small">
 									<use xlink:href="#icon-emitter"></use>
 								</svg> tab on the left)</a>,</li>
-						<li>and to those near an existing chemical plant <a
+						<li>and to those near an existing chemical parc, polyol plant or steel mill <a
 								onclick="sidebar.open('consumer-content')">(<svg class="svgicon-small">
 									<use xlink:href="#icon-consumer"></use>
-								</svg> tab)</a>.</li>
+								</svg> tab)</a>. This tab also allows for analysis of available CO/CO<sub>2</sub>, ethylene oxide and propylene oxide as well as some analytics.</li>
+						<li>The <a onclick="sidebar.open('legal-content')"><svg class="svgicon-small">
+							<use xlink:href="#icon-paragraph"></use>
+							</svg> tab</a> contains information about data, licences and privacy and</li>
+						<li>in the <a onclick="sidebar.open('settings-content')"><svg class="svgicon-small">
+							<use xlink:href="#icon-settings"></use>
+							</svg> settings tab</a> contains advanced options like map layout and a possibility to load and save your own consumers.</li>
 					</ul>
-					You can always click on the button to reset the map to this initial state:<br>
-					<a class="button is-info" id="reset-filters-button">Reset all filters</a>
 				</div>
 				<h2>Funding</h2>
 				<div>
@@ -343,6 +347,12 @@
 						<td style="text-align: right; padding-left: 0.75rem;"><output
 								id="number-polyol-plants"></output></td>
 					</tr>
+					<tr>
+						<td>Steel mills within the filters:</td>
+						<td style="text-align: right; padding-left: 0.75rem;"><output
+								id="number-steel-mills"></output></td>
+					</tr>
+					
 				</table>
 			</div>
 
@@ -355,17 +365,27 @@
 				</h1>
 				<a name="data-section"></a>
 				<h2>Data</h2>
+				<h3>Emissions</h3>
 				All emissions have been obtained from <a href="https://prtr.eea.europa.eu" target="_blank" rel="noopener">E-PRTR</a>.
 				The data was queried via the SPARQL-Endpoint <a href="http://semantic.eea.europa.eu/sparql"
 					target="_blank" rel="noopener">http://semantic.eea.europa.eu/sparql</a>. The exact query can be found <a
 					href="sparql.txt" target="_blank" rel="noopener">in this text file</a>. Some errors have been corrected manually, e.g. the
 				coordinates of Fjernvarme Fyn power plant was changed from somewhere in Cameroon to the correct
 				location in Denmark.<br>
+				<h3>Chemical parks and polyol plants</h3>
 				All chemical plants and polyol plants have been gathered manually via desk research, publications
 				and interviews. There is no promise that this data is complete or correct. If you have suggestions,
 				please <a href="https://www.carbon4pur.eu/contact/" target="_blank" rel="noopener">contact us</a>.
-				Ethylene and propylene availability was also gathered via desk research. Data is sparse and sometimes contradictory,
-				so please only use this as a first indicator. It is (wrongly) considered that all polyol plants have ethylene and propylene available.
+				<h3>Resource availability</h3>
+				Ethylene oxide and propylene oxide availability was also gathered via desk research. Data is sparse and sometimes contradictory,
+				so please only use this as a first indicator. It is (wrongly) considered that all polyol plants have ethylene oxide and propylene oxide available.<br>
+				Ethylene and propylene pipelines are compiled from
+				<a href="https://chemicalparks.eu">chemicalparks.eu</a>,
+				<a href="https://argkg.com/european-ethylene-pipeline-network/">argkg.com</a>,
+				<a href="https://www.eps-pipeline.de/pipeline/verbund.html">eps-pipeline.de</a>,
+				<a href="https://www.sabic.com/en/about/ehss/sabic-uk-pipelines">sabic.com</a>,
+				<a href="https://www.infraserv.com/en/standortbetrieb/energien_1/technische_gase_und_medien/ethylen_transport/ethylen_transp_grbild.html">infraserv.com</a> and 
+				<a href="https://www.gtai.de/GTAI/Navigation/EN/Invest/Industries/Chemicals-materials/Chemicals/chemical-parks-in-germany.html">gtai.de</a>
 				<a name="nace-description"></a>
 				<h2>NACE categories and plant types</h2>
 				Carbon4PUR is investigating two cleaning technologies: <b>chemical looping</b> and <b>catalytic

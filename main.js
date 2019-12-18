@@ -103,16 +103,6 @@ let globalEmissionData, globalChemicalData
 /* Handle interactions */
 /***********************/
 
-/************/
-/* Info tab */
-let resetButton = document.getElementById('reset-filters-button')
-
-function resetFilters() {
-    window.location.reload()
-    return false
-}
-resetButton.addEventListener('click', resetFilters)
-
 /*****************/
 /* Emissions tab */
 let compatFilterManualButton = document.getElementById('compat-filter-manual-button'),
@@ -569,10 +559,12 @@ polyolSlider.addEventListener('input', function (event) {
 })
 
 let numberChemParks = document.getElementById('number-chem-parks'),
-numberPolyolPlants = document.getElementById('number-polyol-plants')
+numberPolyolPlants = document.getElementById('number-polyol-plants'),
+numberSteelMills = document.getElementById('number-steel-mills')
 function getActiveChemPlants(){
-    numberChemParks.value = polyolFilterButton.classList.contains('is-info') ? 0 : chemicalParkMarkers["chemical parks"].getLayers().length
-    numberPolyolPlants.value = chemicalParkMarkers["polyol plants"].getLayers().length
+    numberChemParks.value = chemParkFilterButton.classList.contains('is-info') ? chemicalParkMarkers["chemical parks"].getLayers().length : 0
+    numberPolyolPlants.value = polyolFilterButton.classList.contains('is-info') ? chemicalParkMarkers["polyol plants"].getLayers().length : 0
+    numberSteelMills.value = steelMillButton.classList.contains('is-info') ? chemicalParkMarkers["steel mills"].getLayers().length : 0
 }
 
 /****************/
@@ -967,8 +959,6 @@ function loadPRTRlayers(data) {
             }
         }
         globalEmissionData = data
-        console.log(globalEmissionData);
-        
         resolve(data)
     })
 }
@@ -1078,7 +1068,6 @@ function loadSteelMillsAsChemicalParks(){
                             }
                         }
                     }
-                    console.log(new_feats)
                     for(e in globalEmissionData){
                         distancesBetweenFeatureLists(globalEmissionData[e].features, new_feats)
                     }
