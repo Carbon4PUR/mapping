@@ -518,13 +518,14 @@ function updatePlantFilter() {
     for (marker in chemicalParkMarkers) {
         var m = chemicalParkMarkers[marker]
         m.setFilter(globalChemicalData[marker], feature => {
-            return (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
+            let bool = (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
                     // polyol plants are considered to have propylene and ethylene availability. This is just a first approximation.
                    ((marker == "polyol plants") ||
                    // if steel mill filter is deactivated, always show them
-                   ((isSteelMillFilterInActive && marker == "steel mills")) ||
+                   (isSteelMillFilterInActive && marker == "steel mills") ||
                    ((!isEthyleneFilterActive || feature.properties.hasEthyleneOxide == 1 || feature.properties.hasEthyleneOxide == "1") &&
                    (!isPropyleneFilterActive || feature.properties.hasPropyleneOxide == 1 || feature.properties.hasPropyleneOxide == "1")))
+            return bool
         })
     }
 }
