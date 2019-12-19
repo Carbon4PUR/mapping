@@ -179,7 +179,7 @@
 				<h2>Information on this map</h2>
 				<div class="description">This map shows all emissions of CO and CO<sub>2</sub> in Europe <b>in selected industrial categories that contain processes with Carbon4PUR compatible emissions</b> according to
 					the <a href="https://prtr.eea.europa.eu" target="_blank" rel="noopener">E-PRTR</a>. For more detail on the E-PRTR
-					data and how it was obtained, read the <a href="#data-section" onclick="sidebar.open('legal-content')">data section</a>.<br>
+					data and how it was obtained, read the <a href="#data-section" onclick="map.sidebar.open('legal-content')">data section</a>.<br>
 					The tabs on the left allow to filter those emissions to obtain possible replication sites for a
 					Carbon4PUR plant. The first tab contains filters based on the type of emissions, the second tab
 					filters based on possible plants.
@@ -199,17 +199,17 @@
 					<h2>Usage</h2>
 					You can add filters to narrow down the emissions:<ul class="is-bullet">
 						<li>to those compatible with the Carbon4PUR process or by emission type and source <a
-								onclick="sidebar.open('emitter-content')">(<svg class="svgicon-small">
+								onclick="map.sidebar.open('emitter-content')">(<svg class="svgicon-small">
 									<use xlink:href="#icon-emitter"></use>
 								</svg> tab on the left)</a>,</li>
 						<li>and to those near an existing chemical parc, polyol plant or steel mill <a
-								onclick="sidebar.open('consumer-content')">(<svg class="svgicon-small">
+								onclick="map.sidebar.open('consumer-content')">(<svg class="svgicon-small">
 									<use xlink:href="#icon-consumer"></use>
 								</svg> tab)</a>. This tab also allows for analysis of available CO/CO<sub>2</sub>, ethylene oxide and propylene oxide as well as some analytics.</li>
-						<li>The <a onclick="sidebar.open('legal-content')"><svg class="svgicon-small">
+						<li>The <a onclick="map.sidebar.open('legal-content')"><svg class="svgicon-small">
 							<use xlink:href="#icon-paragraph"></use>
 							</svg> tab</a> contains information about data, licences and privacy and</li>
-						<li>in the <a onclick="sidebar.open('settings-content')"><svg class="svgicon-small">
+						<li>in the <a onclick="map.sidebar.open('settings-content')"><svg class="svgicon-small">
 							<use xlink:href="#icon-settings"></use>
 							</svg> settings tab</a> contains advanced options like map layout and a possibility to load and save your own consumers.</li>
 					</ul>
@@ -241,7 +241,7 @@
 							href="https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=NACE_REV2&StrLanguageCode=EN&StrLayoutCode=HIERARCHIC&IntPcKey="
 							target="_blank"  rel="noopener">NACE category</a>. Within this categories, especially within "electricity",
 						not all emissions are compatible with the Carbon4PUR cleaning steps. Please find more
-						information <a href="#nace-description" onclick="sidebar.open('legal-content')">in the data section.</a></div>
+						information <a href="#nace-description" onclick="map.sidebar.open('legal-content')">in the data section.</a></div>
 				</div>
 				<h2>Or manually filter</h2>
 				<div class="filterGroup">
@@ -303,7 +303,7 @@
 					<button class="button is-small is-fullwidth is-info" id="chem-plant-filter-button">Chemical parks</button>
 					<div class="buttons has-addons" style="width: 100%;">
 						<button class="button is-small" style="width: 62%;" id="steel-mill-button">Also show steel mills as consumers</button>
-						<button class="button is-small" style="width: 38%;" id="steel-mill-filter-button" disabled="">Don't filter by resources</button>
+						<button class="button is-small" style="width: 38%;" id="steel-mill-filter-button" disabled>Don't filter by resources</button>
 					</div>
 				</div>
 				<h2>Select needed resources</h2>
@@ -327,7 +327,7 @@
 					<a class="button is-small" id="radius-filter-button">Only show emitters within radius of chemical
 						plant</a>
 				</div>
-				<h2>Filter by possible Carbon4PUR plant size</h2>
+				<h2>Filter by desired Carbon4PUR plant size</h2>
 				<div class="filterGroup">
 					<a class="button is-small" id="size-filter-button">Only clusters with enough CO for x kt
 						polyol:</a><br />
@@ -375,7 +375,8 @@
 				<h3>Chemical parks and polyol plants</h3>
 				All chemical plants and polyol plants have been gathered manually via desk research, publications
 				and interviews. There is no promise that this data is complete or correct. If you have suggestions,
-				please <a href="https://www.carbon4pur.eu/contact/" target="_blank" rel="noopener">contact us</a>.
+				please <a href="https://www.carbon4pur.eu/contact/" target="_blank" rel="noopener">contact us</a>.<br>
+				The steel mills come from Carbon4PUR internal resources.
 				<h3>Resource availability</h3>
 				Ethylene oxide and propylene oxide availability was also gathered via desk research. Data is sparse and sometimes contradictory,
 				so please only use this as a first indicator. It is (wrongly) considered that all polyol plants have ethylene oxide and propylene oxide available.<br>
@@ -387,6 +388,8 @@
 				<a href="https://www.infraserv.com/en/standortbetrieb/energien_1/technische_gase_und_medien/ethylen_transport/ethylen_transp_grbild.html">infraserv.com</a> and 
 				<a href="https://www.gtai.de/GTAI/Navigation/EN/Invest/Industries/Chemicals-materials/Chemicals/chemical-parks-in-germany.html">gtai.de</a>
 				<a name="nace-description"></a>
+				<h3>Further reading</h3>
+				A more detailed documentation can be found in our <a href="https://www.carbon4pur.eu/wp-content/uploads/2019/09/D-7.1-Mapping-of-CO2-CO-mixed-and-pure-sources-in-Europe.pdf">public deliverable D7.1</a>.
 				<h2>NACE categories and plant types</h2>
 				Carbon4PUR is investigating two cleaning technologies: <b>chemical looping</b> and <b>catalytic
 					cleaning</b>. They differ in their compatibility with input gases. We therefore defined a list
@@ -447,6 +450,13 @@
 				information about the Carbon4PUR consortium and its project. The document reflects only the
 				Carbon4PUR consortium’s view and the European Commission is not responsible for any use that may be
 				made of the information it contains.
+				<h2>Funding</h2>
+				<div>
+					<img src="img/eu.png" style="float: left; vertical-align: middle; padding: 8px 8px 5px 0px;">This
+					project has
+					received funding from the European Union’s Horizon 2020 research and innovation programme under
+					grant agreement No 768919
+				</div>
 				<h2>Licence</h2>
 				The content of this site is licensed under the <a href="https://opensource.org/licenses/MIT">MIT
 					license</a>. You are basically free to do anything you want with it as long as you cite the author

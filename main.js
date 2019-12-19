@@ -363,6 +363,7 @@ let toggleSteelMills = () => {
     }
 }
 steelMillButton.addEventListener('click', toggleSteelMills)
+steelMillFilterButton.disabled = true
 
 /**
  * Toggle if steel mills are filtered
@@ -602,13 +603,20 @@ mapLayoutLight.addEventListener('click', toggleMapLayout)
 function toggleShowConsumers() {
     mapShowConsumers.classList.toggle('is-info')
     polyolFilterButton.classList.remove('is-info')
+    chemParkFilterButton.classList.remove('is-info')
+    steelMillButton.classList.remove('is-info')
     if (mapShowConsumers.classList.contains('is-info')) {
         polyolFilterButton.disabled = false
+        chemParkFilterButton.disabled = false
+        steelMillButton.disabled = false
         for(l in chemicalParkMarkers)
             map.addLayer(chemicalParkMarkers[l])
     }
     else {
         polyolFilterButton.disabled = true
+        chemParkFilterButton.disabled = true
+        steelMillButton.disabled = true
+        steelMillFilterButton.disabled = true
         for(l in chemicalParkMarkers)
             map.removeLayer(chemicalParkMarkers[l])
     }
@@ -1323,7 +1331,7 @@ function checkIfIntro(){
 }
 function startIntro(){
         var intro = introJs()
-        intro.onexit(() => sidebar.open('info-content'))
+        intro.onexit(() => map.sidebar.open('info-content'))
         intro.setOptions({
             steps: [
             { 
