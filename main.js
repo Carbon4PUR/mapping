@@ -95,6 +95,8 @@ nace = {
 }
 
 
+// ToDo: replace all this with a global data model and assign all buttons, functions etc. to the right model category.
+
 /*********************************************************/
 /* Keep a copy of the loaded jsons, in case we need them */
 let globalEmissionData, globalChemicalData
@@ -286,7 +288,8 @@ let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
     steelMillFilterButton = document.getElementById('steel-mill-filter-button'),
     radiusFilterButton = document.getElementById('radius-filter-button'),
     ethylenePipelineButton = document.getElementById('ethylene-pipeline-button'),
-    propylenePipelineButton = document.getElementById('propylene-pipeline-button')
+    propylenePipelineButton = document.getElementById('propylene-pipeline-button'),
+    plantTypeButtons = {"chemical parks": chemParkFilterButton, "polyol plants": polyolFilterButton, "steel mills" : steelMillButton}
 
 let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
     distanceChemicalPlantOutput = document.getElementById('distance-chemical-plant-slider-output'),
@@ -351,14 +354,12 @@ let toggleSteelMills = () => {
     steelMillButton.classList.toggle('is-info')
     if(steelMillButton.classList.contains('is-info')) {
         steelMillFilterButton.disabled = false
-        loadSteelMillsAsChemicalParks()
-            .then(() => {loadChemicalParks(globalChemicalData)}).then(updatePlantFilter).then(updateEmissionsFilter)
+        map.addLayer(chemicalParkMarkers['steel mills'])
+        updateEmissionsFilter()
     }
     else {
         steelMillFilterButton.disabled = true
-        const {"steel mills": sm, ...partialObject} = globalChemicalData
-        loadChemicalParks(partialObject)
-        updatePlantFilter()
+        map.removeLayer(chemicalParkMarkers['steel mills'])
         updateEmissionsFilter()
     }
 }
@@ -1015,6 +1016,9 @@ function loadChemicalParksFromData(data) {
         for (type in data) {
             if (type != "stats") {
                 chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map)
+                if (!plantTypeButtons[type].classList.contains('is-info')){
+                    plantTypeButtons[type].click()
+                }
             }
         }
         // keep global reference
@@ -1080,6 +1084,7 @@ function loadSteelMillsAsChemicalParks(){
                     for(e in globalEmissionData){
                         distancesBetweenFeatureLists(globalEmissionData[e].features, new_feats)
                     }
+                    chemicalParkMarkers["steel mills"] = convertGeoJSONToChemLayer(globalChemicalData, "steel mills")
                     resolve()
                 })
             }
@@ -1260,6 +1265,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(addNACEFilters)
         .then(getFilteredTotals)
         .then(loadChemicalParksFromJSON)
+        .then(loadSteelMillsAsChemicalParks)
         .then(checkIfIntro)
         .then(getActiveChemPlants)
 })
