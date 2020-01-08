@@ -96,6 +96,44 @@ nace = {
 
 
 // ToDo: replace all this with a global data model and assign all buttons, functions etc. to the right model category.
+// For now this is just an example
+
+let globalModel = {
+    emissions : {
+        gasType : {
+            "CO2, AIR": {
+                color: 'rgb(241, 177, 48)',
+                filterButton: document.getElementById('pollutant-filter-CO2-button')
+            },
+            "CO, AIR": {
+                color: 'rgb(234,110,57)',
+                filterButton: document.getElementById('pollutant-filter-CO-button')
+            }
+        },
+        naceCategories : {
+            "Manufacture of basic iron and steel and of ferro-alloys": {
+                style: 'nace-iron',
+                color: '#ff0000',
+                looping: true,
+                catalytic: true,
+                active: true
+            },
+            "Manufacture of other inorganic basic chemicals": {
+                style: 'nace-inorganic',
+                color: 'rgb(214,70,111)', 
+                looping: true, 
+                catalytic: true, 
+                active: true
+            },
+            "Production of electricity": { style: 'nace-electricity', color: 'rgb(190,85,153)', looping: true, catalytic: false, active: true },
+            "Extraction of natural gas": { style: 'nace-ng', color: 'rgb(151,133,176)', looping: true, catalytic: false, active: true }, // find color
+            "Manufacture of refined petroleum products": { style: 'nace-petroleum', color: 'rgb(103,155,186)', looping: true, catalytic: false, active: true },
+            "Manufacture of cement": { style: 'nace-cement', color: '#5a6067', looping: true, catalytic: false, active: true },
+            "Manufacture of lime and plaster": { style: 'nace-lime', color: '#000000', looping: true, catalytic: false, active: true },
+            "Manufacture of fertilisers and nitrogen compounds": { style: 'nace-fertilisers', color: '#938e99', looping: true, catalytic: false, active: true }
+        }
+    }
+}
 
 /*********************************************************/
 /* Keep a copy of the loaded jsons, in case we need them */
