@@ -75,617 +75,10 @@ function loadGlobalDefs() {
     formatSI = d3.format(',.3f')
 }
 
-let emissionColors = {
-        "CO2, AIR": 'rgb(241, 177, 48)',
-        "CO, AIR": 'rgb(234,110,57)'
-    },
-    chemicalColors = {
-        "chemical parks": "rgb(0,168,189)",
-        "polyol plants": "rgb(12,168,118)",
-        "steel mills": "yellow"
-    }
-
-
-// ToDo: replace all this with a global data model and assign all buttons, functions etc. to the right model category.
-// For now this is just an example
-
-let globalModel = {
-    emissions: {
-        categories: {
-            gasType: {
-                buttons: {
-                    containerId: 'gas-type-buttons',
-                    onClick: function(){},
-                    createFunction: function(){}
-                },
-                items: {
-                    "CO2, AIR": {
-                        color: 'rgb(241, 177, 48)',
-                        filterButton: document.getElementById('pollutant-filter-CO2-button')
-                    },
-                    "CO, AIR": {
-                        color: 'rgb(234,110,57)',
-                        filterButton: document.getElementById('pollutant-filter-CO-button')
-                    }
-                }
-            },
-            naceCategories: {
-                buttons: {
-                    containerId: 'nace-categories',
-                    onClick: (button) => {
-                        return function(){
-                            activateCompatButton(compatFilterManualButton)
-                            // update nace object
-                            toggleNaceButton(button)
-                            // only display active emissions
-                            updateEmissionsFilter()
-                        }
-                    },
-                    createButtons: () => {
-                        return new Promise(resolve => {                            
-                            let nace = globalModel.emissions.categories.naceCategories
-                            let catDiv = document.getElementById('nace-categories')
-                            for (var name in nace.items) {
-                                let emissionSums = formatSI(globalEmissionData.stats.totals['CO2, AIR'][name]) + ' Megatonnes CO2/year, ' + formatSI(globalEmissionData.stats.totals['CO, AIR'][name]) + ' Megatonnes CO/year';
-                                nace.items[name].button = document.createElement('a')
-                                nace.items[name].button.className = 'button is-small is-activated is-fullwidth nace-button ' + nace.items[name].style
-                                nace.items[name].button.title = emissionSums
-                                nace.items[name].button.text = name
-                                nace.items[name].button.onclick = nace.buttons.onClick(nace.items[name].button)
-                                catDiv.append(nace.items[name].button)
-                            }
-                            nace.buttons.allButtons = document.getElementsByClassName('nace-button')
-                            resolve()
-                        })
-                    },
-                    allButtons: []
-                },
-                items: {
-                    "Manufacture of basic iron and steel and of ferro-alloys": {
-                        style: 'nace-iron',
-                        color: '#ff0000',
-                        looping: true,
-                        catalytic: true,
-                        active: true,
-
-                    },
-                    "Manufacture of other inorganic basic chemicals": {
-                        style: 'nace-inorganic',
-                        color: 'rgb(214,70,111)',
-                        looping: true,
-                        catalytic: true,
-                        active: true
-                    },
-                    "Production of electricity": {
-                        style: 'nace-electricity',
-                        color: 'rgb(190,85,153)',
-                        looping: true,
-                        catalytic: false,
-                        active: true
-                    },
-                    "Extraction of natural gas": {
-                        style: 'nace-ng',
-                        color: 'rgb(151,133,176)', // find color
-                        looping: true,
-                        catalytic: false,
-                        active: true
-                    },
-                    "Manufacture of refined petroleum products": {
-                        style: 'nace-petroleum',
-                        color: 'rgb(103,155,186)',
-                        looping: true,
-                        catalytic: false,
-                        active: true
-                    },
-                    "Manufacture of cement": {
-                        style: 'nace-cement',
-                        color: '#5a6067',
-                        looping: true,
-                        catalytic: false,
-                        active: true
-                    },
-                    "Manufacture of lime and plaster": {
-                        style: 'nace-lime',
-                        color: '#000000',
-                        looping: true,
-                        catalytic: false,
-                        active: true
-                    },
-                    "Manufacture of fertilisers and nitrogen compounds": {
-                        style: 'nace-fertilisers',
-                        color: '#938e99',
-                        looping: true,
-                        catalytic: false,
-                        active: true
-                    }
-                }
-            }
-        }
-    }
-}
-
-/*********************************************************/
-/* Keep a copy of the loaded jsons, in case we need them */
-let globalEmissionData, globalChemicalData
-
-/***********************/
-/* Handle interactions */
-/***********************/
-
-/*****************/
-/* Emissions tab */
-let compatFilterManualButton = document.getElementById('compat-filter-manual-button'),
-    compatFilterLoopButton = document.getElementById('compat-filter-loop-button')
-compatFilterCatButton = document.getElementById('compat-filter-cat-button')
-compatFilterButtons = [compatFilterManualButton, compatFilterLoopButton, compatFilterCatButton]
-
-let pollutantFilterCO2Button = document.getElementById('pollutant-filter-CO2-button'),
-    pollutantFilterCOButton = document.getElementById('pollutant-filter-CO-button')
-
-
-let co2FilteredSumOutput = document.getElementById('sumCO2'),
-    coFilteredSumOutput = document.getElementById('sumCO'),
-    co2CombinedFilteredSumOutput = document.getElementById('sumCO2combined'),
-    coCombinedFilteredSumOutput = document.getElementById('sumCOcombined')
-
-let naceDeselectButton = document.getElementById('nace-deselect-all')
-
-/* styling */
-pollutantFilterCO2Button.style.background = emissionColors["CO2, AIR"]
-pollutantFilterCOButton.style.background = emissionColors["CO, AIR"]
-
-/**
- *
- *
- * @param {*} button
- * @param {boolean} [forceState=false] if forceState = "active" force active, if forceState != "active" and != false, force inactive
- */
-function toggleNaceButton(button, forceState = false){
-    let nace = globalModel.emissions.categories.naceCategories
-    if (!forceState){
-        nace.items[button.text].active = !nace.items[button.text].active
-    }
-    else {
-        nace.items[button.text].active = (forceState == "active")
-    }
-    if (nace.items[button.text].active) {
-        button.classList.add('is-activated', nace.items[button.text].style)
-    }
-    else {
-        button.classList.remove('is-activated', nace.items[button.text].style)
-    }
-}
-
-
-/**
- * when clicking on a compat button, switch mode
- *
- * @param {event} event the click event on a compat button
- */
-function toggleCompatFilter(event) {
-    let nace = globalModel.emissions.categories.naceCategories.items
-    activateCompatButton(event.target)
-    if (event.target == compatFilterCatButton) {
-        for (name in nace) {
-            nace[name].active = nace[name].catalytic
-            toggleNaceButton(nace[name].button, nace[name].active ? "active" : "not")
-        }
-    } else if (event.target == compatFilterLoopButton) {
-        for (name in nace) {
-            nace[name].active = nace[name].looping
-            toggleNaceButton(nace[name].button, nace[name].active ? "active" : "not")
-        }
-    }
-    updateEmissionsFilter()
-}
-for (var i = 0; i < compatFilterButtons.length; i++) {
-    compatFilterButtons[i].addEventListener('click', toggleCompatFilter)
-}
-
-function activateCompatButton(button) {
-    for (var i = 0; i < compatFilterButtons.length; i++) {
-        compatFilterButtons[i].classList.remove('is-info')
-    }
-    button.classList.add('is-info')
-}
-
-function returnTogglePollutantFilter(button) {
-    return function () {
-        button.classList.toggle('is-activated')
-        if (button.classList.contains('is-activated')) button.style.background = emissionColors[button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR"]
-        else button.style.background = '#fff'
-        getFilteredTotals()
-        toggleFilterEmittersByPollutant(button.id.includes("CO2") ? "CO2, AIR" : "CO, AIR")
-    }
-}
-
-function toggleFilterEmittersByPollutant(pollutant) {
-    if (map.hasLayer(markers[pollutant])) {
-        map.removeLayer(markers[pollutant])
-    } else {
-        map.addLayer(markers[pollutant])
-    }
-}
-pollutantFilterCO2Button.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCO2Button))
-pollutantFilterCOButton.addEventListener('click', returnTogglePollutantFilter(pollutantFilterCOButton))
-
-
-function getFilteredTotals() {
-    let co2sum = 0,
-        cosum = 0,
-        co2sumCombined = 0,
-        cosumCombined = 0,
-        nace = globalModel.emissions.categories.naceCategories.items
-    for (name in nace) {
-        if (nace[name].active) {
-            if (pollutantFilterCOButton.classList.contains('is-activated')) cosum += globalEmissionData.stats.totals['CO, AIR'][name]
-            if (pollutantFilterCO2Button.classList.contains('is-activated')) co2sum += globalEmissionData.stats.totals['CO2, AIR'][name]
-        }
-    }
-    for (f in globalEmissionData['CO, AIR'].features) {
-        let props = globalEmissionData['CO, AIR'].features[f].properties
-        if (pollutantFilterCOButton.classList.contains('is-activated') &&
-            pollutantFilterCO2Button.classList.contains('is-activated') &&
-            nace[props.NACEMainEconomicActivityName].active &&
-            props.co2Amount &&
-            props.co2Amount > 0) {
-            co2sumCombined += props.co2Amount
-            cosumCombined += props.MTonnes
-        }
-    }
-    co2CombinedFilteredSumOutput.style.background = '#ddc'
-    coCombinedFilteredSumOutput.style.background = '#ddc'
-    co2FilteredSumOutput.style.background = '#ddc'
-    coFilteredSumOutput.style.background = '#ddc'
-    setTimeout(function () {
-        co2FilteredSumOutput.style.background = '#fff'
-        coFilteredSumOutput.style.background = '#fff'
-        co2CombinedFilteredSumOutput.style.background = '#fff'
-        coCombinedFilteredSumOutput.style.background = '#fff'
-    }, 500)
-    co2FilteredSumOutput.textContent = format1Dec(co2sum) + ' Megatonnes/year'
-    coFilteredSumOutput.textContent = format1Dec(cosum) + ' Megatonnes/year'
-    co2CombinedFilteredSumOutput.textContent = format1Dec(co2sumCombined) + ' Megatonnes/year'
-    coCombinedFilteredSumOutput.textContent = format1Dec(cosumCombined) + ' Megatonnes/year'
-}
-
-function toggleAllNaceFilter() {
-    let nace = globalModel.emissions.categories.naceCategories
-    if (naceDeselectButton.text == "Deselect all") {
-        activateCompatButton(compatFilterManualButton)
-        naceDeselectButton.text = "Select all"
-        for (name in nace.items) {
-            nace.items[name].active = false
-            nace.items[name].button.classList.remove('is-activated')
-        }
-    } else {
-        activateCompatButton(compatFilterLoopButton)
-        naceDeselectButton.text = "Deselect all"
-        for (name in nace.items) {
-            nace.items[name].active = true
-            nace.items[name].button.classList.add('is-activated')
-        }
-    }
-    updateEmissionsFilter()
-
-}
-naceDeselectButton.addEventListener('click', toggleAllNaceFilter)
-
-
-
-
-
-/***********************/
-/* Chemical plants tab */
-let distanceChemicalPlant = document.getElementById('distance-chemical-plant'),
-    polyolFilterButton = document.getElementById('polyol-filter-button'),
-    chemParkFilterButton = document.getElementById('chem-plant-filter-button'),
-    ethyleneFilterButton = document.getElementById('ethylene-filter-button'),
-    propyleneFilterButton = document.getElementById('propylene-filter-button'),
-    steelMillButton = document.getElementById('steel-mill-button'),
-    steelMillFilterButton = document.getElementById('steel-mill-filter-button'),
-    radiusFilterButton = document.getElementById('radius-filter-button'),
-    ethylenePipelineButton = document.getElementById('ethylene-pipeline-button'),
-    propylenePipelineButton = document.getElementById('propylene-pipeline-button'),
-    plantTypeButtons = {
-        "chemical parks": chemParkFilterButton,
-        "polyol plants": polyolFilterButton,
-        "steel mills": steelMillButton
-    }
-
-let distanceChemicalPlantSlider = document.getElementById('distance-chemical-plant-slider'),
-    distanceChemicalPlantOutput = document.getElementById('distance-chemical-plant-slider-output'),
-    polyolSlider = document.getElementById('polyol-slider'),
-    polyolOutput = document.getElementById('polyol-slider-output')
-
-let sizeFilterButton = document.getElementById('size-filter-button')
-
-/**
- * Toggle if polyol plants are shown
- */
-let togglePolyolFilter = () => {
-    polyolFilterButton.classList.toggle('is-info')
-    if (map.hasLayer(chemicalParkMarkers['polyol plants'])) {
-        map.removeLayer(chemicalParkMarkers['polyol plants'])
-    } else {
-        map.addLayer(chemicalParkMarkers['polyol plants'])
-    }
-    updateEmissionsFilter()
-}
-polyolFilterButton.addEventListener('click', togglePolyolFilter)
-
-/**
- * Toggle if chemical plants are shown
- */
-let toggleChemPlantFilter = () => {
-    chemParkFilterButton.classList.toggle('is-info')
-    if (map.hasLayer(chemicalParkMarkers['chemical parks'])) {
-        map.removeLayer(chemicalParkMarkers['chemical parks'])
-    } else {
-        map.addLayer(chemicalParkMarkers['chemical parks'])
-    }
-    updateEmissionsFilter()
-}
-chemParkFilterButton.addEventListener('click', toggleChemPlantFilter)
-
-/**
- * Toggle if only plants with ethylene are shown or all chemical plants
- */
-let toggleEthyleneFilter = () => {
-    ethyleneFilterButton.classList.toggle('is-info')
-    updatePlantFilter()
-    updateEmissionsFilter()
-}
-ethyleneFilterButton.addEventListener('click', toggleEthyleneFilter)
-/**
- * Toggle if only plants with propylene are shown or all chemical plants
- */
-let togglePropyleneFilter = () => {
-    propyleneFilterButton.classList.toggle('is-info')
-    updatePlantFilter()
-    updateEmissionsFilter()
-}
-propyleneFilterButton.addEventListener('click', togglePropyleneFilter)
-
-/**
- * Toggle if steel mills are shown as consumers
- */
-let toggleSteelMills = () => {
-    steelMillButton.classList.toggle('is-info')
-    if (steelMillButton.classList.contains('is-info')) {
-        steelMillFilterButton.disabled = false
-        map.addLayer(chemicalParkMarkers['steel mills'])
-        updateEmissionsFilter()
-    } else {
-        steelMillFilterButton.disabled = true
-        map.removeLayer(chemicalParkMarkers['steel mills'])
-        updateEmissionsFilter()
-    }
-}
-steelMillButton.addEventListener('click', toggleSteelMills)
-steelMillFilterButton.disabled = true
-
-/**
- * Toggle if steel mills are filtered
- */
-let toggleSteelMillFilter = () => {
-    steelMillFilterButton.classList.toggle('is-info')
-    updatePlantFilter()
-    updateEmissionsFilter()
-}
-steelMillFilterButton.addEventListener('click', toggleSteelMillFilter)
-
-function pipelineStyle(feature) {
-    return {
-        color: feature.properties.type[1] == 54 ? "green" : "red", //Outline color
-    };
-}
-
-function togglePipeline(event, type) {
-    event.target.classList.toggle('is-info')
-    if (event.target.classList.contains('is-info')) {
-        fetch('pipeline-' + type + '.json')
-            .then((response) => {
-                    return response.json()
-                },
-                (reject) => {
-                    console.error(reject)
-                })
-            .then((geojson) => {
-                globalPipelines[type] = L.geoJson(geojson, {
-                    style: pipelineStyle
-                })
-                globalPipelines[type].addTo(map)
-            })
-    } else {
-        map.removeLayer(globalPipelines[type])
-    }
-
-}
-ethylenePipelineButton.addEventListener('click', (event) => {
-    togglePipeline(event, 'ethylene')
-})
-propylenePipelineButton.addEventListener('click', event => {
-    togglePipeline(event, 'propylene')
-})
-
-/**
- * Decide for each emission if it should be displayed depending on all active filters
- */
-function updateEmissionsFilter() {
-    let nace = globalModel.emissions.categories.naceCategories.items
-    let chemParkFilterOn = chemParkFilterButton.classList.contains('is-info')
-    let polyolPlantFilterOn = polyolFilterButton.classList.contains('is-info')
-    for (marker in markers) {
-        var m = markers[marker]
-        m.setFilter(globalEmissionData[marker], function (feature) {
-            let isVisible = true
-            isVisible = (nace[feature.properties.NACEMainEconomicActivityName].active)
-            // if selected, only show those next to chemParks
-            if (isVisible && radiusFilterButton.classList.contains('is-info')) {
-                isVisible =
-                    // if the chemical parks are not limited to polyol plants, check for distance to chemParks
-                    (chemParkFilterOn && decideIfInDistance(feature, 'chemical parks'))
-                    // and always check for distance to polyol plants
-                    ||
-                    (polyolPlantFilterOn && decideIfInDistance(feature, 'polyol plants'))
-                // if selected, only show clusters with enough CO for x kt polyol
-                if (isVisible && sizeFilterButton.classList.contains('is-info')) {
-                    isVisible = decideIfInVisibleCluster(feature)
-                }
-            }
-            return isVisible
-        })
-    }
-    getFilteredTotals()
-    getActiveChemPlants()
-}
-
-/**
- * Checks if the feature is within the radius of a chemical cluster that has enough CO emissions
- *
- * @param {*} feature: an emission feature
- * @returns
- */
-function decideIfInVisibleCluster(feature) {
-    let minCOavailability = polyolOutput.value * 15 / 50000
-    let activePlantTypes = []
-    if (chemParkFilterButton.classList.contains('is-info')) activePlantTypes.push('chemical parks')
-    if (polyolFilterButton.classList.contains('is-info')) activePlantTypes.push('polyol plants')
-    if (steelMillFilterButton.classList.contains('is-info')) activePlantTypes.push('steel mills')
-    // check all distances of the emission if there are any chemical plants within the defined radius    
-    for (d in feature.properties.distances) {
-        for (d in feature.properties.distances) {
-            let chem = feature.properties.distances[d]
-            if (chem.distance < distanceChemicalPlantOutput.value * 1000) {
-                // if so, find the corresponding chemical plant and see if it has enough CO
-                // this should probably be globalChemicalData
-                for (marker in chemicalParkMarkers) {
-                    for (f in chemicalParkMarkers[marker]._layers) {
-                        let feat = chemicalParkMarkers[marker]._layers[f].feature
-                        if (feat.properties.FacilityName == d) {
-                            if (activePlantTypes.includes(feat.properties.type))
-                                if (feat.properties.availability['CO, AIR'] > minCOavailability) return true
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false
-}
-
-/**
- * Returns true if the feature is within the defined distance of an active chemical or polyol plant
- *
- * @param {*} feature: A feature with properties, geometry and
- * @param {string} typeOfChemicalPlant: either 'chemical parks' or 'polyol plants'
- */
-function decideIfInDistance(feature, typeOfChemicalPlant) {
-    let minDistance = 99999999 // in meter, must be bigger than the max filter
-    if (feature.properties.distances) {
-        for (d in feature.properties.distances) {
-            let dist = feature.properties.distances[d]
-            if (dist.type == typeOfChemicalPlant && dist.distance < distanceChemicalPlantOutput.value * 1000)
-                return true
-        }
-    }
-    return false
-}
-
-/**
- * Toggle if only emissions within defined radius are shown or all
- */
-let toggleRadiusFilter = () => {
-    radiusFilterButton.classList.toggle('is-info')
-    updateEmissionsFilter()
-}
-radiusFilterButton.addEventListener('click', toggleRadiusFilter)
-
-
-
-/**
- * Toggles if the button is pressed limiting the view to only plants with at least x kt polyol
- */
-let toggleSizeFilter = () => {
-    sizeFilterButton.classList.toggle('is-info')
-    if (sizeFilterButton.classList.contains('is-info')) {
-        radiusFilterButton.classList.add('is-info')
-        polyolSlider.disabled = false
-    } else {
-        polyolSlider.disabled = true
-    }
-    updatePlantFilter()
-    updateEmissionsFilter()
-}
-sizeFilterButton.addEventListener('click', toggleSizeFilter)
-
-function updatePlantFilter() {
-    let isSizeFilterActive = sizeFilterButton.classList.contains('is-info')
-    let isEthyleneFilterActive = ethyleneFilterButton.classList.contains('is-info')
-    let isPropyleneFilterActive = propyleneFilterButton.classList.contains('is-info')
-    let isSteelMillFilterInActive = steelMillFilterButton.classList.contains('is-info')
-    // This was defined by the consortium. A 50 kt polyol plant needs 13,5 kt of CO (or an equivalent amount of CH4 or H2)
-    let minCOavailability = polyolOutput.value * 13.5 / 50000
-    for (marker in chemicalParkMarkers) {
-        var m = chemicalParkMarkers[marker]
-        m.setFilter(globalChemicalData[marker], feature => {
-            let bool = (!isSizeFilterActive || feature.properties.availability['CO, AIR'] > minCOavailability) &&
-                // polyol plants are considered to have propylene and ethylene availability. This is just a first approximation.
-                ((marker == "polyol plants") ||
-                    // if steel mill filter is deactivated, always show them
-                    (isSteelMillFilterInActive && marker == "steel mills") ||
-                    ((!isEthyleneFilterActive || feature.properties.hasEthyleneOxide == 1 || feature.properties.hasEthyleneOxide == "1") &&
-                        (!isPropyleneFilterActive || feature.properties.hasPropyleneOxide == 1 || feature.properties.hasPropyleneOxide == "1")))
-            return bool
-        })
-    }
-}
-
-/* Glitch in the slider, reset the value to put button in middle of slider */
-distanceChemicalPlantSlider.value = distanceChemicalPlantSlider.getAttribute("value")
-polyolSlider.value = polyolSlider.getAttribute("value")
-
-distanceChemicalPlantSlider.addEventListener('input', function (event) {
-    // Update output with slider value
-    distanceChemicalPlantOutput.value = event.target.value
-    for (layer in chemicalParkMarkers) {
-        chemicalParkMarkers[layer].eachLayer((layer) => {
-            // update the popups for all chemical clusters
-            layer.setPopupContent(addConsumerPopupHandler(layer.feature))
-            // Update size of circle
-            return layer.setRadius(event.target.value * 1000)
-        })
-    }
-    // if emissions limited to distance, update filter    
-    if (radiusFilterButton.classList.contains('is-info')) {
-        updateEmissionsFilter()
-    }
-
-
-})
-polyolSlider.addEventListener('input', function (event) {
-    // Update output with slider value
-    polyolOutput.value = event.target.value
-    updatePlantFilter()
-    updateEmissionsFilter()
-})
-
-let numberChemParks = document.getElementById('number-chem-parks'),
-    numberPolyolPlants = document.getElementById('number-polyol-plants'),
-    numberSteelMills = document.getElementById('number-steel-mills')
-
-function getActiveChemPlants() {
-    numberChemParks.value = chemParkFilterButton.classList.contains('is-info') ? chemicalParkMarkers["chemical parks"].getLayers().length : 0
-    numberPolyolPlants.value = polyolFilterButton.classList.contains('is-info') ? chemicalParkMarkers["polyol plants"].getLayers().length : 0
-    numberSteelMills.value = steelMillButton.classList.contains('is-info') ? chemicalParkMarkers["steel mills"].getLayers().length : 0
-}
-
 /****************/
 /* Settings tab */
 let mapLayoutGreen = document.getElementById('map-layout-green'),
     mapLayoutLight = document.getElementById('map-layout-light'),
-    mapShowConsumers = document.getElementById('map-show-consumers'),
     modifyConsumers = document.getElementById('modify-consumers'),
     modalModifyConsumers = document.getElementById('modal-modify-consumers'),
     csvChemicalParks = document.getElementById('csv-chemical-parks'),
@@ -710,28 +103,6 @@ function toggleMapLayout() {
 }
 mapLayoutGreen.addEventListener('click', toggleMapLayout)
 mapLayoutLight.addEventListener('click', toggleMapLayout)
-
-function toggleShowConsumers() {
-    mapShowConsumers.classList.toggle('is-info')
-    polyolFilterButton.classList.remove('is-info')
-    chemParkFilterButton.classList.remove('is-info')
-    steelMillButton.classList.remove('is-info')
-    if (mapShowConsumers.classList.contains('is-info')) {
-        polyolFilterButton.disabled = false
-        chemParkFilterButton.disabled = false
-        steelMillButton.disabled = false
-        for (l in chemicalParkMarkers)
-            map.addLayer(chemicalParkMarkers[l])
-    } else {
-        polyolFilterButton.disabled = true
-        chemParkFilterButton.disabled = true
-        steelMillButton.disabled = true
-        steelMillFilterButton.disabled = true
-        for (l in chemicalParkMarkers)
-            map.removeLayer(chemicalParkMarkers[l])
-    }
-}
-mapShowConsumers.addEventListener('click', toggleShowConsumers)
 
 function putCsvInTextArea(file, textarea) {
     fetch(file)
@@ -1077,7 +448,6 @@ var globalPipelines = {}
  */
 function loadPRTRlayers(data) {
     return new Promise((resolve, reject) => {
-        let nace = globalModel.emissions.categories.naceCategories.items
         for (emission in data) {
             if (emission != "stats") {
                 for (f in data[emission].features) {
@@ -1087,8 +457,8 @@ function loadPRTRlayers(data) {
                     pointToLayer: function (feature, latlng) {
                         return L.circleMarker(latlng, {
                             radius: Math.sqrt(feature.properties.MTonnes / data.stats.totalMax) * 50,
-                            color: emissionColors[feature.properties.PollutantName],
-                            fillColor: nace[feature.properties.NACEMainEconomicActivityName].color,
+                            color: "blue",
+                            fillColor: "blue",
                             weight: 1,
                             opacity: 0.7,
                             fillOpacity: 0.4
@@ -1110,7 +480,6 @@ function loadPRTRlayers(data) {
  * @returns {string} a DOM string containing the popup
  */
 function addEmitterPopupHandler(feature) {
-    let nace = globalModel.emissions.categories.naceCategories.items
     if (feature.properties) {
         let otherEmission = ''
         if (feature.properties.co2Amount) otherEmission += formatSI(feature.properties.co2Amount) + ' Megatonnes CO<sub>2</sub>/year'
@@ -1118,7 +487,7 @@ function addEmitterPopupHandler(feature) {
         let thisEmission = formatSI(feature.properties.MTonnes) + ' Megatonnes '
         if (feature.properties.type == 'CO, AIR') thisEmission += 'CO/year'
         else thisEmission += 'CO<sub>2</sub>/year'
-        let color = translucidColor(nace[feature.properties.NACEMainEconomicActivityName].color)
+        let color = translucidColor("blue")
         return `<h2>${feature.properties.FacilityName}</h2>
                         ${feature.properties.CountryName}                    
                         <br><b><i>${feature.properties.NACEMainEconomicActivityName}</i></b>
@@ -1145,9 +514,7 @@ function loadChemicalParksFromData(data) {
         for (type in data) {
             if (type != "stats") {
                 chemicalParkMarkers[type] = convertGeoJSONToChemLayer(data, type).addTo(map)
-                if (!plantTypeButtons[type].classList.contains('is-info')) {
-                    plantTypeButtons[type].click()
-                }
+                
             }
         }
         // keep global reference
@@ -1195,41 +562,6 @@ function loadChemicalParksFromJSON() {
     })
 }
 
-function loadSteelMillsAsChemicalParks() {
-    return new Promise((resolve) => {
-        if (!globalChemicalData['steel mills']) {
-            fetch('steelMills.json')
-                .then((response) => {
-                        return response.json()
-                    },
-                    (reject) => {
-                        console.error(reject)
-                    })
-                .then((json) => {
-                    globalChemicalData["steel mills"] = {
-                        type: "FeatureCollection",
-                        features: []
-                    }
-                    new_feats = globalChemicalData["steel mills"].features
-                    for (e in globalEmissionData["CO, AIR"].features) {
-                        let emitter = globalEmissionData["CO, AIR"].features[e]
-                        for (s in json.bof) {
-                            let steelMill = json.bof[s]
-                            if (emitter.properties.FacilityName == steelMill) {
-                                new_feats.push(clone(emitter))
-                            }
-                        }
-                    }
-                    for (e in globalEmissionData) {
-                        distancesBetweenFeatureLists(globalEmissionData[e].features, new_feats)
-                    }
-                    chemicalParkMarkers["steel mills"] = convertGeoJSONToChemLayer(globalChemicalData, "steel mills")
-                    resolve()
-                })
-        } else resolve()
-    })
-}
-
 
 function loadScript(url, callback) {
     // Adding the script tag to the head as suggested before
@@ -1256,8 +588,8 @@ function convertGeoJSONToChemLayer(data, type) {
     return L.geoJson(data[type], {
         pointToLayer: function (feature, latlng) {
             feature.properties['type'] = type
-            return L.circle(latlng, distanceChemicalPlantOutput.value * 1000, { // radius expected in m, slider in km
-                fillColor: chemicalColors[feature.properties.type],
+            return L.circle(latlng, 1000, { // radius expected in m, slider in km
+                fillColor: "red",
                 weight: 0,
                 fillOpacity: 0.4
             }).bindPopup(addConsumerPopupHandler(feature, type))
@@ -1297,12 +629,12 @@ function consumerPopupAvailability(feature) {
     }
     if (p.distances != undefined) {
         for (n in p.distances) {
-            if (p.distances[n].distance < distanceChemicalPlantOutput.value * 1000) {
+            if (p.distances[n].distance < 1000) {
                 p.availability[p.distances[n].type] += p.distances[n].amount
             }
         }
     }
-    return '<div class="popup-em" style="background:' + translucidColor(chemicalColors[feature.properties.type]) + '">Available emissions:<br>(in a radius of ' + distanceChemicalPlantOutput.value + '&nbsp;km)<br>' +
+    return '<div class="popup-em" style="background:' + translucidColor("red") + '">Available emissions:<br>(in a radius of 1&nbsp;km)<br>' +
         formatSI(feature.properties.availability['CO2, AIR']) + '&nbsp;Megatonnes CO<sub>2</sub>/year<br>' +
         formatSI(feature.properties.availability['CO, AIR']) + '&nbsp;Megatonnes CO/year</div>'
 }
@@ -1422,12 +754,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
         .then(loadPRTRlayers)
         .then(createScale)
-        .then(globalModel.emissions.categories.naceCategories.buttons.createButtons)
-        .then(getFilteredTotals)
         .then(loadChemicalParksFromJSON)
-        .then(loadSteelMillsAsChemicalParks)
-        .then(checkIfIntro)
-        .then(getActiveChemPlants)
 })
 
 /***********************************/
