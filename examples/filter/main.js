@@ -72,10 +72,63 @@ function showMap() {
         map.scrollWheelZoom.disable()
     })
 
+    map.filters = {
+        items: {
+            eoAvailability: {
+                button: document.getElementById('filter-by-eo'),
+                filterFunction: (feature) => {
+                    return feature.properties.hasEthyleneOxide == "1"
+                },
+                activeOnLoad: true
+            },
+            left: {
+                button: document.getElementById('filter-by-geo'),
+                filterFunction: (feature) => {
+                    return feature.geometry.coordinates[0] <= 0
+                },
+                activeOnLoad: false
+            }
+        },
+        createFilterFunction: function (name, filter) {
+            return function () {
+                filter.button.classList.toggle('is-info')
+                if (filter.button.classList.contains('is-info')) {
+                    map.filters.filterConditions[name] = filter.filterFunction
+                }
+                else {
+                    delete map.filters.filterConditions[name]
+                }
+                map.filters.filter()
+            }
+        },
+        filterConditions: {},
+        filter : function(layer){
+            map.geoJSONlayer.setFilter(map.data, function (feature) {
+                let isVisible = true
+                for (condition in map.filters.filterConditions){
+                    isVisible = isVisible && map.filters.filterConditions[condition](feature)
+                }
+                return isVisible
+            })
+        }
+    }
+    for (filter in map.filters.items) {
+        let f = map.filters.items[filter]
+        f.button.addEventListener('click', map.filters.createFilterFunction(filter, f))
+        if (f.activeOnLoad) {
+            f.button.classList.add('is-info')
+            map.filters.filterConditions[filter] = f.filterFunction
+        }
+        else {
+            f.button.classList.remove('is-info')
+        }
+    }
+
 }
 
 function showDataLayer(data) {
-    map.data = L.geoJson(data, {
+    map.data = data
+    map.geoJSONlayer = L.geoJson(data, {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
                 radius: 30,
@@ -87,6 +140,8 @@ function showDataLayer(data) {
             }).bindPopup(addPopupHandler(feature))
         }
     }).addTo(map)
+    
+    map.filters.filter()
 }
 
 function addPopupHandler(feature) {
