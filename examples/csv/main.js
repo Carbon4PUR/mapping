@@ -94,15 +94,38 @@ function addPopupHandler(feature) {
         ${feature.properties.CountryName}`
 }
 
+function convertCsvsToJSON(csv) {
+    return new Promise((resolve) => {
+        // only load csv2geojson if needed
+        var script = document.createElement('script')
+        script.onload = function () {
+            csv2geojson.csv2geojson(csv, {
+                latfield: 'latitude',   // hier den Namen des csv-Feldes eintragen
+                lonfield: 'longitude',   // hier den Namen des csv-Feldes eintragen
+                delimiter: ';',
+            }, (err, geojson) => {
+                if (err) {
+                    console.error(err)
+                } else {
+                    resolve(geojson)
+                }
+            })
+        }
+        script.src = 'vendor/csv2geojson.js'
+        document.head.appendChild(script)
+    })
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     showMap()
-    fetch('data.json')
+    fetch('data.csv')
         .then(
             (response) => {
-                return response.json()
+                return response.text()
             },
             (reject) => {
                 console.error(reject)
             })
+        .then(convertCsvsToJSON)
         .then(showDataLayer)
 })

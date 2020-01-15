@@ -1,0 +1,81 @@
+﻿latitude;longitude;FacilityName;CountryName;color
+48.2886041;14.3320535;Chemiepark Linz;Austria;blue
+48.1409268;16.4763778;Schwechat;Austria;red
+51.3249258;4.2856278;INEOS Antwerp site;Belgium;green
+51.2438582;4.3936194;Port Of Antwerp;Belgium;#FFAA44
+51.0642666;5.0881938;Tessenderloo;Belgium;#EEEE22
+59.3894802;27.2241924;Kohtla-Järve;Estonia;#2345AB
+63.1114049;21.6718522;Kokkola Industrial Park;Finland;blue
+60.3931919;25.6652739;Porvoo;Finland;red
+43.4172697;-0.6367076;Chemparc. Aquitaine;France;green
+43.4448356;4.8625546;Fos-Lavera-Berre;France;#FFAA45
+49.4815578;0.5335092;Port Jérôme;France;#EEEE23
+49.4719317;0.1474997;Port of Le Havre;France;#2345AB
+49.4445326;1.0734142;Port of Rouen;France;blue
+51.8727519;12.5831064;Agro-Chemie Park Piesteritz;Germany;red
+51.4794334;13.8770358;BASF Schwarzheide GmbH;Germany;green
+49.495018;8.434131;BASF SE. Ludwigshafen;Germany;#FFAA46
+51.5632625;7.3150145;Castrop-Rauxel;Germany;#EEEE24
+53.9080853;9.1649447;ChemCoast Park Brunsbüttel;Germany;#2345AB
+51.6249058;12.3057442;ChemiePark Bitterfeld Wolfen;Germany;blue
+50.859615;6.852667;Chemiepark Knapsack;Germany;red
+51.068288;12.1938009;Chemie- und Industriepark Zeitz;Germany;green
+51.0781842;6.8288621;Chempark Dormagen;Germany;#FFAA45
+51.01291;6.9915312;Chempark Leverkusen Currenta;Germany;#EEEE23
+48.1781988;12.7216208;GENDORF Chemical Park;Germany;#2345AB
+51.6855538;7.0873505;Industrial Park Dorsten-Marl;Germany;blue
+50.0856676;8.5367836;Industriepark Höchst;Germany;red
+52.4861884;7.3084948;IndustriePark Lingen;Germany;green
+52.5341067;12.3516765;Industriepark Premnitz;Germany;#FFAA46
+51.5227225;14.3705415;Industriepark Schwarze Pumpe;Germany;#EEEE24
+51.5654896;6.579241;Industriepark Solvay Rheinberg;Germany;#2345AB
+52.90477;9.65834;industriepark walsrode;Germany;blue
+51.3248017;12.0044359;InfraLeuna GmbH;Germany;red
+51.3746776;6.6643382;Krefeld-Uerdingen Currenta;Germany;green
+51.6821945;7.0820829;Marl Chemical Park;Germany;#FFAA47
+51.058747;6.141278;NUON Industriepark Oberbruch;Germany;#EEEE25
+51.3900745;11.9851505;Schkopau;Germany;#2345AB
+53.0932724;14.2312786;Schwedt/Oder PCK Raffinerie GmbH;Germany;blue
+53.5928618;9.4709494;Stade;Germany;red
+50.1187875;8.9653663;Wolfgang Industrial Park;Germany;green
+53.62261;8.05866;Vynova Wilhelmshaven;Germany;#FFAA46
+51.180708;6.8383343;Henkel AG & Co. KGaA;Germany;blue
+51.0581658;6.1433015;BIZZPARK Oberbruch - Der Standort 3.0;Germany;red
+50.859615;6.8504783;Chemical Park Knapsack ;Germany;green
+50.8265289;7.0032188;Evonik Site Lülsdorf;Germany;#FFAA45
+51.0184732;6.938964;Industriepark Köln - Merkenich;Germany;#EEEE23
+51.79878;11.75353;Solvay's Industrial Park in Bernburg;Germany;#2345AB
+51.6599214;12.2877664;Industrial Park Bayer Bitterfeld;Germany;blue
+49.8847535;8.6173142;Evonik Site Darmstadt/Weiterstadt;Germany;red
+50.0368924;8.2460426;Kalle-Albert Industrial Park;Germany;green
+50.12858;8.7672;Allessa GmbH;Germany;#FFAA46
+49.828961;9.151943;Industry Centre Obernburg Mainsite GmbH;Germany;#EEEE24
+49.61819;8.43899;BASF Lampertheim GmbH;Germany;#2345AB
+48.0201794;7.8441234;SOLVAY Acetow GmbH;Germany;blue
+48.4443975;10.8791169;Industrial Park Gersthofen;Germany;red
+48.0212315;12.5523216;Chemiepark Trostberg;Germany;green
+47.1707612;18.121994;Pétfürdö;Hungary;#FFAA47
+64.0370884;-21.4033842;Hellisheiði ON-Power;Iceland;#EEEE25
+53.419599;-7.992272;Monksland;Ireland;#2345AB
+45.4627674;12.2669663;Porto Marghera;Italy;blue
+51.165633;16.6130874;?roda ?l?ska;Poland;red
+52.0145541;18.5009145;Turek;Poland;green
+37.9832887;-8.8330698;ZILS - Sines Industrial and Logistics Zone;Portugal;#FFAA46
+48.8754835;21.8085434;Strážske Chemko;Slovakia;#EEEE24
+41.12016;1.246002;AEQT - Tarragona Chemical Cluster;Spain;#2345AB
+37.261421;-6.9447224;Huelva;Spain;blue
+58.0678388;11.8294345;Stenungsund;Sweden;red
+47.5325241;7.6647135;Infrapark Baselland;Switzerland;green
+47.5766045;8.3123644;Solvay Ind.park;Switzerland;#FFAA47
+50.974183;5.7932988;Chemelot;The Netherlands;#EEEE25
+53.3165884;6.9476955;Chemical Cluster Delfzijl;The Netherlands;#2345AB
+52.7749331;6.9069293;EMMTEC Industry & Business Park;The Netherlands;blue
+52.3778637;4.9152054;Port of Amsterdam;The Netherlands;red
+51.9496008;4.145263;Port of Rotterdam;The Netherlands;green
+51.3342613;3.8225052;Valuepark Terneuzen;The Netherlands;#FFAA48
+54.9580038;-1.5595312;AkzoNobel R&D center Felling UK;United Kingdom;#EEEE26
+56.0097152;-3.7227698;Grangemouth;United Kingdom;#2345AB
+53.7360647;-0.2404589;Saltend Chemicals Parks;United Kingdom;blue
+54.5802188;-1.0946702;Wilton International;United Kingdom;red
+51.188426;12.359936;DOW Olefinverbund Böhlen;Germany;green
+48.758381;11.708812;Basell Polyolefine;Germany;#FFAA47
